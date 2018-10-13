@@ -33,6 +33,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.3.0",
+    "husky": "^1.1.2",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.0.0",
@@ -40,10 +41,33 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "lint-staged": "^7.3.0",
     "prettier": "^1.14.3",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~2.9.2"
+  },
+  "lint-staged": {
+    "*.{scss,js,css}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --print-width 80 --write",
+      "git add"
+    ],
+    "*.ts": [
+      "prettier --write",
+      "tslint -c tslint.json --fix -t stylish",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "post-commit": "git update-index --again",
+      "pre-commit": "lint-staged",
+      "pre-push": "ng test --watch=false"
+    }
   }
 }
