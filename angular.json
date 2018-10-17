@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "redux-client-ngrx"
+  "defaultProject": "redux-client-ngrx",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
