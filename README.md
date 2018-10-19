@@ -3,6 +3,14 @@
 This project was generated with
 [Angular CLI](https://github.com/angular/angular-cli) version 6.2.4.
 
+## Running `ng update`
+
+It seems `ng update` is not compatible with Yarn. See
+[this](https://github.com/angular/angular-cli/issues/11694) issue.
+
+To mitigate this, use the `--from=x.x.x` syntax. Example:
+`ng update --from=6.2.5 @angular/cli`.
+
 ## ngrx
 
 `ng g store State --root --module app`
