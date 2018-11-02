@@ -6,7 +6,14 @@ import { Component, OnInit } from "@angular/core";
     styleUrls: ["./counter-list.component.css"],
 })
 export class CounterListComponent implements OnInit {
-    constructor() {}
+    counterIndices: number[];
+    numOfCounters = 6;
+
+    constructor() {
+        this.counterIndices = Array(this.numOfCounters)
+            .fill(0)
+            .map((x, i) => i);
+    }
 
     ngOnInit() {}
 }
