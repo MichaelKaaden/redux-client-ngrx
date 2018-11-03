@@ -15,6 +15,7 @@ import { ErrorComponent } from "./components/error/error.component";
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
 import { MaterialModule } from "./material.module";
 import { metaReducers, reducers } from "./reducers";
+import * as fromError from "./reducers/error.reducer";
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { metaReducers, reducers } from "./reducers";
         FlexLayoutModule,
         StoreModule.forRoot(reducers, { metaReducers }),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
+        StoreModule.forFeature("errors", fromError.reducer),
     ],
     providers: [],
     bootstrap: [AppComponent],

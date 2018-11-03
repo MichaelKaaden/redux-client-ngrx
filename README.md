@@ -13,13 +13,14 @@ To mitigate this, use the `--from=x.x.x` syntax. Example:
 
 ## ngrx
 
-First, generate the store.
+First, generate a store using `IAppState` as state interface:
 
     ng g store State --stateInterface IAppState --root --module app.module.ts
 
-Use `IAppState` as state interface.
+Then, create a set of actions, effects and reducers (called a _feature_) for the
+error component:
 
-`ng g r errors --group --module app --reducers reducers/index.ts`
+    `ng g feature error -m app.module.ts --group`
 
 ## Development server
 
