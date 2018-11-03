@@ -68,7 +68,7 @@
     ],
     "*.ts": [
       "prettier --write",
-      "tslint -c tslint.json --fix -t stylish",
+      "ng lint --fix",
       "git add"
     ]
   },
