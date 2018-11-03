@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { CounterListComponent } from "./counter-list.component";
@@ -9,6 +10,7 @@ describe("CounterListComponent", () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [CounterListComponent],
+            schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));
 
