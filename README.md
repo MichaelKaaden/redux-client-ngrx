@@ -13,7 +13,11 @@ To mitigate this, use the `--from=x.x.x` syntax. Example:
 
 ## ngrx
 
-`ng g store State --root --module app`
+First, generate the store.
+
+    ng g store State --stateInterface IAppState --root --module app.module.ts
+
+Use `IAppState` as state interface.
 
 `ng g r errors --group --module app --reducers reducers/index.ts`
 
