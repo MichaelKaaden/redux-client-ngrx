@@ -23,4 +23,10 @@ describe("CounterListComponent", () => {
     it("should create", () => {
         expect(component).toBeTruthy();
     });
+
+    it("should contain counters", () => {
+        const compiled = fixture.debugElement.nativeElement;
+        const counters = compiled.querySelectorAll("mk-counter-container");
+        expect(counters.length).toBe(component.numOfCounters);
+    });
 });
