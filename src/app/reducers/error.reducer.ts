@@ -22,3 +22,5 @@ export function reducer(state = initialState, action: ErrorActions): State {
             return state;
     }
 }
+
+export const getErrors = (state: State) => state.errors;

@@ -21,8 +21,17 @@ export const reducers: ActionReducerMap<IAppState> = {
  */
 export const metaReducers: MetaReducer<IAppState>[] = !environment.production ? [storeFreeze] : [];
 
+/*
+ * Counter selectors
+ */
 export const selectCountersState = createFeatureSelector<fromCounter.State>("counters");
 export const getCounters = createSelector(selectCountersState, fromCounter.getCounters);
 export const getCounter = createSelector(getCounters, (counters, props) =>
     counters.find((counter) => counter.index === props.index)
 );
+
+/*
+ * Error selectors
+ */
+export const selectErrorsState = createFeatureSelector<fromError.State>("errors");
+export const getErrors = createSelector(selectErrorsState, fromError.getErrors);
