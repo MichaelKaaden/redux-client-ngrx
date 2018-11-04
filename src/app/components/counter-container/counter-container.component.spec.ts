@@ -1,12 +1,12 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { combineReducers, Store, StoreModule } from "@ngrx/store";
-
+import { Store, StoreModule } from "@ngrx/store";
 import * as fromRoot from "../../reducers";
-import * as fromCounter from "../../reducers/counter.reducer";
+import { reducers } from "../../reducers";
 import { CounterContainerComponent } from "./counter-container.component";
 
 describe("CounterContainerComponent", () => {
+    const counterIndex = 0;
     let component: CounterContainerComponent;
     let fixture: ComponentFixture<CounterContainerComponent>;
     let store: Store<fromRoot.IAppState>;
@@ -14,11 +14,7 @@ describe("CounterContainerComponent", () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [CounterContainerComponent],
-            imports: [
-                StoreModule.forRoot({
-                    counters: combineReducers(fromCounter.reducer),
-                }),
-            ],
+            imports: [StoreModule.forRoot(reducers)],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));
@@ -29,10 +25,12 @@ describe("CounterContainerComponent", () => {
 
         fixture = TestBed.createComponent(CounterContainerComponent);
         component = fixture.componentInstance;
+        component.counterIndex = counterIndex;
+
         fixture.detectChanges();
     });
 
-    xit("should create", () => {
+    it("should create", () => {
         expect(component).toBeTruthy();
     });
 });
