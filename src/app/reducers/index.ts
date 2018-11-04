@@ -23,3 +23,6 @@ export const metaReducers: MetaReducer<IAppState>[] = !environment.production ? 
 
 export const selectCountersState = createFeatureSelector<fromCounter.State>("counters");
 export const getCounters = createSelector(selectCountersState, fromCounter.getCounters);
+export const getCounter = createSelector(getCounters, (counters, props) =>
+    counters.find((counter) => counter.index === props.index)
+);
