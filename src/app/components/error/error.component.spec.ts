@@ -1,18 +1,29 @@
+import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { Store, StoreModule } from "@ngrx/store";
+import { ErrorOccurred, ResetErrors } from "../../actions/error.actions";
+import { IAppState, reducers } from "../../reducers";
 
 import { ErrorComponent } from "./error.component";
 
 describe("ErrorComponent", () => {
     let component: ErrorComponent;
     let fixture: ComponentFixture<ErrorComponent>;
+    let store: Store<IAppState>;
+    let dispatchSpy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [ErrorComponent],
+            imports: [StoreModule.forRoot(reducers)],
+            schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));
 
     beforeEach(() => {
+        store = TestBed.get(Store);
+        dispatchSpy = spyOn(store, "dispatch").and.callThrough();
+
         fixture = TestBed.createComponent(ErrorComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -20,5 +31,42 @@ describe("ErrorComponent", () => {
 
     it("should create", () => {
         expect(component).toBeTruthy();
+    });
+
+    it("should initially show no errors", () => {
+        component.errors$.subscribe((data) => {
+            expect(data.length).toBe(0);
+        });
+    });
+
+    it("should show an error if its action is dispatched", () => {
+        const error = "foo";
+        const action = new ErrorOccurred({ error });
+        store.dispatch(action);
+
+        component.errors$.subscribe((data) => {
+            expect(data.length).toBe(1);
+            expect(data[0]).toEqual(error);
+        });
+    });
+
+    it("should dispatch an action when reset() is called", () => {
+        const action = new ResetErrors();
+
+        component.reset();
+
+        expect(dispatchSpy).toHaveBeenCalledWith(action);
+    });
+
+    it("should reset the errors", () => {
+        const error = "bar";
+        const action = new ErrorOccurred({ error });
+        store.dispatch(action);
+
+        component.reset();
+
+        component.errors$.subscribe((data) => {
+            expect(data.length).toBe(0);
+        });
     });
 });
