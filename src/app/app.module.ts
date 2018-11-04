@@ -21,6 +21,7 @@ import { metaReducers, reducers } from "./reducers";
 import * as fromCounter from "./reducers/counter.reducer";
 import * as fromError from "./reducers/error.reducer";
 import { CounterService } from "./services/counter.service";
+import { ProgressComponent } from "./components/progress/progress.component";
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { CounterService } from "./services/counter.service";
         PageNotFoundComponent,
         ErrorComponent,
         CounterContainerComponent,
+        ProgressComponent,
     ],
     imports: [
         BrowserModule,
