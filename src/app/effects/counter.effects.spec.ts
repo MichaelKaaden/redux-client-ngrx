@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { TestBed } from "@angular/core/testing";
 import { provideMockActions } from "@ngrx/effects/testing";
-import { combineReducers, StoreModule } from "@ngrx/store";
+import { StoreModule } from "@ngrx/store";
 import { Observable } from "rxjs";
-import * as fromCounter from "../reducers/counter.reducer";
+import { reducers } from "../reducers";
 import { CounterService } from "../services/counter.service";
 
 import { CounterEffects } from "./counter.effects";
@@ -15,11 +15,7 @@ describe("CounterEffects", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                StoreModule.forRoot({
-                    counters: combineReducers(fromCounter.reducer),
-                }),
-            ],
+            imports: [StoreModule.forRoot(reducers)],
             providers: [
                 CounterEffects,
                 provideMockActions(() => actions$),
