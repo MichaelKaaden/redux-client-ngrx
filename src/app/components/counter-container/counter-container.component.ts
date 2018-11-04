@@ -27,12 +27,12 @@ export class CounterContainerComponent implements OnInit {
 
     // needed to capture "this" properly
     public decrement = (by: number): void => {
-        this.store$.dispatch(new DecrementPending({ index: this.counterIndex }));
+        this.store$.dispatch(new DecrementPending({ index: this.counterIndex, by }));
     }
 
     // needed to capture "this" properly
     public increment = (by: number): void => {
-        this.store$.dispatch(new IncrementPending({ index: this.counterIndex }));
+        this.store$.dispatch(new IncrementPending({ index: this.counterIndex, by }));
     }
 
     private load() {

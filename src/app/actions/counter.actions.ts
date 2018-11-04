@@ -37,7 +37,7 @@ export class LoadAllCompleted implements Action {
 export class DecrementPending implements Action {
     readonly type = CounterActionTypes.DecrementPending;
 
-    constructor(readonly payload: { index: number }) {}
+    constructor(readonly payload: { index: number; by: number }) {}
 }
 
 export class DecrementCompleted implements Action {
@@ -49,7 +49,7 @@ export class DecrementCompleted implements Action {
 export class IncrementPending implements Action {
     readonly type = CounterActionTypes.IncrementPending;
 
-    constructor(readonly payload: { index: number }) {}
+    constructor(readonly payload: { index: number; by: number }) {}
 }
 
 export class IncrementCompleted implements Action {
