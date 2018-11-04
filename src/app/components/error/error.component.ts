@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { ResetErrors } from "../../actions/error.actions";
@@ -11,10 +11,12 @@ import { IAppState } from "../../reducers";
     styleUrls: ["./error.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ErrorComponent {
+export class ErrorComponent implements OnInit {
     errors$: Observable<string[]>;
 
-    constructor(private store: Store<IAppState>) {
+    constructor(private store: Store<IAppState>) {}
+
+    ngOnInit(): void {
         this.errors$ = this.store.pipe(select(fromRoot.getErrors));
     }
 
