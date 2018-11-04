@@ -6,5 +6,10 @@
                             [counter]="counter$ | async"></mk-counter-heading>
     </mat-card-subtitle>
 
-    <mat-card-content>Value: {{ (counter$ | async).value }}</mat-card-content>
+    <mat-card-content>
+        <mk-counter-input [counterIndex]="counterIndex"
+                          [counter]="counter$ | async"
+                          [decrementFunc]="decrement"
+                          [incrementFunc]="increment"></mk-counter-input>
+    </mat-card-content>
 </mat-card>
