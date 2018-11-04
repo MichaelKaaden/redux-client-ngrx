@@ -5,7 +5,7 @@ import { Store } from "@ngrx/store";
 import { of } from "rxjs";
 import { catchError, map, mergeMap, withLatestFrom } from "rxjs/operators";
 
-import { CounterActionTypes, LoadCompleted, LoadPending } from "../actions/counter.actions";
+import { CounterActionTypes, LoadAllCompleted, LoadCompleted, LoadPending } from "../actions/counter.actions";
 import { ErrorOccurred } from "../actions/error.actions";
 import { ICounter } from "../models/counter";
 import { getCounters, IAppState } from "../reducers";
@@ -13,6 +13,8 @@ import { CounterService } from "../services/counter.service";
 
 @Injectable()
 export class CounterEffects {
+    constructor(private actions$: Actions, private store$: Store<IAppState>, private counterService: CounterService) {}
+
     @Effect()
     loadPending = this.actions$.pipe(
         ofType<LoadPending>(CounterActionTypes.LoadPending),
@@ -44,7 +46,26 @@ export class CounterEffects {
         catchError((err) => of(new ErrorOccurred({ error: this.setError("loadPending", err) })))
     );
 
-    constructor(private actions$: Actions, private store$: Store<IAppState>, private counterService: CounterService) {}
+    @Effect()
+    loadAllPending = this.actions$.pipe(
+        ofType<LoadPending>(CounterActionTypes.LoadAllPending),
+        mergeMap((action) => {
+            return this.counterService.counters().pipe(
+                map((counters) => new LoadAllCompleted({ counters })),
+                catchError((error: HttpErrorResponse) =>
+                    of(
+                        new ErrorOccurred({
+                            error: this.setError(
+                                "loadAllPending",
+                                `retrieving the counters failed with ${error.message}`
+                            ),
+                        })
+                    )
+                )
+            );
+        }),
+        catchError((err) => of(new ErrorOccurred({ error: this.setError("loadAllPending", err) })))
+    );
 
     setError(methodName: string, message: string): string {
         return `error in the "${methodName}" action creator: "${message}"`;
