@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { LoadPending } from "../../actions/counter.actions";
@@ -10,6 +10,7 @@ import { IAppState } from "../../reducers";
     selector: "mk-counter-container",
     templateUrl: "./counter-container.component.html",
     styleUrls: ["./counter-container.component.css"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CounterContainerComponent implements OnInit {
     @Input()

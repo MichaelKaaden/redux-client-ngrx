@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { ResetErrors } from "../../actions/error.actions";
@@ -9,6 +9,7 @@ import { IAppState } from "../../reducers";
     selector: "mk-error",
     templateUrl: "./error.component.html",
     styleUrls: ["./error.component.css"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ErrorComponent {
     errors$: Observable<string[]>;
