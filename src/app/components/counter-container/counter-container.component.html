@@ -1,4 +1,10 @@
 <mat-card class="counterContainer">
-  <mat-card-title>Counter #{{ counterIndex }}</mat-card-title>
-  <mat-card-content>Value: {{ (counter$ | async).value }}</mat-card-content>
+    <mat-card-title>Counter #{{ counterIndex }}</mat-card-title>
+
+    <mat-card-subtitle>
+        <mk-counter-heading [counterIndex]="counterIndex"
+                            [counter]="counter$ | async"></mk-counter-heading>
+    </mat-card-subtitle>
+
+    <mat-card-content>Value: {{ (counter$ | async).value }}</mat-card-content>
 </mat-card>

@@ -22,6 +22,7 @@ import * as fromCounter from "./reducers/counter.reducer";
 import * as fromError from "./reducers/error.reducer";
 import { CounterService } from "./services/counter.service";
 import { ProgressComponent } from "./components/progress/progress.component";
+import { CounterHeadingComponent } from "./components/counter-heading/counter-heading.component";
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { ProgressComponent } from "./components/progress/progress.component";
         ErrorComponent,
         CounterContainerComponent,
         ProgressComponent,
+        CounterHeadingComponent,
     ],
     imports: [
         BrowserModule,
