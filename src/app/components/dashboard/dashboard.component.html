@@ -1,0 +1,33 @@
+<mk-errors></mk-errors>
+
+<div fxFlex fxLayout="row wrap" fxLayout.xs="column" fxLayout.sm="column"
+     fxLayoutWrap fxLayoutGap="5%" fxLayoutAlign="left">
+  <mat-card class="dashboard">
+    <mat-card-title i18n="Heading for the card containing the number of counters@@DashboardComponent:NumOfCounters">
+      Number of counters
+    </mat-card-title>
+    <br><br>
+    <mat-card-content>{{ numOfCounters$ | async }}</mat-card-content>
+    <br>
+  </mat-card>
+
+  <mat-card class="dashboard">
+    <mat-card-title
+            i18n="Heading for the card containing the sum over all counters@@DashboardComponent:SumOfCounters">Counters sum
+      up to
+    </mat-card-title>
+    <br><br>
+    <mat-card-content>{{ counterValueSum$ | async }}</mat-card-content>
+    <br>
+  </mat-card>
+
+  <mat-card class="dashboard">
+    <mat-card-title
+            i18n="Heading for the card containing the average over all counters@@DashboardComponent:AverageOfCounters">
+      Average counter value
+    </mat-card-title>
+    <br><br>
+    <mat-card-content>{{ averageCounterValue$ | async }}</mat-card-content>
+    <br>
+  </mat-card>
+</div>

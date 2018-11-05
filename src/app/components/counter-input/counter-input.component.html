@@ -1,0 +1,23 @@
+<div>
+    <mk-progress [isLoading]="counter?.isLoading || counter?.isSaving"
+                 [diameter]="23">
+        <span>{{ counter?.value }}</span>
+    </mk-progress>
+    <br>
+    <br>
+    <button mat-raised-button
+            class="decrementButton"
+            color="primary"
+            (click)="decrement()"
+            [disabled]="counter?.isLoading || counter?.isSaving">
+        <mat-icon>remove</mat-icon>
+    </button>
+    &nbsp;
+    <button mat-raised-button
+            class="incrementButton"
+            color="primary"
+            (click)="increment()"
+            [disabled]="counter?.isLoading || counter?.isSaving">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

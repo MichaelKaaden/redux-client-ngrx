@@ -1,0 +1,6 @@
+<h3>
+    Counter #{{ counterIndex }}: Current value is
+    <mk-progress [isLoading]="counter?.isLoading || counter?.isSaving" [diameter]="15">
+        {{ counter?.value }}
+    </mk-progress>
+</h3>

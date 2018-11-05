@@ -1,0 +1,16 @@
+<mat-card class="counterContainer">
+    <mat-card-title>Counter #{{ counterIndex }}</mat-card-title>
+
+    <mat-card-subtitle>
+        <mk-counter-heading [counterIndex]="counterIndex"
+                            [counter]="counter$ | async"></mk-counter-heading>
+    </mat-card-subtitle>
+
+    <mat-card-content>
+        <br><br>
+        <mk-counter-input [counterIndex]="counterIndex"
+                          [counter]="counter$ | async"
+                          [decrementFunc]="decrement"
+                          [incrementFunc]="increment"></mk-counter-input>
+    </mat-card-content>
+</mat-card>
