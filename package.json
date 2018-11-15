@@ -57,20 +57,5 @@
     "ts-node": "~7.0.1",
     "tslint": "~5.11.0",
     "typescript": "~3.1.6"
-  },
-  "lint-staged": {
-    "*.{scss,js,css}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.md": [
-      "prettier --print-width 80 --write",
-      "git add"
-    ],
-    "*.ts": [
-      "prettier --write",
-      "tslint -c tslint.json --fix -t stylish --project tsconfig.json",
-      "git add"
-    ]
   }
 }
