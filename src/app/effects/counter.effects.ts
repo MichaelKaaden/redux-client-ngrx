@@ -18,7 +18,8 @@ import {
 } from "../actions/counter.actions";
 import { ErrorOccurred } from "../actions/error.actions";
 import { ICounter } from "../models/counter";
-import { getCounters, IAppState } from "../reducers";
+import { IAppState } from "../reducers";
+import { getCounters } from "../selectors/counters.selectors";
 import { CounterService } from "../services/counter.service";
 
 @Injectable()
@@ -35,16 +36,13 @@ export class CounterEffects {
                 catchError((error: HttpErrorResponse) =>
                     of(
                         new ErrorOccurred({
-                            error: this.setError(
-                                "decrementPending",
-                                `decrementing counter ${payload.index} failed with ${error.message}`
-                            ),
-                        })
-                    )
-                )
+                            error: this.setError("decrementPending", `decrementing counter ${payload.index} failed with ${error.message}`),
+                        }),
+                    ),
+                ),
             );
         }),
-        catchError((err) => of(new ErrorOccurred({ error: this.setError("decrementPending", err) })))
+        catchError((err) => of(new ErrorOccurred({ error: this.setError("decrementPending", err) }))),
     );
 
     @Effect()
@@ -57,16 +55,13 @@ export class CounterEffects {
                 catchError((error: HttpErrorResponse) =>
                     of(
                         new ErrorOccurred({
-                            error: this.setError(
-                                "incrementPending",
-                                `incrementing counter ${payload.index} failed with ${error.message}`
-                            ),
-                        })
-                    )
-                )
+                            error: this.setError("incrementPending", `incrementing counter ${payload.index} failed with ${error.message}`),
+                        }),
+                    ),
+                ),
             );
         }),
-        catchError((err) => of(new ErrorOccurred({ error: this.setError("incrementPending", err) })))
+        catchError((err) => of(new ErrorOccurred({ error: this.setError("incrementPending", err) }))),
     );
 
     @Effect()
@@ -92,12 +87,12 @@ export class CounterEffects {
                     of(
                         new ErrorOccurred({
                             error: this.setError("loadPending", `retrieving the counter failed with ${error.message}`),
-                        })
-                    )
-                )
+                        }),
+                    ),
+                ),
             );
         }),
-        catchError((err) => of(new ErrorOccurred({ error: this.setError("loadPending", err) })))
+        catchError((err) => of(new ErrorOccurred({ error: this.setError("loadPending", err) }))),
     );
 
     @Effect()
@@ -109,16 +104,13 @@ export class CounterEffects {
                 catchError((error: HttpErrorResponse) =>
                     of(
                         new ErrorOccurred({
-                            error: this.setError(
-                                "loadAllPending",
-                                `retrieving all counters failed with ${error.message}`
-                            ),
-                        })
-                    )
-                )
+                            error: this.setError("loadAllPending", `retrieving all counters failed with ${error.message}`),
+                        }),
+                    ),
+                ),
             );
         }),
-        catchError((err) => of(new ErrorOccurred({ error: this.setError("loadAllPending", err) })))
+        catchError((err) => of(new ErrorOccurred({ error: this.setError("loadAllPending", err) }))),
     );
 
     setError(methodName: string, message: string): string {

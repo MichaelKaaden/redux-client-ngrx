@@ -3,8 +3,8 @@ import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { DecrementPending, IncrementPending, LoadPending } from "../../actions/counter.actions";
 import { ICounter } from "../../models/counter";
-import * as fromRoot from "../../reducers";
 import { IAppState } from "../../reducers";
+import { getCounter } from "../../selectors/counters.selectors";
 
 @Component({
     selector: "mk-counter-container",
@@ -21,7 +21,7 @@ export class CounterContainerComponent implements OnInit {
     constructor(private store$: Store<IAppState>) {}
 
     ngOnInit() {
-        this.counter$ = this.store$.pipe(select(fromRoot.getCounter, { index: this.counterIndex }));
+        this.counter$ = this.store$.pipe(select(getCounter, { index: this.counterIndex }));
         this.load();
     }
 
