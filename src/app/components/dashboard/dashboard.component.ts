@@ -19,10 +19,11 @@ export class DashboardComponent implements OnInit {
     constructor(private store$: Store<IAppState>) {}
 
     ngOnInit() {
-        this.loadAll();
         this.numOfCounters$ = this.store$.pipe(select(getNumOfCounters));
         this.counterValueSum$ = this.store$.pipe(select(getCounterSum));
         this.averageCounterValue$ = this.store$.pipe(select(getAverageSum));
+
+        this.loadAll();
     }
 
     private loadAll() {
