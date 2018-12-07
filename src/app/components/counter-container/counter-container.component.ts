@@ -22,7 +22,8 @@ export class CounterContainerComponent implements OnInit {
 
     ngOnInit() {
         this.counter$ = this.store$.pipe(select(getCounter, { index: this.counterIndex }));
-        this.load();
+
+        this.store$.dispatch(new LoadPending({ index: this.counterIndex }));
     }
 
     // needed to capture "this" properly
@@ -33,9 +34,5 @@ export class CounterContainerComponent implements OnInit {
     // needed to capture "this" properly
     public increment = (by: number): void => {
         this.store$.dispatch(new IncrementPending({ index: this.counterIndex, by }));
-    }
-
-    private load() {
-        this.store$.dispatch(new LoadPending({ index: this.counterIndex }));
     }
 }
