@@ -27,7 +27,7 @@ export class CounterEffects {
     constructor(private actions$: Actions, private store$: Store<IAppState>, private counterService: CounterService) {}
 
     @Effect()
-    decrementPending = this.actions$.pipe(
+    decrementPending$ = this.actions$.pipe(
         ofType<DecrementPending>(CounterActionTypes.DecrementPending),
         map((action) => action.payload),
         mergeMap((payload) => {
@@ -36,17 +36,17 @@ export class CounterEffects {
                 catchError((error: HttpErrorResponse) =>
                     of(
                         new ErrorOccurred({
-                            error: this.setError("decrementPending", `decrementing counter ${payload.index} failed with ${error.message}`),
+                            error: this.setError("decrementPending$", `decrementing counter ${payload.index} failed with ${error.message}`),
                         }),
                     ),
                 ),
             );
         }),
-        catchError((err) => of(new ErrorOccurred({ error: this.setError("decrementPending", err) }))),
+        catchError((err) => of(new ErrorOccurred({ error: this.setError("decrementPending$", err) }))),
     );
 
     @Effect()
-    incrementPending = this.actions$.pipe(
+    incrementPending$ = this.actions$.pipe(
         ofType<IncrementPending>(CounterActionTypes.IncrementPending),
         map((action) => action.payload),
         mergeMap((payload) => {
@@ -55,24 +55,24 @@ export class CounterEffects {
                 catchError((error: HttpErrorResponse) =>
                     of(
                         new ErrorOccurred({
-                            error: this.setError("incrementPending", `incrementing counter ${payload.index} failed with ${error.message}`),
+                            error: this.setError("incrementPending$", `incrementing counter ${payload.index} failed with ${error.message}`),
                         }),
                     ),
                 ),
             );
         }),
-        catchError((err) => of(new ErrorOccurred({ error: this.setError("incrementPending", err) }))),
+        catchError((err) => of(new ErrorOccurred({ error: this.setError("incrementPending$", err) }))),
     );
 
     @Effect()
-    loadPending = this.actions$.pipe(
+    loadPending$ = this.actions$.pipe(
         ofType<LoadPending>(CounterActionTypes.LoadPending),
         map((action) => action.payload),
         withLatestFrom(this.store$),
         mergeMap(([payload, state]) => {
             // hint: using switchMap instead would of course cancel any previous HTTP requests
             if (payload.index < 0) {
-                return of(new ErrorOccurred({ error: this.setError("loadPending", `index ${payload.index} < 0`) }));
+                return of(new ErrorOccurred({ error: this.setError("loadPending$", `index ${payload.index} < 0`) }));
             }
 
             // re-use an already loaded counter
@@ -86,17 +86,17 @@ export class CounterEffects {
                 catchError((error: HttpErrorResponse) =>
                     of(
                         new ErrorOccurred({
-                            error: this.setError("loadPending", `retrieving the counter failed with ${error.message}`),
+                            error: this.setError("loadPending$", `retrieving the counter failed with ${error.message}`),
                         }),
                     ),
                 ),
             );
         }),
-        catchError((err) => of(new ErrorOccurred({ error: this.setError("loadPending", err) }))),
+        catchError((err) => of(new ErrorOccurred({ error: this.setError("loadPending$", err) }))),
     );
 
     @Effect()
-    loadAllPending = this.actions$.pipe(
+    loadAllPending$ = this.actions$.pipe(
         ofType<LoadAllPending>(CounterActionTypes.LoadAllPending),
         mergeMap((action) => {
             return this.counterService.counters().pipe(
@@ -104,13 +104,13 @@ export class CounterEffects {
                 catchError((error: HttpErrorResponse) =>
                     of(
                         new ErrorOccurred({
-                            error: this.setError("loadAllPending", `retrieving all counters failed with ${error.message}`),
+                            error: this.setError("loadAllPending$", `retrieving all counters failed with ${error.message}`),
                         }),
                     ),
                 ),
             );
         }),
-        catchError((err) => of(new ErrorOccurred({ error: this.setError("loadAllPending", err) }))),
+        catchError((err) => of(new ErrorOccurred({ error: this.setError("loadAllPending$", err) }))),
     );
 
     setError(methodName: string, message: string): string {
