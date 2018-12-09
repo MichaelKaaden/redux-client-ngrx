@@ -4,8 +4,8 @@ import { EffectsMetadata, getEffectsMetadata } from "@ngrx/effects";
 import { provideMockActions } from "@ngrx/effects/testing";
 import { StoreModule } from "@ngrx/store";
 import { cold } from "jasmine-marbles";
-import { Observable, of } from "rxjs";
-import { DecrementCompleted, DecrementPending } from "../actions/counter.actions";
+import { Observable, of, throwError } from "rxjs";
+import { DecrementCompleted, DecrementPending, IncrementCompleted, IncrementPending } from "../actions/counter.actions";
 import { ErrorOccurred } from "../actions/error.actions";
 import { Counter } from "../models/counter";
 import { reducers } from "../reducers";
@@ -65,15 +65,14 @@ describe("CounterEffects", () => {
         it("should create an ErrorOccurred action if an error occurs during counter retrieval", () => {
             const action = new DecrementPending({ index, by });
             const errMessage = "foo";
-            const returnedErrMessage = `error in the "decrementPending$" action creator: "Error: ${errMessage}"`;
+            // tslint:disable-next-line:max-line-length
+            const returnedErrMessage = `error in the "decrementPending$" action creator: "decrementing counter 0 failed with ${errMessage}"`;
             const error = new ErrorOccurred({ error: returnedErrMessage });
 
-            spyOn(counterService, "decrementCounter").and.throwError(errMessage);
+            spyOn(counterService, "decrementCounter").and.returnValue(throwError({ message: errMessage }));
 
-            // well, needs to be done this way because of
-            // https://stackoverflow.com/questions/48815474/timing-framing-issue-with-jasmine-marbles-using-hot-and-cold
             actions$ = cold("a|", { a: action });
-            const expected = cold("(b|)", { b: error });
+            const expected = cold("b|", { b: error });
 
             expect(effects.decrementPending$).toBeObservable(expected);
         });
@@ -82,6 +81,33 @@ describe("CounterEffects", () => {
     describe("incrementPending$", () => {
         it("should register incrementPending$", () => {
             expect(metadata.incrementPending$).toEqual({ dispatch: true });
+        });
+
+        it("should create a IncrementCompleted action", () => {
+            const action = new IncrementPending({ index, by });
+            const completion = new IncrementCompleted({ index, counter });
+
+            spyOn(counterService, "incrementCounter").and.returnValue(of(new Counter(index, value)));
+
+            actions$ = cold("--a-", { a: action });
+            const expected = cold("--b", { b: completion });
+
+            expect(effects.incrementPending$).toBeObservable(expected);
+        });
+
+        it("should create an ErrorOccurred action if an error occurs during counter retrieval", () => {
+            const action = new IncrementPending({ index, by });
+            const errMessage = "foo";
+            // tslint:disable-next-line:max-line-length
+            const returnedErrMessage = `error in the "incrementPending$" action creator: "incrementing counter 0 failed with ${errMessage}"`;
+            const error = new ErrorOccurred({ error: returnedErrMessage });
+
+            spyOn(counterService, "incrementCounter").and.returnValue(throwError({ message: errMessage }));
+
+            actions$ = cold("a|", { a: action });
+            const expected = cold("b|", { b: error });
+
+            expect(effects.incrementPending$).toBeObservable(expected);
         });
     });
 
