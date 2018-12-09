@@ -2,13 +2,20 @@ import { HttpClient } from "@angular/common/http";
 import { TestBed } from "@angular/core/testing";
 import { EffectsMetadata, getEffectsMetadata } from "@ngrx/effects";
 import { provideMockActions } from "@ngrx/effects/testing";
-import { StoreModule } from "@ngrx/store";
+import { Store, StoreModule } from "@ngrx/store";
 import { cold } from "jasmine-marbles";
 import { Observable, of, throwError } from "rxjs";
-import { DecrementCompleted, DecrementPending, IncrementCompleted, IncrementPending } from "../actions/counter.actions";
+import {
+    DecrementCompleted,
+    DecrementPending,
+    IncrementCompleted,
+    IncrementPending,
+    LoadCompleted,
+    LoadPending,
+} from "../actions/counter.actions";
 import { ErrorOccurred } from "../actions/error.actions";
 import { Counter } from "../models/counter";
-import { reducers } from "../reducers";
+import { IAppState, reducers } from "../reducers";
 import { CounterService } from "../services/counter.service";
 
 import { CounterEffects } from "./counter.effects";
@@ -18,16 +25,25 @@ describe("CounterEffects", () => {
     let actions$: Observable<any>;
     let effects: CounterEffects;
     let metadata: EffectsMetadata<CounterEffects>;
+    let store: Store<IAppState>;
     let counterService: CounterService;
     const index = 0;
     const value = 42;
     const by = 3;
     const counter = new Counter(index, value);
 
+    // class MockStore {
+    //     select() {}
+    // }
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [StoreModule.forRoot(reducers)],
             providers: [
+                // {
+                //     provide: Store,
+                //     useClass: MockStore,
+                // },
                 CounterEffects,
                 provideMockActions(() => actions$),
                 CounterService,
@@ -42,6 +58,7 @@ describe("CounterEffects", () => {
 
         effects = TestBed.get(CounterEffects);
         metadata = getEffectsMetadata(effects);
+        store = TestBed.get(Store);
         counterService = TestBed.get(CounterService);
     });
 
@@ -115,6 +132,42 @@ describe("CounterEffects", () => {
         it("should register loadPending$", () => {
             expect(metadata.loadPending$).toEqual({ dispatch: true });
         });
+
+        it("should produce a LoadCompleted action on successful loading an counter", () => {
+            const action = new LoadPending({ index });
+            const completion = new LoadCompleted({ index, counter });
+
+            spyOn(counterService, "counter").and.returnValue(of(new Counter(index, value)));
+
+            actions$ = cold("--a-", { a: action });
+            const expected = cold("--b", { b: completion });
+
+            expect(effects.loadPending$).toBeObservable(expected);
+        });
+
+        it("should produce an ErrorOccurred action if the counter index is less than zero", () => {
+            const negativeIndex = -1;
+            const action = new LoadPending({ index: negativeIndex });
+            const returnedErrMessage = `error in the "loadPending$" action creator: "index ${negativeIndex} < 0"`;
+            const error = new ErrorOccurred({ error: returnedErrMessage });
+
+            actions$ = cold("a|", { a: action });
+            const expected = cold("b|", { b: error });
+
+            expect(effects.loadPending$).toBeObservable(expected);
+        });
+
+        // it("should return a counter out of the cache", () => {
+        //     const action = new LoadPending({ index });
+        //     const completion = new LoadCompleted({ index, counter });
+        //
+        //     spyOn(store, "select").and.returnValue(of({counters: [new Counter(index, value)]}));
+        //
+        //     actions$ = cold("--a-", { a: action });
+        //     const expected = cold("--b", { b: completion });
+        //
+        //     expect(effects.loadPending$).toBeObservable(expected);
+        // });
     });
 
     describe("loadAllPending$", () => {
