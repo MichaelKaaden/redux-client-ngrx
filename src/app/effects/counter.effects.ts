@@ -42,7 +42,6 @@ export class CounterEffects {
                 ),
             );
         }),
-        catchError((err) => of(new ErrorOccurred({ error: this.setError("decrementPending$", err) }))),
     );
 
     @Effect()
@@ -61,7 +60,6 @@ export class CounterEffects {
                 ),
             );
         }),
-        catchError((err) => of(new ErrorOccurred({ error: this.setError("incrementPending$", err) }))),
     );
 
     @Effect()
