@@ -69,7 +69,7 @@ describe("CounterEffects", () => {
             const returnedErrMessage = `error in the "decrementPending$" action creator: "decrementing counter 0 failed with ${errMessage}"`;
             const error = new ErrorOccurred({ error: returnedErrMessage });
 
-            spyOn(counterService, "decrementCounter").and.returnValue(throwError({ message: errMessage }));
+            spyOn(counterService, "decrementCounter").and.returnValue(throwError(errMessage));
 
             actions$ = cold("a|", { a: action });
             const expected = cold("b|", { b: error });
@@ -102,7 +102,7 @@ describe("CounterEffects", () => {
             const returnedErrMessage = `error in the "incrementPending$" action creator: "incrementing counter 0 failed with ${errMessage}"`;
             const error = new ErrorOccurred({ error: returnedErrMessage });
 
-            spyOn(counterService, "incrementCounter").and.returnValue(throwError({ message: errMessage }));
+            spyOn(counterService, "incrementCounter").and.returnValue(throwError(errMessage));
 
             actions$ = cold("a|", { a: action });
             const expected = cold("b|", { b: error });

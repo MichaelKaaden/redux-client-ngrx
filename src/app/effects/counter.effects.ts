@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
@@ -33,10 +32,10 @@ export class CounterEffects {
         mergeMap((payload) => {
             return this.counterService.decrementCounter(payload.index, payload.by).pipe(
                 map((counter) => new DecrementCompleted({ index: payload.index, counter })),
-                catchError((error: HttpErrorResponse) =>
+                catchError((error: string) =>
                     of(
                         new ErrorOccurred({
-                            error: this.setError("decrementPending$", `decrementing counter ${payload.index} failed with ${error.message}`),
+                            error: this.setError("decrementPending$", `decrementing counter ${payload.index} failed with ${error}`),
                         }),
                     ),
                 ),
@@ -51,10 +50,10 @@ export class CounterEffects {
         mergeMap((payload) => {
             return this.counterService.incrementCounter(payload.index, payload.by).pipe(
                 map((counter) => new IncrementCompleted({ index: payload.index, counter })),
-                catchError((error: HttpErrorResponse) =>
+                catchError((error: string) =>
                     of(
                         new ErrorOccurred({
-                            error: this.setError("incrementPending$", `incrementing counter ${payload.index} failed with ${error.message}`),
+                            error: this.setError("incrementPending$", `incrementing counter ${payload.index} failed with ${error}`),
                         }),
                     ),
                 ),
@@ -81,16 +80,15 @@ export class CounterEffects {
 
             return this.counterService.counter(payload.index).pipe(
                 map((value) => new LoadCompleted({ index: payload.index, counter: value })),
-                catchError((error: HttpErrorResponse) =>
+                catchError((error: string) =>
                     of(
                         new ErrorOccurred({
-                            error: this.setError("loadPending$", `retrieving the counter failed with ${error.message}`),
+                            error: this.setError("loadPending$", `retrieving the counter failed with ${error}`),
                         }),
                     ),
                 ),
             );
         }),
-        catchError((err) => of(new ErrorOccurred({ error: this.setError("loadPending$", err) }))),
     );
 
     @Effect()
@@ -99,10 +97,10 @@ export class CounterEffects {
         mergeMap((action) => {
             return this.counterService.counters().pipe(
                 map((counters) => new LoadAllCompleted({ counters })),
-                catchError((error: HttpErrorResponse) =>
+                catchError((error: string) =>
                     of(
                         new ErrorOccurred({
-                            error: this.setError("loadAllPending$", `retrieving all counters failed with ${error.message}`),
+                            error: this.setError("loadAllPending$", `retrieving all counters failed with ${error}`),
                         }),
                     ),
                 ),
