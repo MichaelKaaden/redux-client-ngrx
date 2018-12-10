@@ -32,18 +32,10 @@ describe("CounterEffects", () => {
     const by = 3;
     const counter = new Counter(index, value);
 
-    // class MockStore {
-    //     select() {}
-    // }
-
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [StoreModule.forRoot(reducers)],
             providers: [
-                // {
-                //     provide: Store,
-                //     useClass: MockStore,
-                // },
                 CounterEffects,
                 provideMockActions(() => actions$),
                 CounterService,
@@ -71,27 +63,29 @@ describe("CounterEffects", () => {
             const action = new DecrementPending({ index, by });
             const completion = new DecrementCompleted({ index, counter });
 
-            spyOn(counterService, "decrementCounter").and.returnValue(of(new Counter(index, value)));
+            const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(of(new Counter(index, value)));
 
             actions$ = cold("--a-", { a: action });
             const expected = cold("--b", { b: completion });
 
             expect(effects.decrementPending$).toBeObservable(expected);
+            expect(decrementCounterSpy).toHaveBeenCalled();
         });
 
         it("should create an ErrorOccurred action if an error occurs during counter retrieval", () => {
             const action = new DecrementPending({ index, by });
             const errMessage = "foo";
             // tslint:disable-next-line:max-line-length
-            const returnedErrMessage = `error in the "decrementPending$" action creator: "decrementing counter 0 failed with ${errMessage}"`;
+            const returnedErrMessage = `error in the "decrementPending$" action creator: "decrementing counter ${index} failed with ${errMessage}"`;
             const error = new ErrorOccurred({ error: returnedErrMessage });
 
-            spyOn(counterService, "decrementCounter").and.returnValue(throwError(errMessage));
+            const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(throwError(errMessage));
 
             actions$ = cold("a|", { a: action });
             const expected = cold("b|", { b: error });
 
             expect(effects.decrementPending$).toBeObservable(expected);
+            expect(decrementCounterSpy).toHaveBeenCalled();
         });
     });
 
@@ -104,27 +98,29 @@ describe("CounterEffects", () => {
             const action = new IncrementPending({ index, by });
             const completion = new IncrementCompleted({ index, counter });
 
-            spyOn(counterService, "incrementCounter").and.returnValue(of(new Counter(index, value)));
+            const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(of(new Counter(index, value)));
 
             actions$ = cold("--a-", { a: action });
             const expected = cold("--b", { b: completion });
 
             expect(effects.incrementPending$).toBeObservable(expected);
+            expect(incrementCounterSpy).toHaveBeenCalled();
         });
 
         it("should create an ErrorOccurred action if an error occurs during counter retrieval", () => {
             const action = new IncrementPending({ index, by });
             const errMessage = "foo";
             // tslint:disable-next-line:max-line-length
-            const returnedErrMessage = `error in the "incrementPending$" action creator: "incrementing counter 0 failed with ${errMessage}"`;
+            const returnedErrMessage = `error in the "incrementPending$" action creator: "incrementing counter ${index} failed with ${errMessage}"`;
             const error = new ErrorOccurred({ error: returnedErrMessage });
 
-            spyOn(counterService, "incrementCounter").and.returnValue(throwError(errMessage));
+            const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(throwError(errMessage));
 
             actions$ = cold("a|", { a: action });
             const expected = cold("b|", { b: error });
 
             expect(effects.incrementPending$).toBeObservable(expected);
+            expect(incrementCounterSpy).toHaveBeenCalled();
         });
     });
 
@@ -133,16 +129,17 @@ describe("CounterEffects", () => {
             expect(metadata.loadPending$).toEqual({ dispatch: true });
         });
 
-        it("should produce a LoadCompleted action on successful loading an counter", () => {
+        it("should produce a LoadCompleted action on successful retrieving an counter", () => {
             const action = new LoadPending({ index });
             const completion = new LoadCompleted({ index, counter });
 
-            spyOn(counterService, "counter").and.returnValue(of(new Counter(index, value)));
+            const counterSpy = spyOn(counterService, "counter").and.returnValue(of(new Counter(index, value)));
 
             actions$ = cold("--a-", { a: action });
             const expected = cold("--b", { b: completion });
 
             expect(effects.loadPending$).toBeObservable(expected);
+            expect(counterSpy).toHaveBeenCalled();
         });
 
         it("should produce an ErrorOccurred action if the counter index is less than zero", () => {
@@ -157,17 +154,54 @@ describe("CounterEffects", () => {
             expect(effects.loadPending$).toBeObservable(expected);
         });
 
-        // it("should return a counter out of the cache", () => {
-        //     const action = new LoadPending({ index });
-        //     const completion = new LoadCompleted({ index, counter });
-        //
-        //     spyOn(store, "select").and.returnValue(of({counters: [new Counter(index, value)]}));
-        //
-        //     actions$ = cold("--a-", { a: action });
-        //     const expected = cold("--b", { b: completion });
-        //
-        //     expect(effects.loadPending$).toBeObservable(expected);
-        // });
+        it("should return a counter out of the cache", () => {
+            // prepare state to already have the counter loaded
+            store.dispatch(new LoadPending({ index }));
+            store.dispatch(new LoadCompleted({ index, counter }));
+
+            const action = new LoadPending({ index });
+            const completion = new LoadCompleted({ index, counter });
+
+            const counterSpy = spyOn(counterService, "counter").and.returnValue(of(new Counter(index, value)));
+
+            actions$ = cold("--a-", { a: action });
+            const expected = cold("--b", { b: completion });
+
+            expect(effects.loadPending$).toBeObservable(expected);
+            expect(counterSpy).not.toHaveBeenCalled();
+        });
+
+        it("should not return a counter out of the cache if it isn't loaded yet", () => {
+            // prepare state to already have the counter loaded
+            store.dispatch(new LoadPending({ index }));
+
+            const action = new LoadPending({ index });
+            const completion = new LoadCompleted({ index, counter });
+
+            const counterSpy = spyOn(counterService, "counter").and.returnValue(of(new Counter(index, value)));
+
+            actions$ = cold("--a-", { a: action });
+            const expected = cold("--b", { b: completion });
+
+            expect(effects.loadPending$).toBeObservable(expected);
+            expect(counterSpy).toHaveBeenCalled();
+        });
+
+        it("should produce an ErrorOccurred action if an error occurs during counter retrieval", () => {
+            const action = new LoadPending({ index });
+            const errMessage = "foo";
+            // tslint:disable-next-line:max-line-length
+            const returnedErrMessage = `error in the "loadPending$" action creator: "retrieving counter ${index} failed with ${errMessage}"`;
+            const error = new ErrorOccurred({ error: returnedErrMessage });
+
+            const counterSpy = spyOn(counterService, "counter").and.returnValue(throwError(errMessage));
+
+            actions$ = cold("a|", { a: action });
+            const expected = cold("b|", { b: error });
+
+            expect(effects.loadPending$).toBeObservable(expected);
+            expect(counterSpy).toHaveBeenCalled();
+        });
     });
 
     describe("loadAllPending$", () => {
