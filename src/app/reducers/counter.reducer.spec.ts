@@ -164,8 +164,6 @@ describe("Counter Reducer", () => {
 
     describe("load all pending action", () => {
         it("should not add to the app state", () => {
-            console.log(state.counters.length);
-
             const result = reducer(state, new LoadAllPending());
 
             expect(state.counters.length).toBe(0);
