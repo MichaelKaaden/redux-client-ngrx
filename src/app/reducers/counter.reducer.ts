@@ -1,15 +1,15 @@
 import { CounterActions, CounterActionTypes } from "../actions/counter.actions";
 import { Counter, ICounter } from "../models/counter";
 
-export interface State {
+export interface CountersState {
     counters: ICounter[];
 }
 
-export const initialState: State = {
+export const initialState: CountersState = {
     counters: [],
 };
 
-export function reducer(state = initialState, action: CounterActions): State {
+export function reducer(state: CountersState = initialState, action: CounterActions): CountersState {
     let counter: ICounter;
     let newCounter: ICounter;
     let newCounters: ICounter[] = [];
@@ -130,4 +130,4 @@ export function reducer(state = initialState, action: CounterActions): State {
     }
 }
 
-export const getCounters = (state: State) => state.counters;
+export const getCounters = (state: CountersState) => state.counters;

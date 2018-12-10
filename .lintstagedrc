@@ -1,0 +1,15 @@
+{
+  "*.{html,json,scss,js,css}": [
+    "prettier --write",
+    "git add"
+  ],
+  "*.md": [
+    "prettier --print-width 80 --write",
+    "git add"
+  ],
+  "*.ts": [
+    "prettier --write",
+    "tslint -c tslint.json --fix -t stylish --project tsconfig.json",
+    "git add"
+  ]
+}

@@ -28,7 +28,7 @@ export class CounterService {
         return this.http.get<IEnvelope>(`${this.BASE_URL}/counters/${index}`).pipe(
             delay(this.DELAY),
             map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value)),
-            catchError(this.errorHandler)
+            catchError(this.errorHandler),
         );
     }
 
@@ -39,7 +39,7 @@ export class CounterService {
         return this.http.get<IEnvelope>(`${this.BASE_URL}/counters`).pipe(
             delay(this.DELAY),
             map((result: IEnvelope) => this.rawCountersToCounters(result.data.counters)),
-            catchError(this.errorHandler)
+            catchError(this.errorHandler),
         );
     }
 
@@ -53,7 +53,7 @@ export class CounterService {
         return this.http.put<IEnvelope>(`${this.BASE_URL}/counters/${index}/decrement`, { by }).pipe(
             delay(this.DELAY),
             map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value)),
-            catchError(this.errorHandler)
+            catchError(this.errorHandler),
         );
     }
 
@@ -67,7 +67,7 @@ export class CounterService {
         return this.http.put<IEnvelope>(`${this.BASE_URL}/counters/${index}/increment`, { by }).pipe(
             delay(this.DELAY),
             map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value)),
-            catchError(this.errorHandler)
+            catchError(this.errorHandler),
         );
     }
 
@@ -77,7 +77,7 @@ export class CounterService {
      * @param error The error
      */
     private errorHandler(error: Error | any): Observable<any> {
-        return throwError(error);
+        return throwError(error.message);
     }
 
     /**

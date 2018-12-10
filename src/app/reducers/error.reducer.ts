@@ -1,14 +1,14 @@
 import { ErrorActions, ErrorActionTypes } from "../actions/error.actions";
 
-export interface State {
+export interface ErrorsState {
     errors: string[];
 }
 
-export const initialState: State = {
+export const initialState: ErrorsState = {
     errors: [],
 };
 
-export function reducer(state = initialState, action: ErrorActions): State {
+export function reducer(state: ErrorsState = initialState, action: ErrorActions): ErrorsState {
     switch (action.type) {
         case ErrorActionTypes.ErrorOccurred:
             return {
@@ -23,4 +23,4 @@ export function reducer(state = initialState, action: ErrorActions): State {
     }
 }
 
-export const getErrors = (state: State) => state.errors;
+export const getErrors = (state: ErrorsState) => state.errors;
