@@ -106,7 +106,6 @@ export class CounterEffects {
                 ),
             );
         }),
-        catchError((err) => of(new ErrorOccurred({ error: this.setError("loadAllPending$", err) }))),
     );
 
     setError(methodName: string, message: string): string {

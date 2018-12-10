@@ -10,6 +10,8 @@ import {
     DecrementPending,
     IncrementCompleted,
     IncrementPending,
+    LoadAllCompleted,
+    LoadAllPending,
     LoadCompleted,
     LoadPending,
 } from "../actions/counter.actions";
@@ -207,6 +209,40 @@ describe("CounterEffects", () => {
     describe("loadAllPending$", () => {
         it("should register loadAllPending$", () => {
             expect(metadata.loadAllPending$).toEqual({ dispatch: true });
+        });
+
+        it("should produce a LoadCompleted action on successful retrieving all counters", () => {
+            const anotherCounter = new Counter(index + 1, value + 1);
+            const theCounters = [counter, anotherCounter];
+
+            const action = new LoadAllPending();
+            const completion = new LoadAllCompleted({ counters: theCounters });
+
+            const countersSpy = spyOn(counterService, "counters").and.returnValue(
+                of([new Counter(index, value), new Counter(index + 1, value + 1)]),
+            );
+
+            actions$ = cold("--a-", { a: action });
+            const expected = cold("--b", { b: completion });
+
+            expect(effects.loadAllPending$).toBeObservable(expected);
+            expect(countersSpy).toHaveBeenCalled();
+        });
+
+        it("should produce an ErrorOccurred action if an error occurs during retrieval of all counters", () => {
+            const action = new LoadAllPending();
+            const errMessage = "foo";
+            // tslint:disable-next-line:max-line-length
+            const returnedErrMessage = `error in the "loadAllPending$" action creator: "retrieving all counters failed with ${errMessage}"`;
+            const error = new ErrorOccurred({ error: returnedErrMessage });
+
+            const countersSpy = spyOn(counterService, "counters").and.returnValue(throwError(errMessage));
+
+            actions$ = cold("a|", { a: action });
+            const expected = cold("b|", { b: error });
+
+            expect(effects.loadAllPending$).toBeObservable(expected);
+            expect(countersSpy).toHaveBeenCalled();
         });
     });
 });
