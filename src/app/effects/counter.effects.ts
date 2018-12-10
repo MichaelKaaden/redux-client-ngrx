@@ -83,7 +83,7 @@ export class CounterEffects {
                 catchError((error: string) =>
                     of(
                         new ErrorOccurred({
-                            error: this.setError("loadPending$", `retrieving the counter failed with ${error}`),
+                            error: this.setError("loadPending$", `retrieving counter ${payload.index} failed with ${error}`),
                         }),
                     ),
                 ),
