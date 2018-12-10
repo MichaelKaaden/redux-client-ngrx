@@ -29,6 +29,15 @@ The app utilizes [NgRx](https://github.com/ngrx/platform). To see the same app
 using [angular-redux](https://github.com/angular-redux/store), have a look at
 [this](https://github.com/MichaelKaaden/redux-client-ng5.git) repository.
 
+## Unit Testing and Code Coverage
+
+I tried to test as much as possible. The current code coverage is at almost
+100%. The one thing missing is a test regarding the production environment which
+shouldn't load the `storeFreeze` meta reducer. I consider this a minor problem,
+though. ;-)
+
+![Code coverage](images/code-coverage.png)
+
 ## Running `ng update`
 
 It seems `ng update` is not fully compatible with Yarn. See
