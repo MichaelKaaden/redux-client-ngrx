@@ -33,7 +33,7 @@ using [angular-redux](https://github.com/angular-redux/store), have a look at
 
 Well... I tried to. At least until I found out that `updateOne(...)` and
 `updateMany()` _copy_ properties from one object into a new one. Problem is:
-You're now no longer deal with instances of classes, but simple objects.
+You're now no longer dealing with instances of classes, but simple objects.
 
 Let's look at a piece of code:
 
