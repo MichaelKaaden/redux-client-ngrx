@@ -29,6 +29,51 @@ The app utilizes [NgRx](https://github.com/ngrx/platform). To see the same app
 using [angular-redux](https://github.com/angular-redux/store), have a look at
 [this](https://github.com/MichaelKaaden/redux-client-ng5.git) repository.
 
+## Why aren't you using @ngrx/entity?
+
+Well... I tried to. At least until I found out that `updateOne(...)` and
+`updateMany()` _copy_ properties from one object into a new one. Problem is:
+You're now no longer deal with instances of classes, but simple objects.
+
+Let's look at a piece of code:
+
+```typescript
+export class Counter implements ICounter {
+    public isLoading?: boolean;
+    public isSaving?: boolean;
+
+    constructor(public index: number, public value?: number) {}
+}
+
+const counter = new Counter(index, value);
+
+it("should return a counter out of the cache", () => {
+    // prepare state to already have the counter loaded
+    store.dispatch(new LoadPending({ index }));
+    store.dispatch(new LoadCompleted({ index, counter }));
+
+    const action = new LoadPending({ index });
+    const completion = new LoadCompleted({ index, counter });
+
+    const counterSpy = spyOn(counterService, "counter").and.returnValue(
+        of(new Counter(index, value)),
+    );
+
+    actions$ = cold("--a-", { a: action });
+    const expected = cold("--b", { b: completion });
+
+    expect(effects.loadPending$).toBeObservable(expected);
+    expect(counterSpy).not.toHaveBeenCalled();
+});
+```
+
+The test will _fail_ at the first expectation with the message
+"`Expected $[0].notification.value.payload.counter to be a kind of Counter, but was Object({ index: 0, value: 42, isLoading: false }).`"
+
+As Mike Ryan says [here](https://github.com/ngrx/platform/issues/976), this
+behaviour is intentional. I'll stick with implementing the state operations
+myself until this has changed.
+
 ## Unit Testing and Code Coverage
 
 I tried to test as much as possible. The current code coverage is at almost
