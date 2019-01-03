@@ -8,31 +8,31 @@ import {
     LoadCompleted,
     LoadPending,
 } from "../actions/counter.actions";
-import { Counter, ICounter } from "../models/counter";
+import { Counter } from "../models/counter";
 import { CountersState, initialState, reducer } from "./counter.reducer";
 
 describe("Counter Reducer", () => {
     let state: CountersState;
     const index = 1;
     const value = 42;
-    let counter: ICounter;
-    let anotherCounter: ICounter;
-    let yetAnotherCounter: ICounter;
+    let counter: Counter;
+    let anotherCounter: Counter;
+    let yetAnotherCounter: Counter;
 
     beforeEach(() => {
         state = Object.assign({}, initialState); // create a copy of the state object
 
         // prepare some counters
-        anotherCounter = new Counter(index - 1, value - 1);
-        counter = new Counter(index, value);
-        yetAnotherCounter = new Counter(index + 1, value + 1);
+        anotherCounter = { index: index - 1, value: value - 1 };
+        counter = { index, value };
+        yetAnotherCounter = { index: index + 1, value: value + 1 };
     });
 
     /*
      * Helper function to get a specific counter out of an app state object
      */
-    const getItemForIndex = (theState: CountersState, theIndex: number): ICounter => {
-        return theState.counters.find((theCounter: ICounter) => theCounter.index === theIndex);
+    const getItemForIndex = (theState: CountersState, theIndex: number): Counter => {
+        return theState.counters.find((theCounter: Counter) => theCounter.index === theIndex);
     };
 
     describe("unknown action", () => {
@@ -79,8 +79,8 @@ describe("Counter Reducer", () => {
 
         it("should not change the other counters if the counter is not yet in the app state", () => {
             state.counters = [
-                new Counter(anotherCounter.index, anotherCounter.value),
-                new Counter(yetAnotherCounter.index, yetAnotherCounter.value),
+                { index: anotherCounter.index, value: anotherCounter.value },
+                { index: yetAnotherCounter.index, value: yetAnotherCounter.value },
             ];
 
             const result = reducer(state, new LoadPending({ index: index }));
@@ -107,7 +107,7 @@ describe("Counter Reducer", () => {
         });
 
         it("should not add a counter if the counter already is in the app state", () => {
-            counter = new Counter(index);
+            counter = { index };
             counter.isLoading = true;
             state.counters = [counter];
 
@@ -120,7 +120,7 @@ describe("Counter Reducer", () => {
 
     describe("load completed action", () => {
         it("should set the properties for the placeholder counter as single counter in the array", () => {
-            const oldCounter = new Counter(index);
+            const oldCounter: Counter = { index };
             oldCounter.isLoading = true;
 
             state.counters = [oldCounter];
@@ -136,7 +136,7 @@ describe("Counter Reducer", () => {
         });
 
         it("should set the properties for the placeholder counter for some counters in the array", () => {
-            const oldCounter = new Counter(index);
+            const oldCounter: Counter = { index };
             oldCounter.isLoading = true;
             state.counters = [anotherCounter, oldCounter, yetAnotherCounter];
 
@@ -195,7 +195,7 @@ describe("Counter Reducer", () => {
         it("should ignore results already present", () => {
             state.counters = [anotherCounter, counter, yetAnotherCounter];
 
-            const doubleCounter = new Counter(index, value);
+            const doubleCounter: Counter = { index, value };
 
             const result = reducer(state, new LoadAllCompleted({ counters: [doubleCounter] }));
 
@@ -274,7 +274,7 @@ describe("Counter Reducer", () => {
         it("should decrement a single counter in the app state", () => {
             state.counters = [counter];
 
-            const result = reducer(state, new DecrementCompleted({ index, counter: new Counter(index, value - 1) }));
+            const result = reducer(state, new DecrementCompleted({ index, counter: { index, value: value - 1 } }));
             expect(result).not.toBe(state);
             expect(result.counters).not.toBe(state.counters);
             expect(result.counters.length).toBe(state.counters.length);
@@ -287,7 +287,7 @@ describe("Counter Reducer", () => {
         it("should decrement a counter in the middle of the app state", () => {
             state.counters = [anotherCounter, counter, yetAnotherCounter];
 
-            const result = reducer(state, new DecrementCompleted({ index, counter: new Counter(index, value - 1) }));
+            const result = reducer(state, new DecrementCompleted({ index, counter: { index, value: value - 1 } }));
             expect(result).not.toBe(state);
             expect(result.counters).not.toBe(state.counters);
             expect(result.counters.length).toBe(state.counters.length);
@@ -300,7 +300,7 @@ describe("Counter Reducer", () => {
         it("should handle a non-present counter", () => {
             state.counters = [anotherCounter, yetAnotherCounter];
 
-            const result = reducer(state, new DecrementCompleted({ index, counter: new Counter(index, value - 1) }));
+            const result = reducer(state, new DecrementCompleted({ index, counter: { index, value: value - 1 } }));
             expect(result.counters.length).toBe(state.counters.length);
 
             const newCounter = getItemForIndex(result, index);
@@ -318,7 +318,7 @@ describe("Counter Reducer", () => {
         it("should increment a single counter in the app state", () => {
             state.counters = [counter];
 
-            const result = reducer(state, new IncrementCompleted({ index, counter: new Counter(index, value + 1) }));
+            const result = reducer(state, new IncrementCompleted({ index, counter: { index, value: value + 1 } }));
             expect(result).not.toBe(state);
             expect(result.counters).not.toBe(state.counters);
             expect(result.counters.length).toBe(state.counters.length);
@@ -331,7 +331,7 @@ describe("Counter Reducer", () => {
         it("should increment a counter in the middle of the app state", () => {
             state.counters = [anotherCounter, counter, yetAnotherCounter];
 
-            const result = reducer(state, new IncrementCompleted({ index, counter: new Counter(index, value + 1) }));
+            const result = reducer(state, new IncrementCompleted({ index, counter: { index, value: value + 1 } }));
             expect(result).not.toBe(state);
             expect(result.counters).not.toBe(state.counters);
             expect(result.counters.length).toBe(state.counters.length);
@@ -344,7 +344,7 @@ describe("Counter Reducer", () => {
         it("should handle a non-present counter", () => {
             state.counters = [anotherCounter, yetAnotherCounter];
 
-            const result = reducer(state, new IncrementCompleted({ index, counter: new Counter(index, value + 1) }));
+            const result = reducer(state, new IncrementCompleted({ index, counter: { index, value: value + 1 } }));
             expect(result.counters.length).toBe(state.counters.length);
 
             const newCounter = getItemForIndex(result, index);

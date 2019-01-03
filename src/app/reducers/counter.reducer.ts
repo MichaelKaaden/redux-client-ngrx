@@ -1,8 +1,8 @@
 import { CounterActions, CounterActionTypes } from "../actions/counter.actions";
-import { Counter, ICounter } from "../models/counter";
+import { Counter } from "../models/counter";
 
 export interface CountersState {
-    counters: ICounter[];
+    counters: Counter[];
 }
 
 export const initialState: CountersState = {
@@ -10,9 +10,9 @@ export const initialState: CountersState = {
 };
 
 export function reducer(state: CountersState = initialState, action: CounterActions): CountersState {
-    let counter: ICounter;
-    let newCounter: ICounter;
-    let newCounters: ICounter[] = [];
+    let counter: Counter;
+    let newCounter: Counter;
+    let newCounters: Counter[] = [];
 
     switch (action.type) {
         case CounterActionTypes.LoadPending:
@@ -30,12 +30,12 @@ export function reducer(state: CountersState = initialState, action: CounterActi
             newCounters = state.counters.map((item) => item);
 
             // add the counter with uninitialized value
-            newCounter = new Counter(action.payload.index);
+            newCounter = { index: action.payload.index };
             newCounter.isLoading = true;
             newCounters.push(newCounter);
 
             // sort the state by counter index
-            newCounters = newCounters.sort((a: ICounter, b: ICounter) => {
+            newCounters = newCounters.sort((a: Counter, b: Counter) => {
                 return a.index - b.index;
             });
 
@@ -53,7 +53,7 @@ export function reducer(state: CountersState = initialState, action: CounterActi
                 }
 
                 // Otherwise, this is the one we want - return a new value
-                return new Counter(action.payload.counter.index, action.payload.counter.value);
+                return { index: action.payload.counter.index, value: action.payload.counter.value };
             });
 
             return {
@@ -65,7 +65,7 @@ export function reducer(state: CountersState = initialState, action: CounterActi
             return state;
 
         case CounterActionTypes.LoadAllCompleted:
-            const countersToAdd: ICounter[] = [];
+            const countersToAdd: Counter[] = [];
             for (const c of action.payload.counters) {
                 if (!state.counters.find((item) => item.index === c.index)) {
                     countersToAdd.push(c);
@@ -76,7 +76,7 @@ export function reducer(state: CountersState = initialState, action: CounterActi
             newCounters = state.counters.map((item) => item).concat(countersToAdd);
 
             // sort the state by counter index
-            newCounters.sort((a: ICounter, b: ICounter) => {
+            newCounters.sort((a: Counter, b: Counter) => {
                 return a.index - b.index;
             });
 
@@ -98,7 +98,7 @@ export function reducer(state: CountersState = initialState, action: CounterActi
                     return item;
                 }
 
-                newCounter = new Counter(item.index, item.value);
+                newCounter = { index: item.index, value: item.value };
                 newCounter.isSaving = true;
                 return newCounter;
             });
@@ -117,7 +117,7 @@ export function reducer(state: CountersState = initialState, action: CounterActi
                 }
 
                 // Otherwise, this is the one we want - return an updated value resetting all flags
-                return new Counter(action.payload.counter.index, action.payload.counter.value);
+                return { index: action.payload.counter.index, value: action.payload.counter.value };
             });
 
             return {

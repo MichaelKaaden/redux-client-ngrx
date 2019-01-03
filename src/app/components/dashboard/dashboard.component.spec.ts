@@ -2,7 +2,6 @@ import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { Store, StoreModule } from "@ngrx/store";
 import { LoadAllCompleted, LoadAllPending } from "../../actions/counter.actions";
-import { Counter } from "../../models/counter";
 import * as fromRoot from "../../reducers";
 import { reducers } from "../../reducers";
 
@@ -43,7 +42,7 @@ describe("DashboardComponent", () => {
     });
 
     it("should show the counter after the counter has been loaded", () => {
-        const counters = [new Counter(0, 1), new Counter(1, 2)];
+        const counters = [{ index: 0, value: 1 }, { index: 1, value: 2 }];
         const action = new LoadAllCompleted({ counters });
         store.dispatch(action);
 

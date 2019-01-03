@@ -53,7 +53,7 @@ describe("CounterContainerComponent", () => {
     });
 
     it("should show the counter after the counter has been loaded", () => {
-        const myCounter = new Counter(counterIndex, 1);
+        const myCounter: Counter = { index: counterIndex, value: 1 };
         const action = new LoadCompleted({ index: counterIndex, counter: myCounter });
         store.dispatch(action);
 
@@ -77,7 +77,7 @@ describe("CounterContainerComponent", () => {
     });
 
     it("should show the decremented counter after the decrement action is dispatched", () => {
-        const myCounter = new Counter(counterIndex, 42);
+        const myCounter: Counter = { index: counterIndex, value: 42 };
         const action = new DecrementCompleted({ index: counterIndex, counter: myCounter });
         store.dispatch(action);
 
@@ -96,7 +96,7 @@ describe("CounterContainerComponent", () => {
     });
 
     it("should show the incremented counter after the increment action is dispatched", () => {
-        const myCounter = new Counter(counterIndex, 2);
+        const myCounter: Counter = { index: counterIndex, value: 2 };
         const action = new IncrementCompleted({ index: counterIndex, counter: myCounter });
         store.dispatch(action);
 

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
-import { ICounter } from "../../models/counter";
+import { Counter } from "../../models/counter";
 
 @Component({
     selector: "mk-counter-input",
@@ -9,7 +9,7 @@ import { ICounter } from "../../models/counter";
 })
 export class CounterInputComponent {
     @Input()
-    counter: ICounter;
+    counter: Counter;
 
     @Input()
     counterIndex: number;

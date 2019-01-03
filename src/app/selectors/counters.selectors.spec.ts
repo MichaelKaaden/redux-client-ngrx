@@ -1,19 +1,19 @@
-import { Counter, ICounter } from "../models/counter";
+import { Counter } from "../models/counter";
 import { CountersState } from "../reducers/counter.reducer";
 import { getAverageSum, getCounter, getCounters, getCounterSum, getNumOfCounters, selectCountersState } from "./counters.selectors";
 
 describe("counters selectors", () => {
     const index = 0;
     const value = 42;
-    let counter: ICounter;
-    let counterWithoutValue: ICounter;
+    let counter: Counter;
+    let counterWithoutValue: Counter;
     let emptyState: CountersState;
     let theState: CountersState;
     let stateWithCounterWithoutValue: CountersState;
 
     beforeEach(() => {
-        counter = new Counter(index, value);
-        counterWithoutValue = new Counter(index + 2);
+        counter = { index, value };
+        counterWithoutValue = { index: index + 2 };
         emptyState = { counters: [] };
         theState = { counters: [counter] };
         stateWithCounterWithoutValue = { counters: [counterWithoutValue] };
@@ -40,7 +40,7 @@ describe("counters selectors", () => {
         it("should select a counter", () => {
             expect(getCounter.projector([], { index })).toBeUndefined();
 
-            const anotherCounter = new Counter(index + 1, value + 1);
+            const anotherCounter: Counter = { index: index + 1, value: value + 1 };
             expect(getCounter.projector([counter, anotherCounter], { index })).toEqual(counter);
             expect(getCounter.projector([anotherCounter, counter], { index })).toEqual(counter);
             expect(getCounter.projector([counterWithoutValue], { index: index + 2 })).toEqual(counterWithoutValue);
@@ -51,7 +51,7 @@ describe("counters selectors", () => {
         it("should calculate the number of counters", () => {
             expect(getNumOfCounters.projector(undefined)).toBe(0);
             expect(getNumOfCounters.projector([])).toBe(0);
-            const anotherCounter = new Counter(index + 1, value + 1);
+            const anotherCounter: Counter = { index: index + 1, value: value + 1 };
             expect(getNumOfCounters.projector([anotherCounter])).toBe(1);
             expect(getNumOfCounters.projector([counter, anotherCounter])).toBe(2);
             expect(getNumOfCounters.projector([counter, anotherCounter, counterWithoutValue])).toBe(3);
@@ -63,7 +63,7 @@ describe("counters selectors", () => {
             expect(getCounterSum.projector([])).toBe(0);
             expect(getCounterSum.projector([counterWithoutValue])).toBe(0);
             expect(getCounterSum.projector([counter])).toBe(42);
-            const anotherCounter = new Counter(index + 1, value + 1);
+            const anotherCounter: Counter = { index: index + 1, value: value + 1 };
             expect(getCounterSum.projector([counter, anotherCounter])).toBe(42 + 43);
             expect(getCounterSum.projector([counter, counterWithoutValue])).toBe(42);
         });
