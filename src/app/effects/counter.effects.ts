@@ -75,7 +75,7 @@ export class CounterEffects {
             // re-use an already loaded counter
             const cachedCounter: Counter = getCounters(state).find((item: Counter) => item.index === payload.index);
             if (cachedCounter && !cachedCounter.isLoading) {
-                return of(new LoadCompleted({ index: payload.index, counter: cachedCounter }));
+                return of(new LoadCompleted({ index: payload.index, counter: { index: cachedCounter.index, value: cachedCounter.value } }));
             }
 
             return this.counterService.counter(payload.index).pipe(
