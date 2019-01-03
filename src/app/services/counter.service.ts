@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError, delay, map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
-import { Counter, ICounter, ICounterRaw } from "../models/counter";
+import { Counter, CounterRaw } from "../models/counter";
 
 export interface IEnvelope {
     data: any;
@@ -24,10 +24,12 @@ export class CounterService {
      *
      * @param index The counter's index
      */
-    public counter(index: number): Observable<ICounter> {
+    public counter(index: number): Observable<Counter> {
         return this.http.get<IEnvelope>(`${this.BASE_URL}/counters/${index}`).pipe(
             delay(this.DELAY),
-            map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value)),
+            map((result: IEnvelope) => {
+                return { index: result.data.counter.index, value: result.data.counter.value };
+            }),
             catchError(this.errorHandler),
         );
     }
@@ -35,7 +37,7 @@ export class CounterService {
     /**
      * Get all counters.
      */
-    public counters(): Observable<ICounter[]> {
+    public counters(): Observable<Counter[]> {
         return this.http.get<IEnvelope>(`${this.BASE_URL}/counters`).pipe(
             delay(this.DELAY),
             map((result: IEnvelope) => this.rawCountersToCounters(result.data.counters)),
@@ -49,10 +51,12 @@ export class CounterService {
      * @param index The counter's index
      * @param by The value by which the counter is decremented
      */
-    public decrementCounter(index: number, by: number): Observable<ICounter> {
+    public decrementCounter(index: number, by: number): Observable<Counter> {
         return this.http.put<IEnvelope>(`${this.BASE_URL}/counters/${index}/decrement`, { by }).pipe(
             delay(this.DELAY),
-            map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value)),
+            map((result: IEnvelope) => {
+                return { index: result.data.counter.index, value: result.data.counter.value };
+            }),
             catchError(this.errorHandler),
         );
     }
@@ -63,10 +67,12 @@ export class CounterService {
      * @param index The counter's index
      * @param by The value by which the counter is incremented
      */
-    public incrementCounter(index: number, by: number): Observable<ICounter> {
+    public incrementCounter(index: number, by: number): Observable<Counter> {
         return this.http.put<IEnvelope>(`${this.BASE_URL}/counters/${index}/increment`, { by }).pipe(
             delay(this.DELAY),
-            map((result: IEnvelope) => new Counter(result.data.counter.index, result.data.counter.value)),
+            map((result: IEnvelope) => {
+                return { index: result.data.counter.index, value: result.data.counter.value };
+            }),
             catchError(this.errorHandler),
         );
     }
@@ -85,10 +91,10 @@ export class CounterService {
      *
      * @param rawCounters Counters as returned from the API
      */
-    private rawCountersToCounters(rawCounters: ICounterRaw[]): ICounter[] {
-        const counters: ICounter[] = [];
+    private rawCountersToCounters(rawCounters: CounterRaw[]): Counter[] {
+        const counters: Counter[] = [];
         for (const rc of rawCounters) {
-            counters.push(new Counter(rc.index, rc.value));
+            counters.push({ index: rc.index, value: rc.value });
         }
         return counters;
     }

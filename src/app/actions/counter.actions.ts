@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { ICounter } from "../models/counter";
+import { Counter } from "../models/counter";
 
 export enum CounterActionTypes {
     LoadPending = "[Counter] Load Pending",
@@ -21,7 +21,7 @@ export class LoadPending implements Action {
 export class LoadCompleted implements Action {
     readonly type = CounterActionTypes.LoadCompleted;
 
-    constructor(readonly payload: { index: number; counter: ICounter }) {}
+    constructor(readonly payload: { index: number; counter: Counter }) {}
 }
 
 export class LoadAllPending implements Action {
@@ -31,7 +31,7 @@ export class LoadAllPending implements Action {
 export class LoadAllCompleted implements Action {
     readonly type = CounterActionTypes.LoadAllCompleted;
 
-    constructor(readonly payload: { counters: ICounter[] }) {}
+    constructor(readonly payload: { counters: Counter[] }) {}
 }
 
 export class DecrementPending implements Action {
@@ -43,7 +43,7 @@ export class DecrementPending implements Action {
 export class DecrementCompleted implements Action {
     readonly type = CounterActionTypes.DecrementCompleted;
 
-    constructor(readonly payload: { index: number; counter: ICounter }) {}
+    constructor(readonly payload: { index: number; counter: Counter }) {}
 }
 
 export class IncrementPending implements Action {
@@ -55,7 +55,7 @@ export class IncrementPending implements Action {
 export class IncrementCompleted implements Action {
     readonly type = CounterActionTypes.IncrementCompleted;
 
-    constructor(readonly payload: { index: number; counter: ICounter }) {}
+    constructor(readonly payload: { index: number; counter: Counter }) {}
 }
 
 export type CounterActions =

@@ -16,7 +16,7 @@ import {
     LoadPending,
 } from "../actions/counter.actions";
 import { ErrorOccurred } from "../actions/error.actions";
-import { ICounter } from "../models/counter";
+import { Counter } from "../models/counter";
 import { IAppState } from "../reducers";
 import { getCounters } from "../selectors/counters.selectors";
 import { CounterService } from "../services/counter.service";
@@ -73,9 +73,9 @@ export class CounterEffects {
             }
 
             // re-use an already loaded counter
-            const cachedCounter: ICounter = getCounters(state).find((item: ICounter) => item.index === payload.index);
+            const cachedCounter: Counter = getCounters(state).find((item: Counter) => item.index === payload.index);
             if (cachedCounter && !cachedCounter.isLoading) {
-                return of(new LoadCompleted({ index: payload.index, counter: cachedCounter }));
+                return of(new LoadCompleted({ index: payload.index, counter: { index: cachedCounter.index, value: cachedCounter.value } }));
             }
 
             return this.counterService.counter(payload.index).pipe(

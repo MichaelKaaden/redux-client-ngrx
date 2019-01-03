@@ -1,6 +1,5 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { Counter } from "../../models/counter";
 
 import { CounterHeadingComponent } from "./counter-heading.component";
 
@@ -50,7 +49,7 @@ describe("CounterHeadingComponent", () => {
 
     it("should display the counter value", () => {
         component.counterIndex = index;
-        component.counter = new Counter(index, BASE_VALUE + index);
+        component.counter = { index, value: BASE_VALUE + index };
         fixture.detectChanges();
         compiled = fixture.debugElement.nativeElement;
         const heading = compiled.querySelector("h3").textContent;

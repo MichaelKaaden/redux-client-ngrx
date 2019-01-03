@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { async, getTestBed, TestBed } from "@angular/core/testing";
 import { environment } from "../../environments/environment";
-import { Counter, ICounter } from "../models/counter";
+import { Counter } from "../models/counter";
 
 import { CounterService, IEnvelope } from "./counter.service";
 
@@ -37,12 +37,12 @@ describe("CounterService", () => {
             message: "Okay",
             status: 200,
             data: {
-                counter: new Counter(index, value),
+                counter: { index, value },
             },
         };
 
         // make the HTTP request via the service
-        service.counter(index).subscribe((counter: ICounter) => {
+        service.counter(index).subscribe((counter: Counter) => {
             expect(counter.index).toBe(index, "index doesn't match");
             expect(counter.value).toBe(value, "value doesn't match");
             expect(counter).not.toBe(dummyEnvelope.data.counter, "counter should be a copy");
@@ -61,12 +61,12 @@ describe("CounterService", () => {
 
         // make the HTTP request via the service
         service.counter(index).subscribe(
-            (counter: ICounter) => {
+            (counter: Counter) => {
                 expect(counter).toBeUndefined("shouldn't run into this success case");
             },
             (error) => {
                 expect(error).toBeDefined("should receive an error");
-            }
+            },
         );
 
         // the request is pending, therefor expect that it sometimes happens
@@ -86,12 +86,12 @@ describe("CounterService", () => {
             message: "Okay",
             status: 200,
             data: {
-                counters: [new Counter(index0, value0), new Counter(index1, value1)],
+                counters: [{ index: index0, value: value0 }, { index: index1, value: value1 }],
             },
         };
 
         // make the HTTP request via the service
-        service.counters().subscribe((counters: ICounter[]) => {
+        service.counters().subscribe((counters: Counter[]) => {
             expect(counters.length).toBe(2, "length incorrect");
 
             expect(counters[0].index).toBe(index0, "first index doesn't match");
@@ -114,12 +114,12 @@ describe("CounterService", () => {
     it("should deal with HTTP errors trying to retrieve all counters", async(() => {
         // make the HTTP request via the service
         service.counters().subscribe(
-            (counters: ICounter[]) => {
+            (counters: Counter[]) => {
                 expect(counters).toBeUndefined("shouldn't run into this success case");
             },
             (error) => {
                 expect(error).toBeDefined("should receive an error");
-            }
+            },
         );
 
         // the request is pending, therefor expect that it sometimes happens
@@ -137,12 +137,12 @@ describe("CounterService", () => {
             message: "Okay",
             status: 200,
             data: {
-                counter: new Counter(index, by),
+                counter: { index, value: by },
             },
         };
 
         // make the HTTP request via the service
-        service.decrementCounter(index, by).subscribe((counter: ICounter) => {
+        service.decrementCounter(index, by).subscribe((counter: Counter) => {
             expect(counter.index).toBe(index, "index doesn't match");
             expect(counter.value).toBe(by, "value doesn't match");
             expect(counter).not.toBe(dummyEnvelope.data.counter, "counter should be a copy");
@@ -162,12 +162,12 @@ describe("CounterService", () => {
 
         // make the HTTP request via the service
         service.decrementCounter(index, by).subscribe(
-            (counter: ICounter) => {
+            (counter: Counter) => {
                 expect(counter).toBeUndefined("shouldn't run into this success case");
             },
             (error) => {
                 expect(error).toBeDefined("should receive an error");
-            }
+            },
         );
 
         // the request is pending, therefor expect that it sometimes happens
@@ -185,12 +185,12 @@ describe("CounterService", () => {
             message: "Okay",
             status: 200,
             data: {
-                counter: new Counter(index, by),
+                counter: { index, value: by },
             },
         };
 
         // make the HTTP request via the service
-        service.incrementCounter(index, by).subscribe((counter: ICounter) => {
+        service.incrementCounter(index, by).subscribe((counter: Counter) => {
             expect(counter.index).toBe(index, "index doesn't match");
             expect(counter.value).toBe(by, "value doesn't match");
             expect(counter).not.toBe(dummyEnvelope.data.counter, "counter should be a copy");
@@ -210,12 +210,12 @@ describe("CounterService", () => {
 
         // make the HTTP request via the service
         service.incrementCounter(index, by).subscribe(
-            (counter: ICounter) => {
+            (counter: Counter) => {
                 expect(counter).toBeUndefined("shouldn't run into this success case");
             },
             (error) => {
                 expect(error).toBeDefined("should receive an error");
-            }
+            },
         );
 
         // the request is pending, therefor expect that it sometimes happens
