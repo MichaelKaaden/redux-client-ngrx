@@ -29,50 +29,84 @@ The app utilizes [NgRx](https://github.com/ngrx/platform). To see the same app
 using [angular-redux](https://github.com/angular-redux/store), have a look at
 [this](https://github.com/MichaelKaaden/redux-client-ng5.git) repository.
 
-## Why aren't you using @ngrx/entity?
+## What do you think of `@ngrx/entity`?
 
-Well... I tried to. At least until I found out that `updateOne(...)` and
-`updateMany()` _copy_ properties from one object into a new one. Problem is:
-You're now no longer dealing with instances of classes, but simple objects.
+Well... `@ngrx/entity` makes it very easy to write reducers, and its performance
+is very good. But it comes with two limitations you should consider:
 
-Let's look at a piece of code:
+-   Unit-testing becomes more tedious. You no longer can simply put your
+    business objects inside your store. You have to create the matching
+    `ids: [...], entities: {...}` instead. I made a little helper function for
+    that:
 
-```typescript
-export class Counter implements ICounter {
-    public isLoading?: boolean;
-    public isSaving?: boolean;
+    ```typescript
+    export function initializeStateWith(counters: Counter[]): CountersState {
+        const state: CountersState = adapter.getInitialState();
+        const ids: number[] = [];
+        const entities: Dictionary<Counter> = {};
 
-    constructor(public index: number, public value?: number) {}
-}
+        for (const counter of counters) {
+            ids.push(counter.index);
+            entities[counter.index] = counter;
+        }
 
-const counter = new Counter(index, value);
+        state.ids = ids;
+        state.entities = entities;
 
-it("should return a counter out of the cache", () => {
-    // prepare state to already have the counter loaded
-    store.dispatch(new LoadPending({ index }));
-    store.dispatch(new LoadCompleted({ index, counter }));
+        return state;
+    }
+    ```
 
-    const action = new LoadPending({ index });
-    const completion = new LoadCompleted({ index, counter });
+-   The second thing that hurts much more is: You cannot use classes as base for
+    the things you put into the store. You have to use plain objects. That makes
+    sense because of serialization, but on the other hand it isn't fun
+    initializing objects where a simple constructor would do.
 
-    const counterSpy = spyOn(counterService, "counter").and.returnValue(
-        of(new Counter(index, value)),
-    );
+    If you _try_ to use classes, you'll stumble upon a problem: `updateOne(...)`
+    as well as `updateMany()` _copy_ properties from one object into a new one.
+    Problem is: You're now no longer dealing with instances of classes, but
+    simple objects.
 
-    actions$ = cold("--a-", { a: action });
-    const expected = cold("--b", { b: completion });
+    Let's look at a piece of code:
 
-    expect(effects.loadPending$).toBeObservable(expected);
-    expect(counterSpy).not.toHaveBeenCalled();
-});
-```
+    ```typescript
+    export class Counter implements ICounter {
+        public isLoading?: boolean;
+        public isSaving?: boolean;
 
-The test will _fail_ at the first expectation with the message
-"`Expected $[0].notification.value.payload.counter to be a kind of Counter, but was Object({ index: 0, value: 42, isLoading: false }).`"
+        constructor(public index: number, public value?: number) {}
+    }
 
-As Mike Ryan says [here](https://github.com/ngrx/platform/issues/976), this
-behaviour is intentional. I'll stick with implementing the state operations
-myself until this has changed.
+    const counter = new Counter(index, value);
+
+    it("should return a counter out of the cache", () => {
+        // prepare state to already have the counter loaded
+        store.dispatch(new LoadPending({ index }));
+        store.dispatch(new LoadCompleted({ index, counter }));
+
+        const action = new LoadPending({ index });
+        const completion = new LoadCompleted({ index, counter });
+
+        const counterSpy = spyOn(counterService, "counter").and.returnValue(
+            of(new Counter(index, value)),
+        );
+
+        actions$ = cold("--a-", { a: action });
+        const expected = cold("--b", { b: completion });
+
+        expect(effects.loadPending$).toBeObservable(expected);
+        expect(counterSpy).not.toHaveBeenCalled();
+    });
+    ```
+
+    The test will _fail_ at the first expectation with the message
+    "`Expected $[0].notification.value.payload.counter to be a kind of Counter, but was Object({ index: 0, value: 42, isLoading: false }).`"
+
+    As Mike Ryan says [here](https://github.com/ngrx/platform/issues/976), this
+    behaviour is intentional.
+
+Now it's your choice if you'll stick with implementing the state operations for
+yourself until this has changed or if you still want to use @ngrx/entity.
 
 ## Unit Testing and Code Coverage
 
