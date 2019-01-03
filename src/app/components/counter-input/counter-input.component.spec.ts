@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
-import { Counter, ICounter } from "../../models/counter";
+import { Counter } from "../../models/counter";
 
 import { CounterInputComponent } from "./counter-input.component";
 
@@ -11,7 +11,7 @@ describe("CounterInputComponent", () => {
     let fixture: ComponentFixture<CounterInputComponent>;
     let compiled: any;
     let index;
-    let counter: ICounter;
+    let counter: Counter;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -22,7 +22,7 @@ describe("CounterInputComponent", () => {
 
     beforeEach(() => {
         index = 21;
-        counter = new Counter(index, BASE_VALUE + index);
+        counter = { index, value: BASE_VALUE + index };
 
         fixture = TestBed.createComponent(CounterInputComponent);
         component = fixture.componentInstance;

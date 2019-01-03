@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { DecrementPending, IncrementPending, LoadPending } from "../../actions/counter.actions";
-import { ICounter } from "../../models/counter";
+import { Counter } from "../../models/counter";
 import { IAppState } from "../../reducers";
 import { getCounter } from "../../selectors/counters.selectors";
 
@@ -16,7 +16,7 @@ export class CounterContainerComponent implements OnInit {
     @Input()
     counterIndex;
 
-    counter$: Observable<ICounter>;
+    counter$: Observable<Counter>;
 
     constructor(private store$: Store<IAppState>) {}
 

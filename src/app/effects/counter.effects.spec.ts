@@ -32,7 +32,7 @@ describe("CounterEffects", () => {
     const index = 0;
     const value = 42;
     const by = 3;
-    const counter = new Counter(index, value);
+    const counter: Counter = { index, value };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -65,7 +65,7 @@ describe("CounterEffects", () => {
             const action = new DecrementPending({ index, by });
             const completion = new DecrementCompleted({ index, counter });
 
-            const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(of(new Counter(index, value)));
+            const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(of({ index, value }));
 
             actions$ = cold("--a-", { a: action });
             const expected = cold("--b", { b: completion });
@@ -100,7 +100,7 @@ describe("CounterEffects", () => {
             const action = new IncrementPending({ index, by });
             const completion = new IncrementCompleted({ index, counter });
 
-            const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(of(new Counter(index, value)));
+            const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(of({ index, value }));
 
             actions$ = cold("--a-", { a: action });
             const expected = cold("--b", { b: completion });
@@ -135,7 +135,7 @@ describe("CounterEffects", () => {
             const action = new LoadPending({ index });
             const completion = new LoadCompleted({ index, counter });
 
-            const counterSpy = spyOn(counterService, "counter").and.returnValue(of(new Counter(index, value)));
+            const counterSpy = spyOn(counterService, "counter").and.returnValue(of({ index, value }));
 
             actions$ = cold("--a-", { a: action });
             const expected = cold("--b", { b: completion });
@@ -164,7 +164,7 @@ describe("CounterEffects", () => {
             const action = new LoadPending({ index });
             const completion = new LoadCompleted({ index, counter });
 
-            const counterSpy = spyOn(counterService, "counter").and.returnValue(of(new Counter(index, value)));
+            const counterSpy = spyOn(counterService, "counter").and.returnValue(of({ index, value }));
 
             actions$ = cold("--a-", { a: action });
             const expected = cold("--b", { b: completion });
@@ -180,7 +180,7 @@ describe("CounterEffects", () => {
             const action = new LoadPending({ index });
             const completion = new LoadCompleted({ index, counter });
 
-            const counterSpy = spyOn(counterService, "counter").and.returnValue(of(new Counter(index, value)));
+            const counterSpy = spyOn(counterService, "counter").and.returnValue(of({ index, value }));
 
             actions$ = cold("--a-", { a: action });
             const expected = cold("--b", { b: completion });
@@ -212,14 +212,14 @@ describe("CounterEffects", () => {
         });
 
         it("should produce a LoadCompleted action on successful retrieving all counters", () => {
-            const anotherCounter = new Counter(index + 1, value + 1);
+            const anotherCounter: Counter = { index: index + 1, value: value + 1 };
             const theCounters = [counter, anotherCounter];
 
             const action = new LoadAllPending();
             const completion = new LoadAllCompleted({ counters: theCounters });
 
             const countersSpy = spyOn(counterService, "counters").and.returnValue(
-                of([new Counter(index, value), new Counter(index + 1, value + 1)]),
+                of([{ index, value }, { index: index + 1, value: value + 1 }]),
             );
 
             actions$ = cold("--a-", { a: action });

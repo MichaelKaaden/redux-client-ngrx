@@ -1,23 +1,24 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ICounter } from "../models/counter";
+import { Counter } from "../models/counter";
 import * as fromCounter from "../reducers/counter.reducer";
 
 export const selectCountersState = createFeatureSelector<fromCounter.CountersState>("counters");
 export const getCounters = createSelector(
     selectCountersState,
-    fromCounter.getCounters,
+    fromCounter.selectAll,
 );
 export const getCounter = createSelector(
     getCounters,
     (counters, props) => counters.find((counter) => counter.index === props.index),
 );
 export const getNumOfCounters = createSelector(
-    getCounters,
-    (counters) => (!!counters ? counters.length : 0),
+    selectCountersState,
+    fromCounter.selectTotal,
 );
+
 export const getCounterSum = createSelector(
     getCounters,
-    (counters) => counters.reduce((accumulator: number, current: ICounter) => accumulator + (current.value ? current.value : 0), 0),
+    (counters) => counters.reduce((accumulator: number, current: Counter) => accumulator + (current.value ? current.value : 0), 0),
 );
 export const getAverageSum = createSelector(
     getNumOfCounters,
