@@ -58,7 +58,7 @@ describe("CounterEffects", () => {
 
     describe("decrementPending$", () => {
         it("should register decrementPending$", () => {
-            expect(metadata.decrementPending$).toEqual({ dispatch: true });
+            expect(metadata.decrementPending$).toEqual(jasmine.objectContaining({ dispatch: true }));
         });
 
         it("should create a DecrementCompleted action", () => {
@@ -93,7 +93,7 @@ describe("CounterEffects", () => {
 
     describe("incrementPending$", () => {
         it("should register incrementPending$", () => {
-            expect(metadata.incrementPending$).toEqual({ dispatch: true });
+            expect(metadata.incrementPending$).toEqual(jasmine.objectContaining({ dispatch: true }));
         });
 
         it("should create a IncrementCompleted action", () => {
@@ -128,7 +128,7 @@ describe("CounterEffects", () => {
 
     describe("loadPending$", () => {
         it("should register loadPending$", () => {
-            expect(metadata.loadPending$).toEqual({ dispatch: true });
+            expect(metadata.loadPending$).toEqual(jasmine.objectContaining({ dispatch: true }));
         });
 
         it("should produce a LoadCompleted action on successful retrieving an counter", () => {
@@ -208,7 +208,7 @@ describe("CounterEffects", () => {
 
     describe("loadAllPending$", () => {
         it("should register loadAllPending$", () => {
-            expect(metadata.loadAllPending$).toEqual({ dispatch: true });
+            expect(metadata.loadAllPending$).toEqual(jasmine.objectContaining({ dispatch: true }));
         });
 
         it("should produce a LoadCompleted action on successful retrieving all counters", () => {

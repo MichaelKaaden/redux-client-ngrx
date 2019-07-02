@@ -65,4 +65,3 @@ export function reducer(state: CountersState = initialState, action: CounterActi
 }
 
 export const { selectIds, selectEntities, selectAll, selectTotal } = adapter.getSelectors();
-export const getCounters = (state: CountersState) => selectEntities(state);
