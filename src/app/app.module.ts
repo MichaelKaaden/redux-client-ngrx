@@ -44,7 +44,7 @@ import { CounterInputComponent } from "./components/counter-input/counter-input.
         BrowserAnimationsModule,
         MaterialModule,
         FlexLayoutModule,
-        StoreModule.forRoot(reducers, { metaReducers }),
+        StoreModule.forRoot(reducers, { metaReducers, runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true } }),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         StoreModule.forFeature("errors", fromError.reducer),
         StoreModule.forFeature("counters", fromCounter.reducer),

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { DecrementPending, IncrementPending, LoadPending } from "../../actions/counter.actions";
+import * as counterActions from "../../actions/counter.actions";
 import { Counter } from "../../models/counter";
 import { IAppState } from "../../reducers";
 import { getCounter } from "../../selectors/counters.selectors";
@@ -23,16 +23,16 @@ export class CounterContainerComponent implements OnInit {
     ngOnInit() {
         this.counter$ = this.store$.pipe(select(getCounter, { index: this.counterIndex }));
 
-        this.store$.dispatch(new LoadPending({ index: this.counterIndex }));
+        this.store$.dispatch(counterActions.loadPending({ index: this.counterIndex }));
     }
 
     // needed to capture "this" properly
     public decrement = (by: number): void => {
-        this.store$.dispatch(new DecrementPending({ index: this.counterIndex, by }));
+        this.store$.dispatch(counterActions.decrementPending({ index: this.counterIndex, by }));
     }
 
     // needed to capture "this" properly
     public increment = (by: number): void => {
-        this.store$.dispatch(new IncrementPending({ index: this.counterIndex, by }));
+        this.store$.dispatch(counterActions.incrementPending({ index: this.counterIndex, by }));
     }
 }
