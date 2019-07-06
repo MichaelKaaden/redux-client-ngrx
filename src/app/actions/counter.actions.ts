@@ -1,69 +1,11 @@
-import { Action } from "@ngrx/store";
+import { createAction, props } from "@ngrx/store";
 import { Counter } from "../models/counter";
 
-export enum CounterActionTypes {
-    LoadPending = "[Counter] Load Pending",
-    LoadCompleted = "[Counter] Load Completed",
-    LoadAllPending = "[Counter] Load All Pending",
-    LoadAllCompleted = "[Counter] Load All Completed",
-    DecrementPending = "[Counter] Decrement Pending",
-    DecrementCompleted = "[Counter] Decrement Completed",
-    IncrementPending = "[Counter] Increment Pending",
-    IncrementCompleted = "[Counter] Increment Completed",
-}
-
-export class LoadPending implements Action {
-    readonly type = CounterActionTypes.LoadPending;
-
-    constructor(readonly payload: { index: number }) {}
-}
-
-export class LoadCompleted implements Action {
-    readonly type = CounterActionTypes.LoadCompleted;
-
-    constructor(readonly payload: { index: number; counter: Counter }) {}
-}
-
-export class LoadAllPending implements Action {
-    readonly type = CounterActionTypes.LoadAllPending;
-}
-
-export class LoadAllCompleted implements Action {
-    readonly type = CounterActionTypes.LoadAllCompleted;
-
-    constructor(readonly payload: { counters: Counter[] }) {}
-}
-
-export class DecrementPending implements Action {
-    readonly type = CounterActionTypes.DecrementPending;
-
-    constructor(readonly payload: { index: number; by: number }) {}
-}
-
-export class DecrementCompleted implements Action {
-    readonly type = CounterActionTypes.DecrementCompleted;
-
-    constructor(readonly payload: { index: number; counter: Counter }) {}
-}
-
-export class IncrementPending implements Action {
-    readonly type = CounterActionTypes.IncrementPending;
-
-    constructor(readonly payload: { index: number; by: number }) {}
-}
-
-export class IncrementCompleted implements Action {
-    readonly type = CounterActionTypes.IncrementCompleted;
-
-    constructor(readonly payload: { index: number; counter: Counter }) {}
-}
-
-export type CounterActions =
-    | LoadPending
-    | LoadCompleted
-    | LoadAllPending
-    | LoadAllCompleted
-    | DecrementPending
-    | DecrementCompleted
-    | IncrementPending
-    | IncrementCompleted;
+export const loadPending = createAction("[Counter] Load Pending", props<{ index: number }>());
+export const loadCompleted = createAction("[Counter] Load Completed", props<{ index: number; counter: Counter }>());
+export const loadAllPending = createAction("[Counter] Load All Pending");
+export const loadAllCompleted = createAction("[Counter] Load All Completed", props<{ counters: Counter[] }>());
+export const decrementPending = createAction("[Counter] Decrement Pending", props<{ index: number; by: number }>());
+export const decrementCompleted = createAction("[Counter] Decrement Completed", props<{ index: number; counter: Counter }>());
+export const incrementPending = createAction("[Counter] Increment Pending", props<{ index: number; by: number }>());
+export const incrementCompleted = createAction("[Counter] Increment Completed", props<{ index: number; counter: Counter }>());

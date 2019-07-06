@@ -1,5 +1,5 @@
 import { ActionReducerMap, MetaReducer } from "@ngrx/store";
-import { storeFreeze } from "ngrx-store-freeze";
+
 import { environment } from "../../environments/environment";
 import * as fromCounter from "./counter.reducer";
 import * as fromError from "./error.reducer";
@@ -19,4 +19,4 @@ export const reducers: ActionReducerMap<IAppState> = {
  *   exception will be thrown. This is useful during development mode to
  *   ensure that none of the reducers accidentally mutates the state.
  */
-export const metaReducers: MetaReducer<IAppState>[] = !environment.production ? [storeFreeze] : [];
+export const metaReducers: MetaReducer<IAppState>[] = !environment.production ? [] : [];

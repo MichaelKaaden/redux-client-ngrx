@@ -1,4 +1,4 @@
-import { ErrorOccurred, ResetErrors } from "../actions/error.actions";
+import * as errorActions from "../actions/error.actions";
 import { ErrorsState, initialState, reducer } from "./error.reducer";
 
 describe("Error Reducer", () => {
@@ -15,7 +15,7 @@ describe("Error Reducer", () => {
     describe("error occurred", () => {
         it("should set the array to the new error", () => {
             const error = "Oops!";
-            const action = new ErrorOccurred({ error });
+            const action = errorActions.errorOccurred({ error });
 
             const result = reducer(initialState, action);
 
@@ -29,7 +29,7 @@ describe("Error Reducer", () => {
             const prevError2 = "error2";
             const state: ErrorsState = { errors: [prevError1, prevError2] };
             const error = "error3";
-            const action = new ErrorOccurred({ error });
+            const action = errorActions.errorOccurred({ error });
 
             const result = reducer(state, action);
 
@@ -46,7 +46,7 @@ describe("Error Reducer", () => {
             const prevError1 = "error1";
             const prevError2 = "error2";
             const state: ErrorsState = { errors: [prevError1, prevError2] };
-            const action = new ResetErrors();
+            const action = errorActions.resetErrors();
 
             const result = reducer(state, action);
 
@@ -55,7 +55,7 @@ describe("Error Reducer", () => {
         });
 
         it("should not do any harm to reset the counters if no errors are present", () => {
-            const action = new ResetErrors();
+            const action = errorActions.resetErrors();
 
             const result = reducer(initialState, action);
 
