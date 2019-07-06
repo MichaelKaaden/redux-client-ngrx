@@ -1,5 +1,6 @@
 import { createEntityAdapter, EntityState } from "@ngrx/entity";
-import { CounterActions, CounterActionTypes } from "../actions/counter.actions";
+import { Action, createReducer, on } from "@ngrx/store";
+import * as counterActions from "../actions/counter.actions";
 import { Counter } from "../models/counter";
 
 export const adapter = createEntityAdapter<Counter>({
@@ -11,57 +12,56 @@ export interface CountersState extends EntityState<Counter> {}
 
 export const initialState: CountersState = adapter.getInitialState();
 
-export function reducer(state: CountersState = initialState, action: CounterActions): CountersState {
-    switch (action.type) {
-        case CounterActionTypes.LoadPending:
-            return adapter.addOne({ index: action.payload.index, isLoading: true }, state);
+function incDecPending(action, state: CountersState) {
+    return adapter.updateOne(
+        {
+            id: action.index,
+            changes: {
+                isSaving: true,
+            },
+        },
+        state,
+    );
+}
 
-        case CounterActionTypes.LoadCompleted:
-            return adapter.updateOne(
-                {
-                    id: action.payload.index,
-                    changes: {
-                        value: action.payload.counter.value,
-                        isLoading: false,
-                    },
+function incDecCompleted(action, state: CountersState) {
+    return adapter.updateOne(
+        {
+            id: action.index,
+            changes: {
+                value: action.counter.value,
+                isSaving: false,
+            },
+        },
+        state,
+    );
+}
+
+const counterReducer = createReducer(
+    initialState,
+    on(counterActions.loadPending, (state, action) => adapter.addOne({ index: action.index, isLoading: true }, state)),
+    on(counterActions.loadCompleted, (state, action) =>
+        adapter.updateOne(
+            {
+                id: action.index,
+                changes: {
+                    value: action.counter.value,
+                    isLoading: false,
                 },
-                state,
-            );
+            },
+            state,
+        ),
+    ),
+    on(counterActions.loadAllPending, (state) => state),
+    on(counterActions.loadAllCompleted, (state, action) => adapter.addMany(action.counters, state)),
+    on(counterActions.decrementPending, (state, action) => incDecPending(action, state)),
+    on(counterActions.incrementPending, (state, action) => incDecPending(action, state)),
+    on(counterActions.decrementCompleted, (state, action) => incDecCompleted(action, state)),
+    on(counterActions.incrementCompleted, (state, action) => incDecCompleted(action, state)),
+);
 
-        case CounterActionTypes.LoadAllPending:
-            return state;
-
-        case CounterActionTypes.LoadAllCompleted:
-            return adapter.addMany(action.payload.counters, state);
-
-        case CounterActionTypes.DecrementPending:
-        case CounterActionTypes.IncrementPending:
-            return adapter.updateOne(
-                {
-                    id: action.payload.index,
-                    changes: {
-                        isSaving: true,
-                    },
-                },
-                state,
-            );
-
-        case CounterActionTypes.DecrementCompleted:
-        case CounterActionTypes.IncrementCompleted:
-            return adapter.updateOne(
-                {
-                    id: action.payload.index,
-                    changes: {
-                        value: action.payload.counter.value,
-                        isSaving: false,
-                    },
-                },
-                state,
-            );
-
-        default:
-            return state;
-    }
+export function reducer(state: CountersState = initialState, action: Action): CountersState {
+    return counterReducer(state, action);
 }
 
 export const { selectIds, selectEntities, selectAll, selectTotal } = adapter.getSelectors();

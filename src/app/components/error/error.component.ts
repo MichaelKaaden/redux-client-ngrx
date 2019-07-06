@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { ResetErrors } from "../../actions/error.actions";
+import * as errorActions from "../../actions/error.actions";
 import { IAppState } from "../../reducers";
 import { getErrors } from "../../selectors/errors.selectors";
 
@@ -21,6 +21,6 @@ export class ErrorComponent implements OnInit {
     }
 
     reset() {
-        this.store.dispatch(new ResetErrors());
+        this.store.dispatch(errorActions.resetErrors());
     }
 }

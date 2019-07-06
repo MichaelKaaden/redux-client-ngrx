@@ -1,14 +1,5 @@
 import { Dictionary } from "@ngrx/entity";
-import {
-    DecrementCompleted,
-    DecrementPending,
-    IncrementCompleted,
-    IncrementPending,
-    LoadAllCompleted,
-    LoadAllPending,
-    LoadCompleted,
-    LoadPending,
-} from "../actions/counter.actions";
+import * as counterActions from "../actions/counter.actions";
 import { Counter } from "../models/counter";
 import { adapter, CountersState, initialState, reducer, selectEntities, selectIds, selectTotal } from "./counter.reducer";
 
@@ -44,7 +35,7 @@ describe("Counter Reducer", () => {
 
     describe("load pending action", () => {
         it("should add a counter if the app state is empty", () => {
-            const action = new LoadPending({ index: index });
+            const action = counterActions.loadPending({ index: index });
 
             const result = reducer(initialState, action);
 
@@ -61,7 +52,7 @@ describe("Counter Reducer", () => {
         it("should add a counter if the counter is not yet in the app state", () => {
             state = initializeStateWith([anotherCounter, yetAnotherCounter]);
 
-            const result = reducer(state, new LoadPending({ index: index }));
+            const result = reducer(state, counterActions.loadPending({ index: index }));
 
             expect(selectTotal(state)).toBe(2);
             expect(selectTotal(result)).toBe(3);
@@ -76,7 +67,7 @@ describe("Counter Reducer", () => {
         it("should not change the other counters if the counter is not yet in the app state", () => {
             state = initializeStateWith([anotherCounter, yetAnotherCounter]);
 
-            const result = reducer(state, new LoadPending({ index: index }));
+            const result = reducer(state, counterActions.loadPending({ index: index }));
 
             expect(selectTotal(state)).toBe(2);
             expect(selectTotal(result)).toBe(3);
@@ -90,7 +81,7 @@ describe("Counter Reducer", () => {
         it("should sort the counter list if the counter is not yet in the app state", () => {
             state = initializeStateWith([anotherCounter, yetAnotherCounter]);
 
-            const result = reducer(state, new LoadPending({ index: index }));
+            const result = reducer(state, counterActions.loadPending({ index: index }));
 
             expect(selectTotal(state)).toBe(2);
             expect(selectTotal(result)).toBe(3);
@@ -104,7 +95,7 @@ describe("Counter Reducer", () => {
             counter.isLoading = true;
             state = initializeStateWith([counter]);
 
-            const result = reducer(state, new LoadPending({ index: index }));
+            const result = reducer(state, counterActions.loadPending({ index: index }));
 
             expect(selectTotal(state)).toBe(1);
             expect(result).toBe(state);
@@ -118,7 +109,7 @@ describe("Counter Reducer", () => {
 
             state = initializeStateWith([oldCounter]);
 
-            const result = reducer(state, new LoadCompleted({ index, counter }));
+            const result = reducer(state, counterActions.loadCompleted({ index, counter }));
 
             expect(selectTotal(result)).toBe(1);
 
@@ -134,7 +125,7 @@ describe("Counter Reducer", () => {
 
             state = initializeStateWith([anotherCounter, oldCounter, yetAnotherCounter]);
 
-            const result = reducer(state, new LoadCompleted({ index, counter }));
+            const result = reducer(state, counterActions.loadCompleted({ index, counter }));
 
             expect(selectTotal(result)).toBe(3);
 
@@ -147,7 +138,7 @@ describe("Counter Reducer", () => {
         it("should handle a non-present counter", () => {
             state = initializeStateWith([anotherCounter, yetAnotherCounter]);
 
-            const result = reducer(state, new LoadCompleted({ index, counter }));
+            const result = reducer(state, counterActions.loadCompleted({ index, counter }));
             expect(selectTotal(result)).toBe(selectTotal(state));
 
             const newCounter = result.entities[index];
@@ -157,7 +148,7 @@ describe("Counter Reducer", () => {
 
     describe("load all pending action", () => {
         it("should not add to the app state", () => {
-            const result = reducer(state, new LoadAllPending());
+            const result = reducer(state, counterActions.loadAllPending());
 
             expect(selectTotal(state)).toBe(0);
             expect(selectTotal(result)).toBe(0);
@@ -166,7 +157,7 @@ describe("Counter Reducer", () => {
         it("should not change the app state", () => {
             state = initializeStateWith([anotherCounter, counter, yetAnotherCounter]);
 
-            const result = reducer(state, new LoadAllPending());
+            const result = reducer(state, counterActions.loadAllPending());
 
             expect(result.entities).toBe(state.entities);
         });
@@ -176,7 +167,7 @@ describe("Counter Reducer", () => {
         it("should add all counters to the state", () => {
             expect(selectTotal(state)).toBe(0);
 
-            const result = reducer(state, new LoadAllCompleted({ counters: [anotherCounter, counter, yetAnotherCounter] }));
+            const result = reducer(state, counterActions.loadAllCompleted({ counters: [anotherCounter, counter, yetAnotherCounter] }));
             expect(result.entities).not.toBe(state.entities);
             expect(selectTotal(state)).toBe(0);
             expect(selectTotal(result)).toBe(3);
@@ -190,7 +181,7 @@ describe("Counter Reducer", () => {
 
             const doubleCounter: Counter = { index, value };
 
-            const result = reducer(state, new LoadAllCompleted({ counters: [doubleCounter] }));
+            const result = reducer(state, counterActions.loadAllCompleted({ counters: [doubleCounter] }));
 
             expect(selectTotal(result)).toBe(selectTotal(state));
             expect(result.entities[counter.index]).toEqual(counter);
@@ -200,7 +191,7 @@ describe("Counter Reducer", () => {
         it("should add counters to existing ones in the state", () => {
             state = initializeStateWith([anotherCounter, yetAnotherCounter]);
 
-            const result = reducer(state, new LoadAllCompleted({ counters: [anotherCounter, counter, yetAnotherCounter] }));
+            const result = reducer(state, counterActions.loadAllCompleted({ counters: [anotherCounter, counter, yetAnotherCounter] }));
 
             expect(selectTotal(state)).toBe(2);
             expect(selectTotal(result)).toBe(3);
@@ -210,7 +201,7 @@ describe("Counter Reducer", () => {
         });
 
         it("should sort the counters by index", () => {
-            const result = reducer(state, new LoadAllCompleted({ counters: [yetAnotherCounter, counter, anotherCounter] }));
+            const result = reducer(state, counterActions.loadAllCompleted({ counters: [yetAnotherCounter, counter, anotherCounter] }));
 
             expect(selectTotal(result)).toBe(3);
             expect(selectIds(result)[0]).toBe(anotherCounter.index);
@@ -225,7 +216,7 @@ describe("Counter Reducer", () => {
 
             state = initializeStateWith([anotherCounter, counter, yetAnotherCounter]);
 
-            const result = reducer(state, new DecrementPending({ index, by }));
+            const result = reducer(state, counterActions.decrementPending({ index, by }));
 
             expect(result).not.toBe(state);
             expect(result.entities).not.toBe(state.entities);
@@ -244,7 +235,7 @@ describe("Counter Reducer", () => {
 
             state = initializeStateWith([anotherCounter, counter, yetAnotherCounter]);
 
-            const result = reducer(state, new IncrementPending({ index, by }));
+            const result = reducer(state, counterActions.incrementPending({ index, by }));
 
             expect(result).not.toBe(state);
             expect(result.entities).not.toBe(state.entities);
@@ -259,7 +250,7 @@ describe("Counter Reducer", () => {
 
     describe("decrement completed action", () => {
         it("should not decrement a counter not in the app state", () => {
-            const result = reducer(state, new DecrementCompleted({ index, counter }));
+            const result = reducer(state, counterActions.decrementCompleted({ index, counter }));
 
             expect(selectTotal(result)).toBe(0);
         });
@@ -267,7 +258,7 @@ describe("Counter Reducer", () => {
         it("should decrement a single counter in the app state", () => {
             state = initializeStateWith([counter]);
 
-            const result = reducer(state, new DecrementCompleted({ index, counter: { index, value: value - 1 } }));
+            const result = reducer(state, counterActions.decrementCompleted({ index, counter: { index, value: value - 1 } }));
             expect(result).not.toBe(state);
             expect(result.entities).not.toBe(state.entities);
             expect(selectTotal(result)).toBe(selectTotal(state));
@@ -280,7 +271,7 @@ describe("Counter Reducer", () => {
         it("should decrement a counter in the middle of the app state", () => {
             state = initializeStateWith([anotherCounter, counter, yetAnotherCounter]);
 
-            const result = reducer(state, new DecrementCompleted({ index, counter: { index, value: value - 1 } }));
+            const result = reducer(state, counterActions.decrementCompleted({ index, counter: { index, value: value - 1 } }));
             expect(result).not.toBe(state);
             expect(result.entities).not.toBe(state.entities);
             expect(selectTotal(result)).toBe(selectTotal(state));
@@ -293,7 +284,7 @@ describe("Counter Reducer", () => {
         it("should handle a non-present counter", () => {
             state = initializeStateWith([anotherCounter, yetAnotherCounter]);
 
-            const result = reducer(state, new DecrementCompleted({ index, counter: { index, value: value - 1 } }));
+            const result = reducer(state, counterActions.decrementCompleted({ index, counter: { index, value: value - 1 } }));
             expect(selectTotal(result)).toBe(selectTotal(state));
 
             const newCounter = result.entities[index];
@@ -303,7 +294,7 @@ describe("Counter Reducer", () => {
 
     describe("increment completed action", () => {
         it("should not increment a counter not in the app state", () => {
-            const result = reducer(state, new IncrementCompleted({ index, counter }));
+            const result = reducer(state, counterActions.incrementCompleted({ index, counter }));
 
             expect(selectTotal(result)).toBe(0);
         });
@@ -311,7 +302,7 @@ describe("Counter Reducer", () => {
         it("should increment a single counter in the app state", () => {
             state = initializeStateWith([counter]);
 
-            const result = reducer(state, new IncrementCompleted({ index, counter: { index, value: value + 1 } }));
+            const result = reducer(state, counterActions.incrementCompleted({ index, counter: { index, value: value + 1 } }));
             expect(result).not.toBe(state);
             expect(result.entities).not.toBe(state.entities);
             expect(selectTotal(result)).toBe(selectTotal(state));
@@ -324,7 +315,7 @@ describe("Counter Reducer", () => {
         it("should increment a counter in the middle of the app state", () => {
             state = initializeStateWith([anotherCounter, counter, yetAnotherCounter]);
 
-            const result = reducer(state, new IncrementCompleted({ index, counter: { index, value: value + 1 } }));
+            const result = reducer(state, counterActions.incrementCompleted({ index, counter: { index, value: value + 1 } }));
             expect(result).not.toBe(state);
             expect(result.entities).not.toBe(state.entities);
             expect(selectTotal(result)).toBe(selectTotal(state));
@@ -337,7 +328,7 @@ describe("Counter Reducer", () => {
         it("should handle a non-present counter", () => {
             state = initializeStateWith([anotherCounter, yetAnotherCounter]);
 
-            const result = reducer(state, new IncrementCompleted({ index, counter: { index, value: value + 1 } }));
+            const result = reducer(state, counterActions.incrementCompleted({ index, counter: { index, value: value + 1 } }));
             expect(selectTotal(result)).toBe(selectTotal(state));
 
             const newCounter = result.entities[index];
