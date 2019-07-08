@@ -12,31 +12,6 @@ export interface CountersState extends EntityState<Counter> {}
 
 export const initialState: CountersState = adapter.getInitialState();
 
-function incDecPending(action, state: CountersState) {
-    return adapter.updateOne(
-        {
-            id: action.index,
-            changes: {
-                isSaving: true,
-            },
-        },
-        state,
-    );
-}
-
-function incDecCompleted(action, state: CountersState) {
-    return adapter.updateOne(
-        {
-            id: action.index,
-            changes: {
-                value: action.counter.value,
-                isSaving: false,
-            },
-        },
-        state,
-    );
-}
-
 const counterReducer = createReducer(
     initialState,
     on(counterActions.loadPending, (state, action) => adapter.addOne({ index: action.index, isLoading: true }, state)),
@@ -54,10 +29,29 @@ const counterReducer = createReducer(
     ),
     on(counterActions.loadAllPending, (state) => state),
     on(counterActions.loadAllCompleted, (state, action) => adapter.addMany(action.counters, state)),
-    on(counterActions.decrementPending, (state, action) => incDecPending(action, state)),
-    on(counterActions.incrementPending, (state, action) => incDecPending(action, state)),
-    on(counterActions.decrementCompleted, (state, action) => incDecCompleted(action, state)),
-    on(counterActions.incrementCompleted, (state, action) => incDecCompleted(action, state)),
+    on(counterActions.decrementPending, counterActions.incrementPending, (state, action) =>
+        adapter.updateOne(
+            {
+                id: action.index,
+                changes: {
+                    isSaving: true,
+                },
+            },
+            state,
+        ),
+    ),
+    on(counterActions.decrementCompleted, counterActions.incrementCompleted, (state, action) =>
+        adapter.updateOne(
+            {
+                id: action.index,
+                changes: {
+                    value: action.counter.value,
+                    isSaving: false,
+                },
+            },
+            state,
+        ),
+    ),
 );
 
 export function reducer(state: CountersState = initialState, action: Action): CountersState {
