@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/MichaelKaaden/redux-client-ngrx.svg)](https://github.com/MichaelKaaden/redux-client-ngrx/issues)
 [![license](https://img.shields.io/github/license/MichaelKaaden/redux-client-ngrx.svg)](https://github.com/MichaelKaaden/redux-client-ngrx)
 
-This is a single-page application written in TypeScript using Angular 7. It
+This is a single-page application written in TypeScript using Angular 9. It
 retrieves counters from a REST service and displays them. You can increase and
 decrease each counter's value. A second page displays a little dashboard that
 does some analytics on your counters and their values.
