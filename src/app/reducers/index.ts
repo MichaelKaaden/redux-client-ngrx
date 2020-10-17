@@ -1,3 +1,4 @@
+import * as fromRouter from "@ngrx/router-store";
 import { ActionReducerMap, MetaReducer } from "@ngrx/store";
 
 import { environment } from "../../environments/environment";
@@ -7,11 +8,13 @@ import * as fromError from "./error.reducer";
 export interface IAppState {
     counters: fromCounter.CountersState;
     errors: fromError.ErrorsState;
+    router: fromRouter.RouterReducerState;
 }
 
 export const reducers: ActionReducerMap<IAppState> = {
     counters: fromCounter.reducer,
     errors: fromError.reducer,
+    router: fromRouter.routerReducer,
 };
 
 /*
