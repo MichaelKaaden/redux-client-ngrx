@@ -24,6 +24,7 @@ import { CounterService } from "./services/counter.service";
 import { ProgressComponent } from "./components/progress/progress.component";
 import { CounterHeadingComponent } from "./components/counter-heading/counter-heading.component";
 import { CounterInputComponent } from "./components/counter-input/counter-input.component";
+import { StoreRouterConnectingModule } from "@ngrx/router-store";
 
 @NgModule({
     declarations: [
@@ -50,6 +51,7 @@ import { CounterInputComponent } from "./components/counter-input/counter-input.
         StoreModule.forFeature("counters", fromCounter.reducer),
         EffectsModule.forRoot([]),
         EffectsModule.forFeature([CounterEffects]),
+        StoreRouterConnectingModule.forRoot(),
     ],
     providers: [CounterService],
     bootstrap: [AppComponent],
