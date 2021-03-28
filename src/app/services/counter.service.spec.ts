@@ -1,5 +1,5 @@
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { async, getTestBed, TestBed } from "@angular/core/testing";
+import { getTestBed, TestBed, waitForAsync } from "@angular/core/testing";
 import { environment } from "../../environments/environment";
 import { Counter } from "../models/counter";
 
@@ -30,7 +30,7 @@ describe("CounterService", () => {
         expect(service).toBeTruthy();
     });
 
-    it("should correctly retrieve a counter", async(() => {
+    it("should correctly retrieve a counter", waitForAsync(() => {
         const index = 0;
         const value = 42;
         const dummyEnvelope: IEnvelope = {
@@ -56,7 +56,7 @@ describe("CounterService", () => {
         req.flush(dummyEnvelope);
     }));
 
-    it("should deal with HTTP errors trying to retrieve a counter", async(() => {
+    it("should deal with HTTP errors trying to retrieve a counter", waitForAsync(() => {
         const index = 0;
 
         // make the HTTP request via the service
@@ -77,7 +77,7 @@ describe("CounterService", () => {
         req.error(new ErrorEvent("some error"));
     }));
 
-    it("should correctly retrieve all counters", async(() => {
+    it("should correctly retrieve all counters", waitForAsync(() => {
         const index0 = 0;
         const value0 = 42;
         const index1 = 1;
@@ -111,7 +111,7 @@ describe("CounterService", () => {
         req.flush(dummyEnvelope);
     }));
 
-    it("should deal with HTTP errors trying to retrieve all counters", async(() => {
+    it("should deal with HTTP errors trying to retrieve all counters", waitForAsync(() => {
         // make the HTTP request via the service
         service.counters().subscribe(
             (counters: Counter[]) => {
@@ -130,7 +130,7 @@ describe("CounterService", () => {
         req.error(new ErrorEvent("some error"));
     }));
 
-    it("should correctly decrement a counter", async(() => {
+    it("should correctly decrement a counter", waitForAsync(() => {
         const index = 0;
         const by = 1;
         const dummyEnvelope: IEnvelope = {
@@ -156,7 +156,7 @@ describe("CounterService", () => {
         req.flush(dummyEnvelope);
     }));
 
-    it("should deal with HTTP errors trying to decrement a counter", async(() => {
+    it("should deal with HTTP errors trying to decrement a counter", waitForAsync(() => {
         const index = 0;
         const by = 1;
 
@@ -178,7 +178,7 @@ describe("CounterService", () => {
         req.error(new ErrorEvent("some error"));
     }));
 
-    it("should correctly increment a counter", async(() => {
+    it("should correctly increment a counter", waitForAsync(() => {
         const index = 0;
         const by = 1;
         const dummyEnvelope: IEnvelope = {
@@ -204,7 +204,7 @@ describe("CounterService", () => {
         req.flush(dummyEnvelope);
     }));
 
-    it("should deal with HTTP errors trying to increment a counter", async(() => {
+    it("should deal with HTTP errors trying to increment a counter", waitForAsync(() => {
         const index = 0;
         const by = 1;
 

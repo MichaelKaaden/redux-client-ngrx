@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { CounterHeadingComponent } from "./counter-heading.component";
 
@@ -11,7 +11,7 @@ describe("CounterHeadingComponent", () => {
     let compiled: any;
     let index;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [CounterHeadingComponent],
             schemas: [NO_ERRORS_SCHEMA],
