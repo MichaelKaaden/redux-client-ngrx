@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { CounterListComponent } from "./counter-list.component";
 
@@ -7,7 +7,7 @@ describe("CounterListComponent", () => {
     let component: CounterListComponent;
     let fixture: ComponentFixture<CounterListComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [CounterListComponent],
             schemas: [NO_ERRORS_SCHEMA],

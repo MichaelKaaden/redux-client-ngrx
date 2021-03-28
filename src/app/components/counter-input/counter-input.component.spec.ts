@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
 import { Counter } from "../../models/counter";
 
 import { CounterInputComponent } from "./counter-input.component";
@@ -13,7 +13,7 @@ describe("CounterInputComponent", () => {
     let index;
     let counter: Counter;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [CounterInputComponent],
             schemas: [NO_ERRORS_SCHEMA],
