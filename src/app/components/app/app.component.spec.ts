@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { AppComponent } from "./app.component";
 
@@ -8,7 +8,7 @@ describe("AppComponent", () => {
     let fixture: ComponentFixture<AppComponent>;
     let compiled: any;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [RouterTestingModule],
             declarations: [AppComponent],
@@ -35,11 +35,11 @@ describe("AppComponent", () => {
         expect(compiled.querySelector("h1").textContent).toContain("Redux Demo Application");
     });
 
-    it("should contain a navigation bar", async(() => {
+    it("should contain a navigation bar", waitForAsync(() => {
         expect(compiled.querySelector("nav")).not.toBe(null);
     }));
 
-    it("should have links in the navigation bar", async(() => {
+    it("should have links in the navigation bar", waitForAsync(() => {
         const links = compiled.querySelectorAll("nav a");
         expect(links.length).toBe(2);
         expect(links[0].href).toMatch(/\/counters/);
