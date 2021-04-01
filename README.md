@@ -23,11 +23,7 @@ component would not update the other component's data, so one would either have
 to deal with this chaos or notify the other components about change with e. g.
 events. This is complicated, error-prone and very ugly. Redux perfectly solves
 this problem. So I wrote this app together with the server side which you can
-find [here](https://github.com/MichaelKaaden/redux-server).
-
-The app utilizes [NgRx](https://github.com/ngrx/platform). To see the same app
-using [angular-redux](https://github.com/angular-redux/store), have a look at
-[this](https://github.com/MichaelKaaden/redux-client-ng5.git) repository.
+find at the end of this document.
 
 ## What do you think of `@ngrx/entity`?
 
@@ -140,3 +136,31 @@ error component:
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app
 will automatically reload if you change any of the source files.
+
+## Alternative and Corresponding Implementations
+
+This is only one possible solution to this kind of problem.
+
+There are some implementations of single-page applications using the services which are implemented in different
+programming languages and frameworks.
+
+Here's the full picture.
+
+## Client-Side Implementations
+
+- [https://github.com/MichaelKaaden/redux-client-ngrx](https://github.com/MichaelKaaden/redux-client-ngrx) (Angular with
+  NgRx)
+- [https://github.com/MichaelKaaden/redux-client-ng5](https://github.com/MichaelKaaden/redux-client-ng5) (Angular
+  with `angular-redux`)
+- [https://github.com/MichaelKaaden/redux-client-ng](https://github.com/MichaelKaaden/redux-client-ng) (AngularJS
+  with `ng-redux`)
+
+## Server-Side Implementations
+
+- [https://github.com/MichaelKaaden/redux-server-rust](https://github.com/MichaelKaaden/redux-server-rust) (Rust
+  with `actix-web`)
+- [https://github.com/MichaelKaaden/redux-server-golang](https://github.com/MichaelKaaden/redux-server-golang) (Go
+  with `Gin`)
+- [https://github.com/MichaelKaaden/redux-server-nest](https://github.com/MichaelKaaden/redux-server-nest) (Node.js
+  with `Nest`)
+- [https://github.com/MichaelKaaden/redux-server](https://github.com/MichaelKaaden/redux-server) (Node.js with `Exprss`)
