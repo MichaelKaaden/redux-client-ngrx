@@ -9,7 +9,7 @@
   ],
   "*.ts": [
     "prettier --write",
-    "tslint -c tslint.json --fix -t stylish --project tsconfig.json",
+    "yarn eslint --fix ",
     "git add"
   ]
 }
