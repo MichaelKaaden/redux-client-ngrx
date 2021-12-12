@@ -1,3 +1,4 @@
+import { expect } from "@angular/flex-layout/_private-utils/testing";
 import { Counter } from "../models/counter";
 import { CountersState, initialState } from "../reducers/counter.reducer";
 import { initializeStateWith } from "../reducers/counter.reducer.spec";
@@ -42,12 +43,12 @@ describe("counters selectors", () => {
 
     describe("getCounter", () => {
         it("should select a counter", () => {
-            expect(getCounter.projector([], { index })).toBeUndefined();
+            expect(getCounter(index)({ counters: initializeStateWith([]) })).toBeUndefined();
 
             const anotherCounter: Counter = { index: index + 1, value: value + 1 };
-            expect(getCounter.projector([counter, anotherCounter], { index })).toEqual(counter);
-            expect(getCounter.projector([anotherCounter, counter], { index })).toEqual(counter);
-            expect(getCounter.projector([counterWithoutValue], { index: index + 2 })).toEqual(counterWithoutValue);
+            expect(getCounter(index)({ counters: initializeStateWith([counter, anotherCounter]) })).toEqual(counter);
+            expect(getCounter(index)({ counters: initializeStateWith([anotherCounter, counter]) })).toEqual(counter);
+            expect(getCounter(index + 2)({ counters: initializeStateWith([counterWithoutValue]) })).toEqual(counterWithoutValue);
         });
     });
 

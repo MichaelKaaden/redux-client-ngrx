@@ -17,8 +17,8 @@ describe("CounterService", () => {
         });
 
         injector = getTestBed();
-        service = injector.get(CounterService);
-        httpMock = injector.get(HttpTestingController);
+        service = injector.inject(CounterService);
+        httpMock = injector.inject(HttpTestingController);
     });
 
     afterEach(() => {
@@ -30,199 +30,226 @@ describe("CounterService", () => {
         expect(service).toBeTruthy();
     });
 
-    it("should correctly retrieve a counter", waitForAsync(() => {
-        const index = 0;
-        const value = 42;
-        const dummyEnvelope: IEnvelope = {
-            message: "Okay",
-            status: 200,
-            data: {
-                counter: { index, value },
-            },
-        };
+    it(
+        "should correctly retrieve a counter",
+        waitForAsync(() => {
+            const index = 0;
+            const value = 42;
+            const dummyEnvelope: IEnvelope = {
+                message: "Okay",
+                status: 200,
+                data: {
+                    counter: { index, value },
+                },
+            };
 
-        // make the HTTP request via the service
-        service.counter(index).subscribe((counter: Counter) => {
-            expect(counter.index).toBe(index, "index doesn't match");
-            expect(counter.value).toBe(value, "value doesn't match");
-            expect(counter).not.toBe(dummyEnvelope.data.counter, "counter should be a copy");
-        });
+            // make the HTTP request via the service
+            service.counter(index).subscribe((counter: Counter) => {
+                expect(counter.index).withContext("index doesn't match").toBe(index);
+                expect(counter.value).withContext("value doesn't match").toBe(value);
+                expect(counter).withContext("counter should be a copy").not.toBe(dummyEnvelope.data.counter);
+            });
 
-        // the request is pending, therefor expect that it sometimes happens
-        const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}`);
-        expect(req.request.method).toBe("GET", "expect a GET request");
+            // the request is pending, therefor expect that it sometimes happens
+            const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}`);
+            expect(req.request.method).withContext("expect a GET request").toBe("GET");
 
-        // fulfill the request by transmitting a response
-        req.flush(dummyEnvelope);
-    }));
+            // fulfill the request by transmitting a response
+            req.flush(dummyEnvelope);
+        }),
+    );
 
-    it("should deal with HTTP errors trying to retrieve a counter", waitForAsync(() => {
-        const index = 0;
+    it(
+        "should deal with HTTP errors trying to retrieve a counter",
+        waitForAsync(() => {
+            const index = 0;
 
-        // make the HTTP request via the service
-        service.counter(index).subscribe(
-            (counter: Counter) => {
-                expect(counter).toBeUndefined("shouldn't run into this success case");
-            },
-            (error) => {
-                expect(error).toBeDefined("should receive an error");
-            },
-        );
+            // make the HTTP request via the service
+            service.counter(index).subscribe({
+                next: (counter: Counter) => {
+                    expect(counter).withContext("shouldn't run into this success case").toBeUndefined();
+                },
+                error: (error) => {
+                    expect(error).withContext("should receive an error").toBeDefined();
+                },
+            });
 
-        // the request is pending, therefor expect that it sometimes happens
-        const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}`);
-        expect(req.request.method).toBe("GET", "expect a GET request");
+            // the request is pending, therefor expect that it sometimes happens
+            const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}`);
+            expect(req.request.method).withContext("expect a GET request").toBe("GET");
 
-        // fulfill the request by transmitting an error
-        req.error(new ErrorEvent("some error"));
-    }));
+            // fulfill the request by transmitting an error
+            req.error(new ProgressEvent("some error"));
+        }),
+    );
 
-    it("should correctly retrieve all counters", waitForAsync(() => {
-        const index0 = 0;
-        const value0 = 42;
-        const index1 = 1;
-        const value1 = 4711;
-        const dummyEnvelope: IEnvelope = {
-            message: "Okay",
-            status: 200,
-            data: {
-                counters: [{ index: index0, value: value0 }, { index: index1, value: value1 }],
-            },
-        };
+    it(
+        "should correctly retrieve all counters",
+        waitForAsync(() => {
+            const index0 = 0;
+            const value0 = 42;
+            const index1 = 1;
+            const value1 = 4711;
+            const dummyEnvelope: IEnvelope = {
+                message: "Okay",
+                status: 200,
+                data: {
+                    counters: [
+                        { index: index0, value: value0 },
+                        { index: index1, value: value1 },
+                    ],
+                },
+            };
 
-        // make the HTTP request via the service
-        service.counters().subscribe((counters: Counter[]) => {
-            expect(counters.length).toBe(2, "length incorrect");
+            // make the HTTP request via the service
+            service.counters().subscribe((counters: Counter[]) => {
+                expect(counters.length).withContext("length incorrect").toBe(2);
 
-            expect(counters[0].index).toBe(index0, "first index doesn't match");
-            expect(counters[0].value).toBe(value0, "first value doesn't match");
-            expect(counters[0]).not.toBe(dummyEnvelope.data.counters[0], "first counter should be a copy");
+                expect(counters[0].index).withContext("first index doesn't match").toBe(index0);
+                expect(counters[0].value).withContext("first value doesn't match").toBe(value0);
+                expect(counters[0]).withContext("first counter should be a copy").not.toBe(dummyEnvelope.data.counters[0]);
 
-            expect(counters[1].index).toBe(index1, "second index doesn't match");
-            expect(counters[1].value).toBe(value1, "second value doesn't match");
-            expect(counters[1]).not.toBe(dummyEnvelope.data.counters[1], "second counter should be a copy");
-        });
+                expect(counters[1].index).withContext("second index doesn't match").toBe(index1);
+                expect(counters[1].value).withContext("second value doesn't match").toBe(value1);
+                expect(counters[1]).withContext("second counter should be a copy").not.toBe(dummyEnvelope.data.counters[1]);
+            });
 
-        // the request is pending, therefor expect that it sometimes happens
-        const req = httpMock.expectOne(`${environment.apiServer}/counters`);
-        expect(req.request.method).toBe("GET", "expect a GET request");
+            // the request is pending, therefor expect that it sometimes happens
+            const req = httpMock.expectOne(`${environment.apiServer}/counters`);
+            expect(req.request.method).withContext("expect a GET request").toBe("GET");
 
-        // fulfill the request by transmitting a response
-        req.flush(dummyEnvelope);
-    }));
+            // fulfill the request by transmitting a response
+            req.flush(dummyEnvelope);
+        }),
+    );
 
-    it("should deal with HTTP errors trying to retrieve all counters", waitForAsync(() => {
-        // make the HTTP request via the service
-        service.counters().subscribe(
-            (counters: Counter[]) => {
-                expect(counters).toBeUndefined("shouldn't run into this success case");
-            },
-            (error) => {
-                expect(error).toBeDefined("should receive an error");
-            },
-        );
+    it(
+        "should deal with HTTP errors trying to retrieve all counters",
+        waitForAsync(() => {
+            // make the HTTP request via the service
+            service.counters().subscribe({
+                next: (counters: Counter[]) => {
+                    expect(counters).withContext("shouldn't run into this success case").toBeUndefined();
+                },
+                error: (error) => {
+                    expect(error).withContext("should receive an error").toBeDefined();
+                },
+            });
 
-        // the request is pending, therefor expect that it sometimes happens
-        const req = httpMock.expectOne(`${environment.apiServer}/counters`);
-        expect(req.request.method).toBe("GET", "expect a GET request");
+            // the request is pending, therefor expect that it sometimes happens
+            const req = httpMock.expectOne(`${environment.apiServer}/counters`);
+            expect(req.request.method).withContext("expect a GET request").toBe("GET");
 
-        // fulfill the request by transmitting an error
-        req.error(new ErrorEvent("some error"));
-    }));
+            // fulfill the request by transmitting an error
+            req.error(new ProgressEvent("some error"));
+        }),
+    );
 
-    it("should correctly decrement a counter", waitForAsync(() => {
-        const index = 0;
-        const by = 1;
-        const dummyEnvelope: IEnvelope = {
-            message: "Okay",
-            status: 200,
-            data: {
-                counter: { index, value: by },
-            },
-        };
+    it(
+        "should correctly decrement a counter",
+        waitForAsync(() => {
+            const index = 0;
+            const by = 1;
+            const dummyEnvelope: IEnvelope = {
+                message: "Okay",
+                status: 200,
+                data: {
+                    counter: { index, value: by },
+                },
+            };
 
-        // make the HTTP request via the service
-        service.decrementCounter(index, by).subscribe((counter: Counter) => {
-            expect(counter.index).toBe(index, "index doesn't match");
-            expect(counter.value).toBe(by, "value doesn't match");
-            expect(counter).not.toBe(dummyEnvelope.data.counter, "counter should be a copy");
-        });
+            // make the HTTP request via the service
+            service.decrementCounter(index, by).subscribe((counter: Counter) => {
+                expect(counter.index).withContext("index doesn't match").toBe(index);
+                expect(counter.value).withContext("value doesn't match").toBe(by);
+                expect(counter).withContext("counter should be a copy").not.toBe(dummyEnvelope.data.counter);
+            });
 
-        // the request is pending, therefor expect that it sometimes happens
-        const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}/decrement`);
-        expect(req.request.method).toBe("PUT", "expect a PUT request");
+            // the request is pending, therefor expect that it sometimes happens
+            const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}/decrement`);
+            expect(req.request.method).withContext("expect a PUT request").toBe("PUT");
 
-        // fulfill the request by transmitting a response
-        req.flush(dummyEnvelope);
-    }));
+            // fulfill the request by transmitting a response
+            req.flush(dummyEnvelope);
+        }),
+    );
 
-    it("should deal with HTTP errors trying to decrement a counter", waitForAsync(() => {
-        const index = 0;
-        const by = 1;
+    it(
+        "should deal with HTTP errors trying to decrement a counter",
+        waitForAsync(() => {
+            const index = 0;
+            const by = 1;
 
-        // make the HTTP request via the service
-        service.decrementCounter(index, by).subscribe(
-            (counter: Counter) => {
-                expect(counter).toBeUndefined("shouldn't run into this success case");
-            },
-            (error) => {
-                expect(error).toBeDefined("should receive an error");
-            },
-        );
+            // make the HTTP request via the service
+            service.decrementCounter(index, by).subscribe({
+                next: (counter: Counter) => {
+                    expect(counter).withContext("shouldn't run into this success case").toBeUndefined();
+                },
+                error: (error) => {
+                    expect(error).withContext("should receive an error").toBeDefined();
+                },
+            });
 
-        // the request is pending, therefor expect that it sometimes happens
-        const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}/decrement`);
-        expect(req.request.method).toBe("PUT", "expect a PUT request");
+            // the request is pending, therefor expect that it sometimes happens
+            const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}/decrement`);
+            expect(req.request.method).withContext("expect a PUT request").toBe("PUT");
 
-        // fulfill the request by transmitting an error
-        req.error(new ErrorEvent("some error"));
-    }));
+            // fulfill the request by transmitting an error
+            req.error(new ProgressEvent("some error"));
+        }),
+    );
 
-    it("should correctly increment a counter", waitForAsync(() => {
-        const index = 0;
-        const by = 1;
-        const dummyEnvelope: IEnvelope = {
-            message: "Okay",
-            status: 200,
-            data: {
-                counter: { index, value: by },
-            },
-        };
+    it(
+        "should correctly increment a counter",
+        waitForAsync(() => {
+            const index = 0;
+            const by = 1;
+            const dummyEnvelope: IEnvelope = {
+                message: "Okay",
+                status: 200,
+                data: {
+                    counter: { index, value: by },
+                },
+            };
 
-        // make the HTTP request via the service
-        service.incrementCounter(index, by).subscribe((counter: Counter) => {
-            expect(counter.index).toBe(index, "index doesn't match");
-            expect(counter.value).toBe(by, "value doesn't match");
-            expect(counter).not.toBe(dummyEnvelope.data.counter, "counter should be a copy");
-        });
+            // make the HTTP request via the service
+            service.incrementCounter(index, by).subscribe((counter: Counter) => {
+                expect(counter.index).withContext("index doesn't match").toBe(index);
+                expect(counter.value).withContext("value doesn't match").toBe(by);
+                expect(counter).withContext("counter should be a copy").not.toBe(dummyEnvelope.data.counter);
+            });
 
-        // the request is pending, therefor expect that it sometimes happens
-        const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}/increment`);
-        expect(req.request.method).toBe("PUT", "expect a PUT request");
+            // the request is pending, therefor expect that it sometimes happens
+            const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}/increment`);
+            expect(req.request.method).withContext("expect a PUT request").toBe("PUT");
 
-        // fulfill the request by transmitting a response
-        req.flush(dummyEnvelope);
-    }));
+            // fulfill the request by transmitting a response
+            req.flush(dummyEnvelope);
+        }),
+    );
 
-    it("should deal with HTTP errors trying to increment a counter", waitForAsync(() => {
-        const index = 0;
-        const by = 1;
+    it(
+        "should deal with HTTP errors trying to increment a counter",
+        waitForAsync(() => {
+            const index = 0;
+            const by = 1;
 
-        // make the HTTP request via the service
-        service.incrementCounter(index, by).subscribe(
-            (counter: Counter) => {
-                expect(counter).toBeUndefined("shouldn't run into this success case");
-            },
-            (error) => {
-                expect(error).toBeDefined("should receive an error");
-            },
-        );
+            // make the HTTP request via the service
+            service.incrementCounter(index, by).subscribe({
+                next: (counter: Counter) => {
+                    expect(counter).withContext("shouldn't run into this success case").toBeUndefined();
+                },
+                error: (error) => {
+                    expect(error).withContext("should receive an error").toBeDefined();
+                },
+            });
 
-        // the request is pending, therefor expect that it sometimes happens
-        const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}/increment`);
-        expect(req.request.method).toBe("PUT", "expect a PUT request");
+            // the request is pending, therefor expect that it sometimes happens
+            const req = httpMock.expectOne(`${environment.apiServer}/counters/${index}/increment`);
+            expect(req.request.method).withContext("expect a PUT request").toBe("PUT");
 
-        // fulfill the request by transmitting an error
-        req.error(new ErrorEvent("some error"));
-    }));
+            // fulfill the request by transmitting an error
+            req.error(new ProgressEvent("some error"));
+        }),
+    );
 });

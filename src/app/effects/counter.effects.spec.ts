@@ -41,10 +41,10 @@ describe("CounterEffects", () => {
             ],
         });
 
-        effects = TestBed.get(CounterEffects);
+        effects = TestBed.inject(CounterEffects);
         metadata = getEffectsMetadata(effects);
-        store = TestBed.get(Store);
-        counterService = TestBed.get(CounterService);
+        store = TestBed.inject(Store);
+        counterService = TestBed.inject(CounterService);
     });
 
     describe("decrementPending$", () => {
@@ -72,7 +72,7 @@ describe("CounterEffects", () => {
             const returnedErrMessage = `error in the "decrementPending$" action creator: "decrementing counter ${index} failed with ${errMessage}"`;
             const error = errorActions.errorOccurred({ error: returnedErrMessage });
 
-            const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(throwError(errMessage));
+            const decrementCounterSpy = spyOn(counterService, "decrementCounter").and.returnValue(throwError(() => errMessage));
 
             actions$ = cold("a|", { a: action });
             const expected = cold("b|", { b: error });
@@ -107,7 +107,7 @@ describe("CounterEffects", () => {
             const returnedErrMessage = `error in the "incrementPending$" action creator: "incrementing counter ${index} failed with ${errMessage}"`;
             const error = errorActions.errorOccurred({ error: returnedErrMessage });
 
-            const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(throwError(errMessage));
+            const incrementCounterSpy = spyOn(counterService, "incrementCounter").and.returnValue(throwError(() => errMessage));
 
             actions$ = cold("a|", { a: action });
             const expected = cold("b|", { b: error });
@@ -187,7 +187,7 @@ describe("CounterEffects", () => {
             const returnedErrMessage = `error in the "loadPending$" action creator: "retrieving counter ${index} failed with ${errMessage}"`;
             const error = errorActions.errorOccurred({ error: returnedErrMessage });
 
-            const counterSpy = spyOn(counterService, "counter").and.returnValue(throwError(errMessage));
+            const counterSpy = spyOn(counterService, "counter").and.returnValue(throwError(() => errMessage));
 
             actions$ = cold("a|", { a: action });
             const expected = cold("b|", { b: error });
@@ -210,7 +210,10 @@ describe("CounterEffects", () => {
             const completion = counterActions.loadAllCompleted({ counters: theCounters });
 
             const countersSpy = spyOn(counterService, "counters").and.returnValue(
-                of([{ index, value }, { index: index + 1, value: value + 1 }]),
+                of([
+                    { index, value },
+                    { index: index + 1, value: value + 1 },
+                ]),
             );
 
             actions$ = cold("--a-", { a: action });
@@ -227,7 +230,7 @@ describe("CounterEffects", () => {
             const returnedErrMessage = `error in the "loadAllPending$" action creator: "retrieving all counters failed with ${errMessage}"`;
             const error = errorActions.errorOccurred({ error: returnedErrMessage });
 
-            const countersSpy = spyOn(counterService, "counters").and.returnValue(throwError(errMessage));
+            const countersSpy = spyOn(counterService, "counters").and.returnValue(throwError(() => errMessage));
 
             actions$ = cold("a|", { a: action });
             const expected = cold("b|", { b: error });

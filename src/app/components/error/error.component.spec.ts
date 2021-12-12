@@ -12,16 +12,18 @@ describe("ErrorComponent", () => {
     let store: Store<IAppState>;
     let dispatchSpy;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            declarations: [ErrorComponent],
-            imports: [StoreModule.forRoot(reducers)],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [ErrorComponent],
+                imports: [StoreModule.forRoot(reducers)],
+                schemas: [NO_ERRORS_SCHEMA],
+            }).compileComponents();
+        }),
+    );
 
     beforeEach(() => {
-        store = TestBed.get(Store);
+        store = TestBed.inject(Store);
         dispatchSpy = spyOn(store, "dispatch").and.callThrough();
 
         fixture = TestBed.createComponent(ErrorComponent);
