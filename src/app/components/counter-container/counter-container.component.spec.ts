@@ -14,16 +14,18 @@ describe("CounterContainerComponent", () => {
     let fixture: ComponentFixture<CounterContainerComponent>;
     let store: Store<fromRoot.IAppState>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            declarations: [CounterContainerComponent],
-            imports: [StoreModule.forRoot(fromRoot.reducers)],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [CounterContainerComponent],
+                imports: [StoreModule.forRoot(fromRoot.reducers)],
+                schemas: [NO_ERRORS_SCHEMA],
+            }).compileComponents();
+        }),
+    );
 
     beforeEach(() => {
-        store = TestBed.get(Store);
+        store = TestBed.inject(Store);
         spyOn(store, "dispatch").and.callThrough();
 
         fixture = TestBed.createComponent(CounterContainerComponent);
@@ -50,15 +52,15 @@ describe("CounterContainerComponent", () => {
         const action = counterActions.loadCompleted({ index: counterIndex, counter: myCounter });
         store.dispatch(action);
 
-        component.counter$.subscribe(
-            (data) => {
+        component.counter$.subscribe({
+            next: (data) => {
                 expect(data.index).toBe(myCounter.index);
                 expect(data.value).toBe(myCounter.value);
             },
-            (error) => {
+            error: (error) => {
                 expect(error).toBeUndefined();
             },
-        );
+        });
     });
 
     it("should dispatch an action to decrement the counter", () => {

@@ -21,7 +21,7 @@ export class CounterContainerComponent implements OnInit {
     constructor(private store$: Store<IAppState>) {}
 
     ngOnInit() {
-        this.counter$ = this.store$.pipe(select(getCounter, { index: this.counterIndex }));
+        this.counter$ = this.store$.pipe(select(getCounter(this.counterIndex)));
 
         this.store$.dispatch(counterActions.loadPending({ index: this.counterIndex }));
     }
