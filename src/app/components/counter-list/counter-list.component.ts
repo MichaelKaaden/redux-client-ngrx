@@ -1,11 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
     selector: "mk-counter-list",
     templateUrl: "./counter-list.component.html",
     styleUrls: ["./counter-list.component.css"],
 })
-export class CounterListComponent implements OnInit {
+export class CounterListComponent {
     counterIndices: number[];
     numOfCounters = 6;
 
@@ -14,6 +14,4 @@ export class CounterListComponent implements OnInit {
             .fill(0)
             .map((x, i) => i);
     }
-
-    ngOnInit() {}
 }
