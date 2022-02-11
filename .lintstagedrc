@@ -1,15 +1,12 @@
 {
   "*.{html,json,scss,js,css}": [
-    "prettier --write",
-    "git add"
+    "prettier --write"
   ],
   "*.md": [
-    "prettier --print-width 80 --write",
-    "git add"
+    "prettier --print-width 80 --write"
   ],
   "*.ts": [
     "prettier --write",
-    "yarn eslint --fix ",
-    "git add"
+    "yarn eslint --fix "
   ]
 }
