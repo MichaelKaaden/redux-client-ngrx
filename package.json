@@ -7,7 +7,8 @@
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "prepare": "husky install"
     },
     "private": true,
     "dependencies": {
@@ -50,7 +51,7 @@
         "@typescript-eslint/eslint-plugin": "5.11.0",
         "@typescript-eslint/parser": "5.11.0",
         "eslint": "^8.8.0",
-        "husky": "^4.3.8",
+        "husky": "^7.0.0",
         "jasmine-core": "~4.0.0",
         "jasmine-marbles": "^0.9.1",
         "jasmine-spec-reporter": "~7.0.0",
