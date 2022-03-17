@@ -2,25 +2,23 @@ import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { Store, StoreModule } from "@ngrx/store";
 import * as errorActions from "../../actions/error.actions";
-import { IAppState, reducers } from "../../reducers";
+import { reducers } from "../../reducers";
 
 import { ErrorComponent } from "./error.component";
 
 describe("ErrorComponent", () => {
     let component: ErrorComponent;
     let fixture: ComponentFixture<ErrorComponent>;
-    let store: Store<IAppState>;
+    let store: Store;
     let dispatchSpy;
 
-    beforeEach(
-        waitForAsync(() => {
-            TestBed.configureTestingModule({
-                declarations: [ErrorComponent],
-                imports: [StoreModule.forRoot(reducers)],
-                schemas: [NO_ERRORS_SCHEMA],
-            }).compileComponents();
-        }),
-    );
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [ErrorComponent],
+            imports: [StoreModule.forRoot(reducers)],
+            schemas: [NO_ERRORS_SCHEMA],
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
         store = TestBed.inject(Store);
