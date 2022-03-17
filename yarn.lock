@@ -117,7 +117,7 @@
     rxjs "6.6.7"
     source-map "0.7.3"
 
-"@angular-devkit/schematics@13.3.0":
+"@angular-devkit/schematics@13.3.0", "@angular-devkit/schematics@^13.0.3":
   version "13.3.0"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-13.3.0.tgz#c79dba627d1ec4cef6d38bc282aeb7447446c94c"
   integrity sha512-hq7tqnB3uVT/iDgqWWZ4kvnijeAcgd4cfLzZiCPaYn1nuhZf0tWsho6exhJ/odMZHvVp7w8OibqWiUKxNY9zHA==
@@ -1897,6 +1897,18 @@
   dependencies:
     "@types/node" "*"
 
+"@types/yargs-parser@*":
+  version "21.0.0"
+  resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-21.0.0.tgz#0c60e537fa790f5f9472ed2776c2b71ec117351b"
+  integrity sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==
+
+"@types/yargs@^17.0.0":
+  version "17.0.9"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-17.0.9.tgz#f1f931a4e5ae2c0134dea10f501088636a50b46a"
+  integrity sha512-Ci8+4/DOtkHRylcisKmVMtmVO5g7weUVCKcsu1sJvF1bn0wExTmbHmhFKj7AnEm0de800iovGhdSKzYnzbaHpg==
+  dependencies:
+    "@types/yargs-parser" "*"
+
 "@typescript-eslint/eslint-plugin@^5.15.0":
   version "5.15.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.15.0.tgz#c28ef7f2e688066db0b6a9d95fb74185c114fb9a"
@@ -1918,6 +1930,13 @@
   integrity sha512-EPvC/bU2n1LKtzKWP1AjGWkp7r8tJ8giVlZHIODo6q7SAd6J+/9vjtEKHK2G/Qp+D2IGPsQge+oadDR3CZcFtQ==
   dependencies:
     "@typescript-eslint/utils" "5.11.0"
+
+"@typescript-eslint/experimental-utils@^5.0.0", "@typescript-eslint/experimental-utils@^5.4.0":
+  version "5.15.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-5.15.0.tgz#407bbbdf1d11d24de81cfdf556b3a9f4252ba4ae"
+  integrity sha512-AJOOaBrVqKYWaYDBtgMi9XVDB3YHXlffto/3A4VQ39VVaNqosSOp/nW09G4N/ej8WlzHQB2jTnSfP5wWsXSQJA==
+  dependencies:
+    "@typescript-eslint/utils" "5.15.0"
 
 "@typescript-eslint/parser@^5.15.0":
   version "5.15.0"
@@ -3755,6 +3774,26 @@ escape-string-regexp@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz#14ba83a5d373e3d311e5afca29cf5bfad965bf34"
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
+
+eslint-etc@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-5.1.0.tgz#7e99b80452fe8335065fddf7800e4495dc0922a0"
+  integrity sha512-Rmjl01h5smi5cbsFne2xpTuch2xNnwXiX2lbS4HttXUN5FwXKAwG1UEFBVGO1nC091YO/QyVahyfNPJSX2ae+g==
+  dependencies:
+    "@typescript-eslint/experimental-utils" "^5.0.0"
+    tsutils "^3.17.1"
+    tsutils-etc "^1.4.1"
+
+eslint-plugin-ngrx@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ngrx/-/eslint-plugin-ngrx-2.0.4.tgz#290f5995df591771dc43810dbce804e83f54855e"
+  integrity sha512-pNLZM3dlqowBMz/SoeYFHWC15NLtwv25q4/usWSPRfn2viDJzhdGRjphIyYG7zzgh3urHvBPhBuRwGE4hn57ng==
+  dependencies:
+    "@angular-devkit/schematics" "^13.0.3"
+    "@typescript-eslint/experimental-utils" "^5.4.0"
+    eslint-etc "^5.1.0"
+    semver "^7.3.5"
+    strip-json-comments "3.1.1"
 
 eslint-scope@5.1.1, eslint-scope@^5.1.0, eslint-scope@^5.1.1:
   version "5.1.1"
@@ -7581,7 +7620,15 @@ tslib@^1.8.1, tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tsutils@^3.21.0:
+tsutils-etc@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/tsutils-etc/-/tsutils-etc-1.4.1.tgz#bd42a0079d534765ab314d087f8a89c77a68723f"
+  integrity sha512-6UPYgc7OXcIW5tFxlsZF3OVSBvDInl/BkS3Xsu64YITXk7WrnWTVByKWPCThFDBp5gl5IGHOzGMdQuDCE7OL4g==
+  dependencies:
+    "@types/yargs" "^17.0.0"
+    yargs "^17.0.0"
+
+tsutils@^3.17.1, tsutils@^3.21.0:
   version "3.21.0"
   resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-3.21.0.tgz#b48717d394cea6c1e096983eed58e9d61715b623"
   integrity sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==
@@ -8078,7 +8125,7 @@ yargs@^16.1.1:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
-yargs@^17.2.1:
+yargs@^17.0.0, yargs@^17.2.1:
   version "17.3.1"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.3.1.tgz#da56b28f32e2fd45aefb402ed9c26f42be4c07b9"
   integrity sha512-WUANQeVgjLbNsEmGk20f+nlHgOqzRFpiGWVaBrYGYIGANIIu3lWjoyi0fNlFmJkvfhCZ6BXINe7/W2O2bV4iaA==
