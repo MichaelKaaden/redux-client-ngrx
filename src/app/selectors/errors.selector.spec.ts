@@ -1,5 +1,5 @@
 import { initialState } from "../reducers/error.reducer";
-import { getErrors, selectErrorsState } from "./errors.selectors";
+import { selectErrors, selectErrorsState } from "./errors.selectors";
 
 describe("errors selectors", () => {
     describe("selectErrorsState", () => {
@@ -12,9 +12,9 @@ describe("errors selectors", () => {
 
     describe("getErrors", () => {
         it("should select errors", () => {
-            expect(getErrors.projector(initialState).length).toBe(0);
-            expect(getErrors.projector({ errors: ["foo"] }).length).toBe(1);
-            expect(getErrors.projector({ errors: ["foo", "bar"] }).length).toBe(2);
+            expect(selectErrors.projector(initialState).length).toBe(0);
+            expect(selectErrors.projector({ errors: ["foo"] }).length).toBe(1);
+            expect(selectErrors.projector({ errors: ["foo", "bar"] }).length).toBe(2);
         });
     });
 });

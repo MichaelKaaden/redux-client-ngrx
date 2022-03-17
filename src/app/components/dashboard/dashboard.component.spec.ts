@@ -2,7 +2,6 @@ import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { Store, StoreModule } from "@ngrx/store";
 import * as counterActions from "../../actions/counter.actions";
-import * as fromRoot from "../../reducers";
 import { reducers } from "../../reducers";
 
 import { DashboardComponent } from "./dashboard.component";
@@ -10,17 +9,15 @@ import { DashboardComponent } from "./dashboard.component";
 describe("DashboardComponent", () => {
     let component: DashboardComponent;
     let fixture: ComponentFixture<DashboardComponent>;
-    let store: Store<fromRoot.IAppState>;
+    let store: Store;
 
-    beforeEach(
-        waitForAsync(() => {
-            TestBed.configureTestingModule({
-                declarations: [DashboardComponent],
-                imports: [StoreModule.forRoot(reducers)],
-                schemas: [NO_ERRORS_SCHEMA],
-            }).compileComponents();
-        }),
-    );
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [DashboardComponent],
+            imports: [StoreModule.forRoot(reducers)],
+            schemas: [NO_ERRORS_SCHEMA],
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
         store = TestBed.inject(Store);

@@ -32,6 +32,13 @@
             "files": ["*.html"],
             "extends": ["plugin:@angular-eslint/template/recommended"],
             "rules": {}
+        },
+        {
+            "files": ["*.ts"],
+            "extends": ["plugin:ngrx/recommended"],
+            "rules": {
+                "ngrx/prefer-effect-callback-in-block-statement": "off"
+            }
         }
     ]
 }

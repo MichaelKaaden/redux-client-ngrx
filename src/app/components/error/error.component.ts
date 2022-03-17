@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { select, Store } from "@ngrx/store";
+import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import * as errorActions from "../../actions/error.actions";
-import { IAppState } from "../../reducers";
-import { getErrors } from "../../selectors/errors.selectors";
+import { selectErrors } from "../../selectors/errors.selectors";
 
 @Component({
     selector: "mk-error",
@@ -14,10 +13,10 @@ import { getErrors } from "../../selectors/errors.selectors";
 export class ErrorComponent implements OnInit {
     errors$: Observable<string[]>;
 
-    constructor(private store: Store<IAppState>) {}
+    constructor(private store: Store) {}
 
     ngOnInit(): void {
-        this.errors$ = this.store.pipe(select(getErrors));
+        this.errors$ = this.store.select(selectErrors);
     }
 
     reset() {

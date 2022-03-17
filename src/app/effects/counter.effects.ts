@@ -1,19 +1,18 @@
 import { Injectable } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { of } from "rxjs";
-import { catchError, map, mergeMap, withLatestFrom } from "rxjs/operators";
+import { catchError, map, mergeMap } from "rxjs/operators";
 
 import * as counterActions from "../actions/counter.actions";
 import * as errorActions from "../actions/error.actions";
 import { Counter } from "../models/counter";
-import { IAppState } from "../reducers";
-import { getCounters } from "../selectors/counters.selectors";
+import { selectCounters } from "../selectors/counters.selectors";
 import { CounterService } from "../services/counter.service";
 
 @Injectable()
 export class CounterEffects {
-    constructor(private actions$: Actions, private store$: Store<IAppState>, private counterService: CounterService) {}
+    constructor(private actions$: Actions, private store: Store, private counterService: CounterService) {}
 
     decrementPending$ = createEffect(() =>
         this.actions$.pipe(
@@ -54,7 +53,7 @@ export class CounterEffects {
     loadPending$ = createEffect(() =>
         this.actions$.pipe(
             ofType(counterActions.loadPending),
-            withLatestFrom(this.store$),
+            concatLatestFrom(() => this.store),
             mergeMap(([payload, state]) => {
                 // hint: using switchMap instead would of course cancel any previous HTTP requests
                 if (payload.index < 0) {
@@ -62,7 +61,7 @@ export class CounterEffects {
                 }
 
                 // re-use an already loaded counter
-                const cachedCounter: Counter = getCounters(state).find((item: Counter) => item.index === payload.index);
+                const cachedCounter: Counter = selectCounters(state).find((item: Counter) => item.index === payload.index);
                 if (cachedCounter && !cachedCounter.isLoading) {
                     return of(
                         counterActions.loadCompleted({

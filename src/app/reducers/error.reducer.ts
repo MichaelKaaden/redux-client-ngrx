@@ -1,4 +1,4 @@
-import { Action, createReducer, on } from "@ngrx/store";
+import { createReducer, on } from "@ngrx/store";
 import * as errorActions from "../actions/error.actions";
 
 export interface ErrorsState {
@@ -9,14 +9,10 @@ export const initialState: ErrorsState = {
     errors: [],
 };
 
-const errorReducer = createReducer(
+export const reducer = createReducer(
     initialState,
-    on(errorActions.errorOccurred, (state, action) => ({ errors: [...state.errors, action.error] })),
-    on(errorActions.resetErrors, () => initialState),
+    on(errorActions.errorOccurred, (state, action): ErrorsState => ({ errors: [...state.errors, action.error] })),
+    on(errorActions.resetErrors, (): ErrorsState => initialState),
 );
-
-export function reducer(state: ErrorsState = initialState, action: Action): ErrorsState {
-    return errorReducer(state, action);
-}
 
 export const getErrors = (state: ErrorsState) => state.errors;

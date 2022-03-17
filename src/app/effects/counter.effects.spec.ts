@@ -8,7 +8,7 @@ import { Observable, of, throwError } from "rxjs";
 import * as counterActions from "../actions/counter.actions";
 import * as errorActions from "../actions/error.actions";
 import { Counter } from "../models/counter";
-import { IAppState, reducers } from "../reducers";
+import { reducers } from "../reducers";
 import { CounterService } from "../services/counter.service";
 
 import { CounterEffects } from "./counter.effects";
@@ -18,7 +18,7 @@ describe("CounterEffects", () => {
     let actions$: Observable<any>;
     let effects: CounterEffects;
     let metadata: EffectsMetadata<CounterEffects>;
-    let store: Store<IAppState>;
+    let store: Store;
     let counterService: CounterService;
     const index = 0;
     const value = 42;

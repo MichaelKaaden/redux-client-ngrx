@@ -12,17 +12,15 @@ describe("CounterContainerComponent", () => {
 
     let component: CounterContainerComponent;
     let fixture: ComponentFixture<CounterContainerComponent>;
-    let store: Store<fromRoot.IAppState>;
+    let store: Store;
 
-    beforeEach(
-        waitForAsync(() => {
-            TestBed.configureTestingModule({
-                declarations: [CounterContainerComponent],
-                imports: [StoreModule.forRoot(fromRoot.reducers)],
-                schemas: [NO_ERRORS_SCHEMA],
-            }).compileComponents();
-        }),
-    );
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [CounterContainerComponent],
+            imports: [StoreModule.forRoot(fromRoot.reducers)],
+            schemas: [NO_ERRORS_SCHEMA],
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
         store = TestBed.inject(Store);
