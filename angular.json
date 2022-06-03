@@ -129,7 +129,6 @@
       }
     }
   },
-  "defaultProject": "redux-client-ngrx",
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
   }
