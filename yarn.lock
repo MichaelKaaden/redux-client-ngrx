@@ -25,7 +25,7 @@
     "@angular-devkit/core" "14.0.0"
     rxjs "6.6.7"
 
-"@angular-devkit/build-angular@~14.0.0":
+"@angular-devkit/build-angular@^14.0.0":
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-14.0.0.tgz#68825037c7f110a80a05c1c0c838ba98d6cf3fa7"
   integrity sha512-SUFanOcIJ6XWBltQ7U038zGGhsT40h4I1Pqkf+qlPLGctARz8wfD3GPD1a0pRlrIH6J/f7Xbb7QrQvGfG4g/NQ==
@@ -221,7 +221,7 @@
   optionalDependencies:
     parse5 "^5.0.0"
 
-"@angular/cli@~14.0.0":
+"@angular/cli@^14.0.0":
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-14.0.0.tgz#ce761693bef18e8cf46eeebc01c85ea49f0a110f"
   integrity sha512-dGIP0FdKnZ52VJZo83r+eQlCnUDVj08Dx3v3szD/IT/f7bhv7Ob6Bdae+c7CgM5yIt1DBIYe6xX8uZ/JIGtBoQ==
