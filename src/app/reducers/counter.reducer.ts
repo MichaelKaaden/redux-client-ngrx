@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityState } from "@ngrx/entity";
-import { Action, createReducer, on } from "@ngrx/store";
+import { createReducer, on } from "@ngrx/store";
 import * as counterActions from "../actions/counter.actions";
 import { Counter } from "../models/counter";
 
@@ -12,7 +12,7 @@ export interface CountersState extends EntityState<Counter> {}
 
 export const initialState: CountersState = adapter.getInitialState();
 
-const counterReducer = createReducer(
+export const reducer = createReducer(
     initialState,
     on(counterActions.loadPending, (state, action) => adapter.addOne({ index: action.index, isLoading: true }, state)),
     on(counterActions.loadCompleted, (state, action) =>
@@ -27,7 +27,7 @@ const counterReducer = createReducer(
             state,
         ),
     ),
-    on(counterActions.loadAllPending, (state) => state),
+    on(counterActions.loadAllPending, (state): CountersState => state),
     on(counterActions.loadAllCompleted, (state, action) => adapter.addMany(action.counters, state)),
     on(counterActions.decrementPending, counterActions.incrementPending, (state, action) =>
         adapter.updateOne(
@@ -53,9 +53,5 @@ const counterReducer = createReducer(
         ),
     ),
 );
-
-export function reducer(state: CountersState = initialState, action: Action): CountersState {
-    return counterReducer(state, action);
-}
 
 export const { selectIds, selectEntities, selectAll, selectTotal } = adapter.getSelectors();

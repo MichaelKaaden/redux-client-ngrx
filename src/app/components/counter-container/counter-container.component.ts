@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
-import { select, Store } from "@ngrx/store";
+import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import * as counterActions from "../../actions/counter.actions";
 import { Counter } from "../../models/counter";
-import { IAppState } from "../../reducers";
-import { getCounter } from "../../selectors/counters.selectors";
+import { selectCounter } from "../../selectors/counters.selectors";
 
 @Component({
     selector: "mk-counter-container",
@@ -18,21 +17,21 @@ export class CounterContainerComponent implements OnInit {
 
     counter$: Observable<Counter>;
 
-    constructor(private store$: Store<IAppState>) {}
+    constructor(private store: Store) {}
 
     ngOnInit() {
-        this.counter$ = this.store$.pipe(select(getCounter(this.counterIndex)));
+        this.counter$ = this.store.select(selectCounter(this.counterIndex));
 
-        this.store$.dispatch(counterActions.loadPending({ index: this.counterIndex }));
+        this.store.dispatch(counterActions.loadPending({ index: this.counterIndex }));
     }
 
     // needed to capture "this" properly
     public decrement = (by: number): void => {
-        this.store$.dispatch(counterActions.decrementPending({ index: this.counterIndex, by }));
-    }
+        this.store.dispatch(counterActions.decrementPending({ index: this.counterIndex, by }));
+    };
 
     // needed to capture "this" properly
     public increment = (by: number): void => {
-        this.store$.dispatch(counterActions.incrementPending({ index: this.counterIndex, by }));
-    }
+        this.store.dispatch(counterActions.incrementPending({ index: this.counterIndex, by }));
+    };
 }
