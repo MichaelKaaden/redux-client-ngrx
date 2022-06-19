@@ -1720,6 +1720,13 @@
     "@angular-devkit/schematics" "14.0.0"
     jsonc-parser "3.0.0"
 
+"@state-adapt/core@^0.44.0":
+  version "0.44.0"
+  resolved "https://registry.yarnpkg.com/@state-adapt/core/-/core-0.44.0.tgz#392c489bb1cf8ea15397a9721d8731ff938b1e18"
+  integrity sha512-TMY7no95/oYXuVqHerEMLgTgG6c6CWMJGEzZdAlSRBC6d5e35i3d5MkCz0xKKKje7dcNwwFjs+tuObR6vYGUVA==
+  dependencies:
+    tslib "^2.0.0"
+
 "@swc-node/core@^1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@swc-node/core/-/core-1.9.0.tgz#f5208d575c1aed5a2cab7e4c04e46aca34d8c240"
@@ -7033,6 +7040,11 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+
+reselect@^4.1.6:
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/reselect/-/reselect-4.1.6.tgz#19ca2d3d0b35373a74dc1c98692cdaffb6602656"
+  integrity sha512-ZovIuXqto7elwnxyXbBtCPo9YFEr3uJqj2rRbcOOog1bmu2Ag85M4hixSwFWyaBMKXNgvPaJ9OSu9SkBPIeJHQ==
 
 resolve-from@^4.0.0:
   version "4.0.0"
