@@ -1,12 +1,5 @@
 {
-  "*.{html,json,scss,js,css}": [
-    "prettier --write"
-  ],
-  "*.md": [
-    "prettier --print-width 80 --write"
-  ],
-  "*.ts": [
-    "prettier --write",
-    "yarn eslint --fix "
-  ]
+    "*.{html,json,scss,js,css}": [],
+    "*.md": [],
+    "*.ts": []
 }
