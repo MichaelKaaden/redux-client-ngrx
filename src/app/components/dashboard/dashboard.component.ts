@@ -1,8 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { Observable } from "rxjs";
-import * as counterActions from "../../actions/counter.actions";
-import { selectAverageSum, selectCounterSum, selectNumOfCounters } from "../../selectors/counters.selectors";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { CounterStore } from "src/app/counter.store";
 
 @Component({
     selector: "mk-dashboard",
@@ -10,22 +7,10 @@ import { selectAverageSum, selectCounterSum, selectNumOfCounters } from "../../s
     styleUrls: ["./dashboard.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardComponent implements OnInit {
-    counterValueSum$: Observable<number>; // the sum of all counters
-    numOfCounters$: Observable<number>; // the number of counters
-    averageCounterValue$: Observable<number>;
+export class DashboardComponent {
+    numOfCounters$ = this.store.numOfCounters$;
+    counterValueSum$ = this.store.counterSum$;
+    averageCounterValue$ = this.store.average$;
 
-    constructor(private store: Store) {}
-
-    ngOnInit() {
-        this.numOfCounters$ = this.store.select(selectNumOfCounters);
-        this.counterValueSum$ = this.store.select(selectCounterSum);
-        this.averageCounterValue$ = this.store.select(selectAverageSum);
-
-        this.loadAll();
-    }
-
-    private loadAll() {
-        this.store.dispatch(counterActions.loadAllPending());
-    }
+    constructor(private store: CounterStore) {}
 }

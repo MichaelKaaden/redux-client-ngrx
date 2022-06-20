@@ -3,6 +3,7 @@ export interface Counter {
     value?: number;
     isLoading?: boolean;
     isSaving?: boolean;
+    error?: string;
 }
 
 export interface CounterRaw {
