@@ -1671,10 +1671,10 @@
     "@angular-devkit/schematics" "14.0.0"
     jsonc-parser "3.0.0"
 
-"@state-adapt/core@^0.44.0":
-  version "0.44.0"
-  resolved "https://registry.yarnpkg.com/@state-adapt/core/-/core-0.44.0.tgz#392c489bb1cf8ea15397a9721d8731ff938b1e18"
-  integrity sha512-TMY7no95/oYXuVqHerEMLgTgG6c6CWMJGEzZdAlSRBC6d5e35i3d5MkCz0xKKKje7dcNwwFjs+tuObR6vYGUVA==
+"@state-adapt/core@^0.45.0":
+  version "0.45.0"
+  resolved "https://registry.yarnpkg.com/@state-adapt/core/-/core-0.45.0.tgz#8b0e92c2a828b5e983aa14b26ca336d1f1a0dea7"
+  integrity sha512-4fzT4JawVJMdPtxFdTj0gFx6oDoIZprJlkvGwCp/ajbdBaX+/0Ec49h/XUz6IKFZSvbFGSmam6xBfoMGwIIplw==
   dependencies:
     tslib "^2.0.0"
 
