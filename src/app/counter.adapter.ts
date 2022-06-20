@@ -34,7 +34,7 @@ export const counterAdapter = createAdapter<CountersState>()({
     },
     receiveCounter: (state, { index: id, value }: Counter) =>
         counterEntityAdapter.updateOne({ id, changes: { value, isLoading: false } }, state),
-    setCounterError: (state, [id, error]: [number, string]) =>
+    setCounterError: (state, [error, id]: [string, number]) =>
         counterEntityAdapter.updateOne({ id, changes: { isLoading: false, error } }, state),
     receiveAll: (state, counters: Counter[]) => counterEntityAdapter.addMany(counters, state),
     setError: (state, error: string) => ({ ...state, error }),

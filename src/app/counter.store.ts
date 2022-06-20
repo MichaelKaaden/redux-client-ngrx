@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { AdaptCommon, getAction, getHttpSources, Source, splitSources, toSource } from "@state-adapt/core";
-import { catchError, concat, concatMap, filter, from, mergeMap, of, tap, withLatestFrom } from "rxjs";
+import { AdaptCommon, getHttpActions, getHttpSources, Source, splitHttpSources } from "@state-adapt/core";
+import { concatMap, filter, from, mergeMap, withLatestFrom } from "rxjs";
 import { counterAdapter, countersInitialState } from "./counter.adapter";
 import { CounterService } from "./services/counter.service";
 
@@ -11,65 +11,35 @@ export class CounterStore {
     counterRequest$ = this.itemId$.pipe(
         withLatestFrom(this.countersSpy$),
         filter(([id, counters]) => !counters.some(({ index }) => id === index)),
-        mergeMap(([id]) =>
-            concat(
-                of(getAction("[Counters] request$", id)),
-                this.counterService.counter(id).pipe(
-                    toSource("[Counters] success$"),
-                    catchError((err) => {
-                        const errStr = `loadPending$ retrieving counter ${id} failed with ${err}`;
-                        return of(getAction("[Counters] error$", [id, errStr] as [number, string]));
-                    }),
-                ),
-            ),
-        ),
+        mergeMap(([id]) => getHttpActions(this.counterService.counter(id), (res) => [!!res, res, "Error"], id)),
     );
-    counterRequest = splitSources(this.counterRequest$, {
-        request$: "[Counters] request$",
-        success$: "[Counters] success$",
-        error$: "[Counters] error$",
-    });
+    counterRequest = splitHttpSources("[Counters]", this.counterRequest$);
 
     countersRequest = getHttpSources("[Counters] [All]", this.counterService.counters(), (res) => [!!res, res, "Error"]);
 
     increment$ = new Source<number[]>("[Counters] increment$ request$");
     incrementRequest$ = this.increment$.pipe(
         concatMap(({ payload: [id, by] }) =>
-            concat(
-                of(getAction("[Counters] increment$ request$", id)),
-                this.counterService.incrementCounter(id, by).pipe(
-                    toSource("[Counters] increment$ success$"),
-                    catchError((err) => {
-                        const errStr = `loadPending$ retrieving counter ${id} failed with ${err}`;
-                        return of(getAction("[Counters] error$", [id, errStr] as [number, string]));
-                    }),
-                ),
+            getHttpActions(
+                this.counterService.incrementCounter(id, by),
+                (res) => [!!res, res, `loadPending$ retrieving counter ${id} failed`],
+                id,
             ),
         ),
     );
-    incrementRequest = splitSources(this.incrementRequest$, {
-        success$: "[Counters] increment$ success$",
-        error$: "[Counters] increment$ error$",
-    });
+    incrementRequest = splitHttpSources("[Counters] increment$", this.incrementRequest$);
+
     decrement$ = new Source<number[]>("[Counters] decrement$ request$");
     decrementRequest$ = this.decrement$.pipe(
         concatMap(({ payload: [id, by] }) =>
-            concat(
-                of(getAction("[Counters] decrement$ request$", id)),
-                this.counterService.decrementCounter(id, by).pipe(
-                    toSource("[Counters] decrement$ success$"),
-                    catchError((err) => {
-                        const errStr = `loadPending$ retrieving counter ${id} failed with ${err}`;
-                        return of(getAction("[Counters] error$", [id, errStr] as [number, string]));
-                    }),
-                ),
+            getHttpActions(
+                this.counterService.incrementCounter(id, by),
+                (res) => [!!res, res, `loadPending$ retrieving counter ${id} failed`],
+                id,
             ),
         ),
     );
-    decrementRequest = splitSources(this.decrementRequest$, {
-        success$: "[Counters] decrement$ success$",
-        error$: "[Counters] decrement$ error$",
-    });
+    decrementRequest = splitHttpSources("[Counters] decrement$", this.decrementRequest$);
 
     errorsReset$ = new Source<void>("[Counters] resetErrors$");
 
@@ -91,5 +61,5 @@ export class CounterStore {
     average$ = this.store.average$;
     all$ = this.store.all$;
 
-    constructor(private adapt: AdaptCommon<any>, private counterService: CounterService) {}
+    constructor(private adapt: AdaptCommon, private counterService: CounterService) {}
 }

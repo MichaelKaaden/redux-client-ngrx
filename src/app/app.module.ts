@@ -3,7 +3,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { AdaptCommon, createStore, actionSanitizer, stateSanitizer } from "@state-adapt/core";
+import { defaultStoreProvider } from "@state-adapt/core";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./components/app/app.component";
 import { CounterContainerComponent } from "./components/counter-container/counter-container.component";
@@ -16,11 +16,6 @@ import { PageNotFoundComponent } from "./components/page-not-found/page-not-foun
 import { ProgressComponent } from "./components/progress/progress.component";
 import { MaterialModule } from "./material.module";
 import { CounterService } from "./services/counter.service";
-
-const enableReduxDevTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__?.({
-    actionSanitizer,
-    stateSanitizer,
-});
 
 @NgModule({
     declarations: [
@@ -35,7 +30,7 @@ const enableReduxDevTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__?.({
         CounterInputComponent,
     ],
     imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, MaterialModule, FlexLayoutModule],
-    providers: [CounterService, { provide: AdaptCommon, useValue: createStore(enableReduxDevTools) }],
+    providers: [CounterService, defaultStoreProvider],
     bootstrap: [AppComponent],
     schemas: [NO_ERRORS_SCHEMA],
 })
