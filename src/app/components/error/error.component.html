@@ -6,7 +6,7 @@
 
 <button mat-raised-button
         color="warn"
-        (click)="reset()"
+        (click)="errorsReset$.next()"
         *ngIf="((errors$ | async)?.length)">
     <mat-icon>cancel</mat-icon>&nbsp;&nbsp;<ng-container i18n="Button to delete error messages@@ErrorsComponent">Reset
     errors
