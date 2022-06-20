@@ -10,7 +10,6 @@ export class CounterStore {
     countersSpy$ = this.adapt.spy("counters", counterAdapter).all$;
     counterRequest$ = this.itemId$.pipe(
         withLatestFrom(this.countersSpy$),
-        tap((a) => console.log("itemId$, countersSpy$", a)),
         filter(([id, counters]) => !counters.some(({ index }) => id === index)),
         mergeMap(([id]) =>
             concat(
