@@ -35,14 +35,14 @@ describe("AppComponent", () => {
         expect(compiled.querySelector("h1").textContent).toContain("Redux Demo Application");
     });
 
-    it("should contain a navigation bar", waitForAsync(() => {
+    it("should contain a navigation bar", () => {
         expect(compiled.querySelector("nav")).not.toBe(null);
-    }));
+    });
 
-    it("should have links in the navigation bar", waitForAsync(() => {
+    it("should have links in the navigation bar", () => {
         const links = compiled.querySelectorAll("nav a");
         expect(links.length).toBe(2);
         expect(links[0].href).toMatch(/\/counters/);
         expect(links[1].href).toMatch(/\/dashboard/);
-    }));
+    });
 });
