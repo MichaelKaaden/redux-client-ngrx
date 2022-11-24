@@ -1,15 +1,15 @@
-/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
-mat-card-title {
-    font-weight: bold;
-}
-
-/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
-mat-card-content {
-    padding-top: 20px;
-    text-align: center;
-    font-size: 800%;
+.dashboard-container {
+    display: flex;
 }
 
 .dashboard {
-    margin: 15px;
+    margin: 10px;
+}
+
+mat-card-content {
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold;
 }
