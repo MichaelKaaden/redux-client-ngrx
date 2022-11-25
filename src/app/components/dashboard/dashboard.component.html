@@ -1,33 +1,36 @@
-<mk-errors></mk-errors>
+<mk-error></mk-error>
 
-<div fxFlex fxLayout="row wrap" fxLayout.xs="column" fxLayout.sm="column"
-     fxLayoutWrap fxLayoutGap="5%" fxLayoutAlign="left">
-  <mat-card class="dashboard">
-    <mat-card-title i18n="Heading for the card containing the number of counters@@DashboardComponent:NumOfCounters">
-      Number of counters
-    </mat-card-title>
-    <br><br>
-    <mat-card-content>{{ numOfCounters$ | async }}</mat-card-content>
-    <br>
-  </mat-card>
+<div class="dashboard-container">
+    <mat-card appearance="raised" class="dashboard">
+        <mat-card-header>
+            <mat-card-title i18n="Heading for the card containing the number of counters@@DashboardComponent:NumOfCounters">
+                <p>Number of counters</p>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p class="mat-headline-1 bold">{{ numOfCounters$ | async }}</p>
+        </mat-card-content>
+    </mat-card>
 
-  <mat-card class="dashboard">
-    <mat-card-title
-            i18n="Heading for the card containing the sum over all counters@@DashboardComponent:SumOfCounters">Counters sum
-      up to
-    </mat-card-title>
-    <br><br>
-    <mat-card-content>{{ counterValueSum$ | async }}</mat-card-content>
-    <br>
-  </mat-card>
+    <mat-card appearance="raised" class="dashboard">
+        <mat-card-header>
+            <mat-card-title i18n="Heading for the card containing the sum over all counters@@DashboardComponent:SumOfCounters">
+                <p>Counters sum up to</p>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p class="mat-headline-1 bold">{{ counterValueSum$ | async }}</p>
+        </mat-card-content>
+    </mat-card>
 
-  <mat-card class="dashboard">
-    <mat-card-title
-            i18n="Heading for the card containing the average over all counters@@DashboardComponent:AverageOfCounters">
-      Average counter value
-    </mat-card-title>
-    <br><br>
-    <mat-card-content>{{ averageCounterValue$ | async }}</mat-card-content>
-    <br>
-  </mat-card>
+    <mat-card appearance="raised" class="dashboard">
+        <mat-card-header>
+            <mat-card-title i18n="Heading for the card containing the average over all counters@@DashboardComponent:AverageOfCounters">
+                <p>Average counter value</p>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p class="mat-headline-1 bold">{{ averageCounterValue$ | async }}</p>
+        </mat-card-content>
+    </mat-card>
 </div>

@@ -1,6 +1,5 @@
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
-import { FlexLayoutModule } from "@angular/flex-layout";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { EffectsModule } from "@ngrx/effects";
@@ -44,7 +43,6 @@ import { CounterService } from "./services/counter.service";
         HttpClientModule,
         BrowserAnimationsModule,
         MaterialModule,
-        FlexLayoutModule,
         StoreModule.forRoot(reducers, { metaReducers, runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true } }),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         StoreModule.forFeature("errors", fromError.reducer),

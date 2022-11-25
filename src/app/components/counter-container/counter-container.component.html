@@ -1,16 +1,20 @@
-<mat-card class="counterContainer">
-    <mat-card-title>Counter #{{ counterIndex }}</mat-card-title>
+<mat-card appearance="raised" class="counterContainer">
+    <mat-card-header>
+        <mat-card-title>
+            <p>Counter #{{ counterIndex }}</p>
+        </mat-card-title>
 
-    <mat-card-subtitle>
-        <mk-counter-heading [counterIndex]="counterIndex"
-                            [counter]="counter$ | async"></mk-counter-heading>
-    </mat-card-subtitle>
+        <mat-card-subtitle>
+            <mk-counter-heading [counterIndex]="counterIndex" [counter]="counter$ | async"></mk-counter-heading>
+        </mat-card-subtitle>
+    </mat-card-header>
 
     <mat-card-content>
-        <br><br>
-        <mk-counter-input [counterIndex]="counterIndex"
-                          [counter]="counter$ | async"
-                          [decrementFunc]="decrement"
-                          [incrementFunc]="increment"></mk-counter-input>
+        <mk-counter-input
+            [counterIndex]="counterIndex"
+            [counter]="counter$ | async"
+            [decrementFunc]="decrement"
+            [incrementFunc]="increment"
+        ></mk-counter-input>
     </mat-card-content>
 </mat-card>

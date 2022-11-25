@@ -1,10 +1,9 @@
-<div fxFlex fxLayout="column">
-  <mk-error></mk-error>
+<div class="list-container">
+    <mk-error></mk-error>
 
-  <div fxFlex fxLayout="row wrap" fxLayout.xs="column" fxLayout.sm="column"
-       fxLayoutWrap fxLayoutGap="5%" fxLayoutAlign="left">
-    <div *ngFor="let index of counterIndices">
-      <mk-counter-container [counterIndex]="index"></mk-counter-container>
+    <div class="list">
+        <div *ngFor="let index of counterIndices">
+            <mk-counter-container [counterIndex]="index"></mk-counter-container>
+        </div>
     </div>
-  </div>
 </div>

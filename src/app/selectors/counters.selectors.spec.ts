@@ -1,4 +1,3 @@
-import { expect } from "@angular/flex-layout/_private-utils/testing";
 import { Counter } from "../models/counter";
 import { CountersState, initialState } from "../reducers/counter.reducer";
 import { initializeStateWith } from "../reducers/counter.reducer.spec";

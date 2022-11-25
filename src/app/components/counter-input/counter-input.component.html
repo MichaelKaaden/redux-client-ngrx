@@ -1,23 +1,26 @@
 <div>
-    <mk-progress [isLoading]="counter?.isLoading || counter?.isSaving"
-                 [diameter]="23">
-        <span>{{ counter?.value }}</span>
+    <mk-progress [isLoading]="counter?.isLoading || counter?.isSaving" [diameter]="23">
+        <p class="mat-headline-1 counter-value">{{ counter?.value }}</p>
     </mk-progress>
-    <br>
-    <br>
-    <button mat-raised-button
+
+    <div class="button-container">
+        <button
+            mat-mini-fab
+            color="primary"
             class="decrementButton"
-            color="primary"
             (click)="decrement()"
-            [disabled]="counter?.isLoading || counter?.isSaving">
-        <mat-icon>remove</mat-icon>
-    </button>
-    &nbsp;
-    <button mat-raised-button
-            class="incrementButton"
+            [disabled]="counter?.isLoading || counter?.isSaving"
+        >
+            <mat-icon>remove</mat-icon>
+        </button>
+        <button
+            mat-mini-fab
             color="primary"
+            class="incrementButton"
             (click)="increment()"
-            [disabled]="counter?.isLoading || counter?.isSaving">
-        <mat-icon>add</mat-icon>
-    </button>
+            [disabled]="counter?.isLoading || counter?.isSaving"
+        >
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
 </div>

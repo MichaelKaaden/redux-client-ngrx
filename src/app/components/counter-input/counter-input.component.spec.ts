@@ -52,7 +52,7 @@ describe("CounterInputComponent", () => {
         component.counter = counter;
         fixture.detectChanges();
         compiled = fixture.debugElement.nativeElement;
-        const span = compiled.querySelector("span").textContent;
+        const span = compiled.querySelector(".counter-value").textContent;
         expect(span).toContain(`${BASE_VALUE + index}`);
     });
 

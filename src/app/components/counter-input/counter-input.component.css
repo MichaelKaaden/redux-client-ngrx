@@ -1,8 +1,19 @@
-div {
-    text-align: center;
-    width: 320px;
+.mat-headline-1 {
+    margin-bottom: 16px;
 }
 
-mk-progress > span {
-    font-size: 800%;
+.counter-value {
+    text-align: center;
+    /*width: 320px;*/
+    font-weight: bold;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    margin: 10px;
 }
