@@ -1,9 +1,7 @@
-mat-card-title {
-    font-weight: bold;
-    text-align: center;
-}
-
-mat-card-subtitle {
+mat-card-header,
+mat-card-content {
+    flex-direction: row;
+    justify-content: center;
     text-align: center;
 }
 

@@ -1,3 +1,12 @@
 .container {
     margin: 10px;
 }
+
+.mat-headline-2 {
+    font-weight: bolder;
+    margin-block-end: 16px;
+}
+
+.active {
+    font-weight: bold;
+}
