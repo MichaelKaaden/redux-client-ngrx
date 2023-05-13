@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { Store, StoreModule } from "@ngrx/store";
-import * as counterActions from "../../actions/counter.actions";
+import { CounterActions } from "../../actions";
 import { reducers } from "../../reducers";
 
 import { DashboardComponent } from "./dashboard.component";
@@ -33,7 +33,7 @@ describe("DashboardComponent", () => {
     });
 
     it("should dispatch an action to load the counter when created", () => {
-        const action = counterActions.loadAllPending();
+        const action = CounterActions.loadAllPending();
 
         component.ngOnInit();
 
@@ -45,7 +45,7 @@ describe("DashboardComponent", () => {
             { index: 0, value: 1 },
             { index: 1, value: 2 },
         ];
-        const action = counterActions.loadAllCompleted({ counters });
+        const action = CounterActions.loadAllCompleted({ counters });
         store.dispatch(action);
 
         component.numOfCounters$.subscribe((num) => {

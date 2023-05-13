@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { Store, StoreModule } from "@ngrx/store";
-import * as counterActions from "../../actions/counter.actions";
+import { CounterActions } from "../../actions";
 import { Counter } from "../../models/counter";
 import * as fromRoot from "../../reducers";
 import { CounterContainerComponent } from "./counter-container.component";
@@ -38,7 +38,7 @@ describe("CounterContainerComponent", () => {
     });
 
     it("should dispatch an action to load the counter when created", () => {
-        const action = counterActions.loadPending({ index: counterIndex });
+        const action = CounterActions.loadPending({ index: counterIndex });
 
         component.ngOnInit();
 
@@ -47,7 +47,7 @@ describe("CounterContainerComponent", () => {
 
     it("should show the counter after the counter has been loaded", () => {
         const myCounter: Counter = { index: counterIndex, value: 1 };
-        const action = counterActions.loadCompleted({ index: counterIndex, counter: myCounter });
+        const action = CounterActions.loadCompleted({ index: counterIndex, counter: myCounter });
         store.dispatch(action);
 
         component.counter$.subscribe({
@@ -62,7 +62,7 @@ describe("CounterContainerComponent", () => {
     });
 
     it("should dispatch an action to decrement the counter", () => {
-        const action = counterActions.decrementPending({ index: counterIndex, by });
+        const action = CounterActions.decrementPending({ index: counterIndex, by });
 
         component.decrement(by);
 
@@ -71,7 +71,7 @@ describe("CounterContainerComponent", () => {
 
     it("should show the decremented counter after the decrement action is dispatched", () => {
         const myCounter: Counter = { index: counterIndex, value: 42 };
-        const action = counterActions.decrementCompleted({ index: counterIndex, counter: myCounter });
+        const action = CounterActions.decrementCompleted({ index: counterIndex, counter: myCounter });
         store.dispatch(action);
 
         component.counter$.subscribe((data) => {
@@ -81,7 +81,7 @@ describe("CounterContainerComponent", () => {
     });
 
     it("should dispatch an action to increment the counter", () => {
-        const action = counterActions.incrementPending({ index: counterIndex, by });
+        const action = CounterActions.incrementPending({ index: counterIndex, by });
 
         component.increment(by);
 
@@ -90,7 +90,7 @@ describe("CounterContainerComponent", () => {
 
     it("should show the incremented counter after the increment action is dispatched", () => {
         const myCounter: Counter = { index: counterIndex, value: 2 };
-        const action = counterActions.incrementCompleted({ index: counterIndex, counter: myCounter });
+        const action = CounterActions.incrementCompleted({ index: counterIndex, counter: myCounter });
         store.dispatch(action);
 
         component.counter$.subscribe((data) => {

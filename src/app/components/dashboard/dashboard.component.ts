@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import * as counterActions from "../../actions/counter.actions";
+import { CounterActions } from "../../actions";
 import { selectAverageSum, selectCounterSum, selectNumOfCounters } from "../../selectors/counters.selectors";
 
 @Component({
@@ -26,6 +26,6 @@ export class DashboardComponent implements OnInit {
     }
 
     private loadAll() {
-        this.store.dispatch(counterActions.loadAllPending());
+        this.store.dispatch(CounterActions.loadAllPending());
     }
 }

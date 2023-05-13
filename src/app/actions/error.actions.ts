@@ -1,4 +1,9 @@
-import { createAction, props } from "@ngrx/store";
+import { createActionGroup, emptyProps, props } from "@ngrx/store";
 
-export const errorOccurred = createAction("[Error] Error Occurred", props<{ error: string }>());
-export const resetErrors = createAction("[Error] Reset Errors");
+export const ErrorActions = createActionGroup({
+    source: "Error",
+    events: {
+        "Error Occurred": props<{ error: string }>(),
+        "Reset Errors": emptyProps(),
+    },
+});
