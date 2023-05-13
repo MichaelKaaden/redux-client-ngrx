@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { Store, StoreModule } from "@ngrx/store";
-import * as errorActions from "../../actions/error.actions";
+import { ErrorActions } from "../../actions";
 import { reducers } from "../../reducers";
 
 import { ErrorComponent } from "./error.component";
@@ -41,7 +41,7 @@ describe("ErrorComponent", () => {
 
     it("should show an error if its action is dispatched", () => {
         const error = "foo";
-        const action = errorActions.errorOccurred({ error });
+        const action = ErrorActions.errorOccurred({ error });
         store.dispatch(action);
 
         component.errors$.subscribe((data) => {
@@ -51,7 +51,7 @@ describe("ErrorComponent", () => {
     });
 
     it("should dispatch an action when reset() is called", () => {
-        const action = errorActions.resetErrors();
+        const action = ErrorActions.resetErrors();
 
         component.reset();
 
@@ -60,7 +60,7 @@ describe("ErrorComponent", () => {
 
     it("should reset the errors", () => {
         const error = "bar";
-        const action = errorActions.errorOccurred({ error });
+        const action = ErrorActions.errorOccurred({ error });
         store.dispatch(action);
 
         component.reset();
