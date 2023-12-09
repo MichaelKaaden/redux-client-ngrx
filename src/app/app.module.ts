@@ -44,7 +44,7 @@ import { CounterService } from "./services/counter.service";
         BrowserAnimationsModule,
         MaterialModule,
         StoreModule.forRoot(reducers, { metaReducers, runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true } }),
-        !environment.production ? StoreDevtoolsModule.instrument() : [],
+        !environment.production ? StoreDevtoolsModule.instrument({connectInZone: true}) : [],
         StoreModule.forFeature("errors", fromError.reducer),
         StoreModule.forFeature("counters", fromCounter.reducer),
         EffectsModule.forRoot([]),
