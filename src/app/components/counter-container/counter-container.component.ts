@@ -12,7 +12,7 @@ import { selectCounter } from "../../selectors/counters.selectors";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CounterContainerComponent implements OnInit {
-    @Input()
+    @Input({ required: true })
     counterIndex;
 
     counter$: Observable<Counter>;

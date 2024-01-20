@@ -64,18 +64,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "redux-client-ngrx:build"
+            "buildTarget": "redux-client-ngrx:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "redux-client-ngrx:build:production"
+              "buildTarget": "redux-client-ngrx:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "redux-client-ngrx:build"
+            "buildTarget": "redux-client-ngrx:build"
           }
         },
         "test": {

@@ -8,16 +8,16 @@ import { Counter } from "../../models/counter";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CounterInputComponent {
-    @Input()
+    @Input({ required: true })
     counter: Counter;
 
-    @Input()
+    @Input({ required: true })
     counterIndex: number;
 
-    @Input()
+    @Input({ required: true })
     decrementFunc: (by: number) => void;
 
-    @Input()
+    @Input({ required: true })
     incrementFunc: (by: number) => void;
 
     constructor() {}

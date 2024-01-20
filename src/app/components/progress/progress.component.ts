@@ -13,7 +13,7 @@ export class ProgressComponent implements OnInit, OnChanges {
     delay = DEFAULT_DELAY;
     @Input()
     diameter = 40;
-    @Input()
+    @Input({ required: true })
     isLoading: boolean;
 
     public showProgress = false;

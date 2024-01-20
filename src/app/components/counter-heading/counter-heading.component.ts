@@ -8,10 +8,10 @@ import { Counter } from "../../models/counter";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CounterHeadingComponent {
-    @Input()
+    @Input({ required: true })
     counter: Counter;
 
-    @Input()
+    @Input({ required: true })
     counterIndex: number;
 
     constructor() {}
