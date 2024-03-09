@@ -1,19 +1,21 @@
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { enableProdMode, importProvidersFrom } from "@angular/core";
-import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+import { bootstrapApplication, BrowserModule } from "@angular/platform-browser";
+import { provideAnimations } from "@angular/platform-browser/animations";
+import { provideRouter } from "@angular/router";
+import { EffectsModule } from "@ngrx/effects";
+import { StoreRouterConnectingModule } from "@ngrx/router-store";
+import { StoreModule } from "@ngrx/store";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { routes } from "./app/app-routing";
+import { AppComponent } from "./app/components/app/app.component";
+import { CounterEffects } from "./app/effects/counter.effects";
+import { metaReducers, reducers } from "./app/reducers";
+import * as fromCounter from "./app/reducers/counter.reducer";
+import * as fromError from "./app/reducers/error.reducer";
+import { CounterService } from "./app/services/counter.service";
 
 import { environment } from "./environments/environment";
-import { AppComponent } from "./app/components/app/app.component";
-import { StoreRouterConnectingModule } from "@ngrx/router-store";
-import { CounterEffects } from "./app/effects/counter.effects";
-import { EffectsModule } from "@ngrx/effects";
-import { StoreDevtoolsModule } from "@ngrx/store-devtools";
-import { reducers, metaReducers } from "./app/reducers";
-import { StoreModule } from "@ngrx/store";
-import { provideAnimations } from "@angular/platform-browser/animations";
-import { withInterceptorsFromDi, provideHttpClient } from "@angular/common/http";
-import { AppRoutingModule } from "./app/app-routing.module";
-import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
-import { CounterService } from "./app/services/counter.service";
 
 if (environment.production) {
     enableProdMode();
@@ -23,7 +25,6 @@ bootstrapApplication(AppComponent, {
     providers: [
         importProvidersFrom(
             BrowserModule,
-            AppRoutingModule,
             StoreModule.forRoot(reducers, {
                 metaReducers,
                 runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true },
@@ -38,5 +39,6 @@ bootstrapApplication(AppComponent, {
         CounterService,
         provideHttpClient(withInterceptorsFromDi()),
         provideAnimations(),
+        provideRouter(routes),
     ],
 }).catch((err) => console.error(err));
