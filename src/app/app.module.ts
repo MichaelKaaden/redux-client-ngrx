@@ -19,7 +19,7 @@ import { ErrorComponent } from "./components/error/error.component";
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
 import { ProgressComponent } from "./components/progress/progress.component";
 import { CounterEffects } from "./effects/counter.effects";
-import { MaterialModule } from "./material.module";
+
 import { metaReducers, reducers } from "./reducers";
 import * as fromCounter from "./reducers/counter.reducer";
 import * as fromError from "./reducers/error.reducer";
@@ -32,7 +32,6 @@ import { CounterService } from "./services/counter.service";
         AppRoutingModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        MaterialModule,
         StoreModule.forRoot(reducers, { metaReducers, runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true } }),
         !environment.production ? StoreDevtoolsModule.instrument({ connectInZone: true }) : [],
         StoreModule.forFeature("errors", fromError.reducer),
