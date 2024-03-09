@@ -26,8 +26,20 @@ import * as fromError from "./reducers/error.reducer";
 import { CounterService } from "./services/counter.service";
 
 @NgModule({
-    declarations: [
-        AppComponent,
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        StoreModule.forRoot(reducers, { metaReducers, runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true } }),
+        !environment.production ? StoreDevtoolsModule.instrument({ connectInZone: true }) : [],
+        StoreModule.forFeature("errors", fromError.reducer),
+        StoreModule.forFeature("counters", fromCounter.reducer),
+        EffectsModule.forRoot([]),
+        EffectsModule.forFeature([CounterEffects]),
+        StoreRouterConnectingModule.forRoot(),
         CounterListComponent,
         DashboardComponent,
         PageNotFoundComponent,
@@ -36,20 +48,6 @@ import { CounterService } from "./services/counter.service";
         ProgressComponent,
         CounterHeadingComponent,
         CounterInputComponent,
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MaterialModule,
-        StoreModule.forRoot(reducers, { metaReducers, runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true } }),
-        !environment.production ? StoreDevtoolsModule.instrument({connectInZone: true}) : [],
-        StoreModule.forFeature("errors", fromError.reducer),
-        StoreModule.forFeature("counters", fromCounter.reducer),
-        EffectsModule.forRoot([]),
-        EffectsModule.forFeature([CounterEffects]),
-        StoreRouterConnectingModule.forRoot(),
     ],
     providers: [CounterService],
     bootstrap: [AppComponent],

@@ -13,8 +13,7 @@ describe("DashboardComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [DashboardComponent],
-            imports: [StoreModule.forRoot(reducers)],
+            imports: [StoreModule.forRoot(reducers), DashboardComponent],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));

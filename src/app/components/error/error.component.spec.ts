@@ -14,8 +14,7 @@ describe("ErrorComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [ErrorComponent],
-            imports: [StoreModule.forRoot(reducers)],
+            imports: [StoreModule.forRoot(reducers), ErrorComponent],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));

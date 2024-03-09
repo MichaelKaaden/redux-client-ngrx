@@ -16,8 +16,7 @@ describe("CounterContainerComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [CounterContainerComponent],
-            imports: [StoreModule.forRoot(fromRoot.reducers)],
+            imports: [StoreModule.forRoot(fromRoot.reducers), CounterContainerComponent],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));

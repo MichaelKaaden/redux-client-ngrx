@@ -1,6 +1,7 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
 import { Counter } from "../../models/counter";
+import { ProgressComponent } from "../progress/progress.component";
 
 import { CounterInputComponent } from "./counter-input.component";
 
@@ -15,9 +16,11 @@ describe("CounterInputComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [CounterInputComponent],
+            imports: [CounterInputComponent],
             schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
+        })
+            .overrideComponent(CounterInputComponent, { remove: { imports: [ProgressComponent] } })
+            .compileComponents();
     }));
 
     beforeEach(() => {
