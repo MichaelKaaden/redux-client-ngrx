@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { TestBed } from "@angular/core/testing";
 import { EffectsMetadata, getEffectsMetadata } from "@ngrx/effects";
 import { provideMockActions } from "@ngrx/effects/testing";
-import { Store, StoreModule } from "@ngrx/store";
+import { provideStore, Store } from "@ngrx/store";
 import { cold } from "jasmine-marbles";
 import { Observable, of, throwError } from "rxjs";
 import { CounterActions, ErrorActions } from "../actions";
@@ -26,9 +26,9 @@ describe("CounterEffects", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [StoreModule.forRoot(reducers)],
             providers: [
                 CounterEffects,
+                provideStore(reducers),
                 provideMockActions(() => actions$),
                 CounterService,
                 // dependencies of CounterService, needed for instantiation

@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { Store, StoreModule } from "@ngrx/store";
+import { provideStore, Store } from "@ngrx/store";
 import { CounterActions } from "../../actions";
 import { Counter } from "../../models/counter";
 import * as fromRoot from "../../reducers";
@@ -16,7 +16,8 @@ describe("CounterContainerComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [StoreModule.forRoot(fromRoot.reducers), CounterContainerComponent],
+            imports: [CounterContainerComponent],
+            providers: [provideStore(fromRoot.reducers)],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));
