@@ -1,7 +1,6 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from "@angular/core/testing";
 import { Counter } from "../../models/counter";
-import { ProgressComponent } from "../progress/progress.component";
 
 import { CounterInputComponent } from "./counter-input.component";
 
@@ -18,9 +17,7 @@ describe("CounterInputComponent", () => {
         TestBed.configureTestingModule({
             imports: [CounterInputComponent],
             schemas: [NO_ERRORS_SCHEMA],
-        })
-            .overrideComponent(CounterInputComponent, { remove: { imports: [ProgressComponent] } })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -71,7 +68,7 @@ describe("CounterInputComponent", () => {
         compiled = fixture.debugElement.nativeElement;
         const button = compiled.querySelector(".decrementButton");
         button.click();
-        tick();
+        flush();
         fixture.detectChanges();
 
         expect(foo.decrement).toHaveBeenCalledWith(1);
@@ -89,7 +86,7 @@ describe("CounterInputComponent", () => {
         compiled = fixture.debugElement.nativeElement;
         const button = compiled.querySelector(".incrementButton");
         button.click();
-        tick();
+        flush();
         fixture.detectChanges();
 
         expect(foo.increment).toHaveBeenCalledWith(1);
