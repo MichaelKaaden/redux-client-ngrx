@@ -1,4 +1,5 @@
-import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { provideHttpClient } from "@angular/common/http";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { getTestBed, TestBed, waitForAsync } from "@angular/core/testing";
 import { environment } from "../../environments/environment";
 import { Counter } from "../models/counter";
@@ -12,8 +13,7 @@ describe("CounterService", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [CounterService],
+            providers: [CounterService, provideHttpClient(), provideHttpClientTesting()],
         });
 
         injector = getTestBed();
