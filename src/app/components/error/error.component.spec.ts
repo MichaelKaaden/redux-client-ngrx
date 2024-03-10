@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { Store, StoreModule } from "@ngrx/store";
+import { provideStore, Store } from "@ngrx/store";
 import { ErrorActions } from "../../actions";
 import { reducers } from "../../reducers";
 
@@ -14,8 +14,8 @@ describe("ErrorComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [ErrorComponent],
-            imports: [StoreModule.forRoot(reducers)],
+            imports: [ErrorComponent],
+            providers: [provideStore(reducers)],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));

@@ -3,12 +3,17 @@ import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { ErrorActions } from "../../actions";
 import { selectErrors } from "../../selectors/errors.selectors";
+import { MatIcon } from "@angular/material/icon";
+import { MatButton } from "@angular/material/button";
+import { NgFor, NgIf, AsyncPipe } from "@angular/common";
 
 @Component({
     selector: "mk-error",
     templateUrl: "./error.component.html",
     styleUrls: ["./error.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [NgFor, NgIf, MatButton, MatIcon, AsyncPipe],
 })
 export class ErrorComponent implements OnInit {
     errors$: Observable<string[]>;

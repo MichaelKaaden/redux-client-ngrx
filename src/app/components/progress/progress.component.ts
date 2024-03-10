@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { MatProgressSpinner } from "@angular/material/progress-spinner";
+import { NgIf } from "@angular/common";
 
 export const DEFAULT_DELAY = 250;
 
@@ -7,6 +9,8 @@ export const DEFAULT_DELAY = 250;
     templateUrl: "./progress.component.html",
     styleUrls: ["./progress.component.css"],
     changeDetection: ChangeDetectionStrategy.Default,
+    standalone: true,
+    imports: [NgIf, MatProgressSpinner],
 })
 export class ProgressComponent implements OnInit, OnChanges {
     @Input()

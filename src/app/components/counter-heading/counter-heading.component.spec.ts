@@ -13,7 +13,7 @@ describe("CounterHeadingComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [CounterHeadingComponent],
+            imports: [CounterHeadingComponent],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));

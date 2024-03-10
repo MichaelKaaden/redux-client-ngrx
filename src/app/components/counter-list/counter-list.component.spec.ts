@@ -1,5 +1,8 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { provideStore } from "@ngrx/store";
+import { provideMockStore } from "@ngrx/store/testing";
+import * as fromRoot from "../../reducers";
 
 import { CounterListComponent } from "./counter-list.component";
 
@@ -9,7 +12,8 @@ describe("CounterListComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [CounterListComponent],
+            imports: [CounterListComponent],
+            providers: [provideMockStore(), provideStore(fromRoot.reducers)],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));
