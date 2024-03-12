@@ -1,6 +1,6 @@
 {
     "name": "redux-client-ngrx",
-    "version": "2.3.0",
+    "version": "2.3.1-pre",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
