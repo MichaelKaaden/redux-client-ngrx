@@ -117,7 +117,7 @@
       },
       {
         "file": "package.json",
-        "hash": "18260011793351162168"
+        "hash": "7348704783627943495"
       },
       {
         "file": "src/app/actions/counter.actions.ts",
@@ -132,12 +132,8 @@
         "hash": "11211557202277431716"
       },
       {
-        "file": "src/app/app-routing.module.ts",
-        "hash": "14052538665708775181"
-      },
-      {
-        "file": "src/app/app.module.ts",
-        "hash": "5156666740305237541"
+        "file": "src/app/app-routing.ts",
+        "hash": "11979462173929852620"
       },
       {
         "file": "src/app/components/app/app.component.css",
@@ -149,11 +145,11 @@
       },
       {
         "file": "src/app/components/app/app.component.spec.ts",
-        "hash": "448511925620705726"
+        "hash": "4025168565385002323"
       },
       {
         "file": "src/app/components/app/app.component.ts",
-        "hash": "6378650706016785921"
+        "hash": "12040888557234723800"
       },
       {
         "file": "src/app/components/counter-container/counter-container.component.css",
@@ -165,7 +161,7 @@
       },
       {
         "file": "src/app/components/counter-container/counter-container.component.spec.ts",
-        "hash": "14424250182050598620"
+        "hash": "3050867688171527557"
       },
       {
         "file": "src/app/components/counter-container/counter-container.component.ts",
@@ -181,7 +177,7 @@
       },
       {
         "file": "src/app/components/counter-heading/counter-heading.component.spec.ts",
-        "hash": "1094861552668016454"
+        "hash": "6361164769808779237"
       },
       {
         "file": "src/app/components/counter-heading/counter-heading.component.ts",
@@ -197,11 +193,11 @@
       },
       {
         "file": "src/app/components/counter-input/counter-input.component.spec.ts",
-        "hash": "1245587582566318356"
+        "hash": "3383913884018650104"
       },
       {
         "file": "src/app/components/counter-input/counter-input.component.ts",
-        "hash": "9846870008729865851"
+        "hash": "17322534685805262418"
       },
       {
         "file": "src/app/components/counter-list/counter-list.component.css",
@@ -209,15 +205,15 @@
       },
       {
         "file": "src/app/components/counter-list/counter-list.component.html",
-        "hash": "12177269652188192146"
+        "hash": "17583800465943477839"
       },
       {
         "file": "src/app/components/counter-list/counter-list.component.spec.ts",
-        "hash": "8988411412825312258"
+        "hash": "12507267824131739777"
       },
       {
         "file": "src/app/components/counter-list/counter-list.component.ts",
-        "hash": "13573588644861637494"
+        "hash": "12292330603135350916"
       },
       {
         "file": "src/app/components/dashboard/dashboard.component.css",
@@ -229,11 +225,11 @@
       },
       {
         "file": "src/app/components/dashboard/dashboard.component.spec.ts",
-        "hash": "1449374270110483138"
+        "hash": "15875221946466638070"
       },
       {
         "file": "src/app/components/dashboard/dashboard.component.ts",
-        "hash": "9643376810075179048"
+        "hash": "10700774068944307596"
       },
       {
         "file": "src/app/components/error/error.component.css",
@@ -241,15 +237,15 @@
       },
       {
         "file": "src/app/components/error/error.component.html",
-        "hash": "1809892323361453397"
+        "hash": "7941270811797260545"
       },
       {
         "file": "src/app/components/error/error.component.spec.ts",
-        "hash": "7271638317839330340"
+        "hash": "12014907168285954111"
       },
       {
         "file": "src/app/components/error/error.component.ts",
-        "hash": "5503372842335319762"
+        "hash": "4295346504423613898"
       },
       {
         "file": "src/app/components/page-not-found/page-not-found.component.css",
@@ -261,7 +257,7 @@
       },
       {
         "file": "src/app/components/page-not-found/page-not-found.component.spec.ts",
-        "hash": "323829533908014749"
+        "hash": "1158588821565843366"
       },
       {
         "file": "src/app/components/page-not-found/page-not-found.component.ts",
@@ -273,27 +269,23 @@
       },
       {
         "file": "src/app/components/progress/progress.component.html",
-        "hash": "4733182445989408317"
+        "hash": "4371590323035034935"
       },
       {
         "file": "src/app/components/progress/progress.component.spec.ts",
-        "hash": "8745325847054877906"
+        "hash": "6816921825798194912"
       },
       {
         "file": "src/app/components/progress/progress.component.ts",
-        "hash": "7694348358210388101"
+        "hash": "12332663045420767378"
       },
       {
         "file": "src/app/effects/counter.effects.spec.ts",
-        "hash": "10190670411432341270"
+        "hash": "11210720342841717976"
       },
       {
         "file": "src/app/effects/counter.effects.ts",
         "hash": "15911052432153706793"
-      },
-      {
-        "file": "src/app/material.module.ts",
-        "hash": "7617234140793797439"
       },
       {
         "file": "src/app/models/counter.ts",
@@ -337,7 +329,7 @@
       },
       {
         "file": "src/app/services/counter.service.spec.ts",
-        "hash": "13301886550823897544"
+        "hash": "10895687067977781823"
       },
       {
         "file": "src/app/services/counter.service.ts",
@@ -369,7 +361,7 @@
       },
       {
         "file": "src/main.ts",
-        "hash": "4154691337635397755"
+        "hash": "15607297793303424909"
       },
       {
         "file": "src/polyfills.ts",

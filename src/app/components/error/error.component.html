@@ -1,11 +1,15 @@
 <ul>
-    <li *ngFor="let error of errors$ | async">
-        {{ error }}
-    </li>
+    @for (error of errors$ | async; track $index) {
+        <li>
+            {{ error }}
+        </li>
+    }
 </ul>
 
-<button mat-raised-button color="warn" (click)="reset()" *ngIf="(errors$ | async)?.length">
-    <mat-icon>cancel</mat-icon>&nbsp;&nbsp;<ng-container i18n="Button to delete error messages@@ErrorsComponent"
-        >Reset errors
-    </ng-container>
-</button>
+@if ((errors$ | async)?.length) {
+    <button mat-raised-button color="warn" (click)="reset()">
+        <mat-icon>cancel</mat-icon>&nbsp;&nbsp;<ng-container i18n="Button to delete error messages@@ErrorsComponent"
+            >Reset errors
+        </ng-container>
+    </button>
+}
