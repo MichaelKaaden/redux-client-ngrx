@@ -2,8 +2,10 @@
     <mk-error></mk-error>
 
     <div class="list">
-        <div *ngFor="let index of counterIndices">
-            <mk-counter-container [counterIndex]="index"></mk-counter-container>
-        </div>
+        @for (index of counterIndices; track index) {
+            <div>
+                <mk-counter-container [counterIndex]="index"></mk-counter-container>
+            </div>
+        }
     </div>
 </div>

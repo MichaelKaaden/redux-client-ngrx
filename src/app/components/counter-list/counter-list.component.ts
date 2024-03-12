@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { CounterContainerComponent } from "../counter-container/counter-container.component";
-import { NgFor } from "@angular/common";
+
 import { ErrorComponent } from "../error/error.component";
 
 @Component({
@@ -8,7 +8,7 @@ import { ErrorComponent } from "../error/error.component";
     templateUrl: "./counter-list.component.html",
     styleUrls: ["./counter-list.component.css"],
     standalone: true,
-    imports: [ErrorComponent, NgFor, CounterContainerComponent],
+    imports: [ErrorComponent, CounterContainerComponent],
 })
 export class CounterListComponent {
     counterIndices: number[];

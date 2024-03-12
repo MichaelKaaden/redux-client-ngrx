@@ -1,7 +1,7 @@
-<span *ngIf="showProgress; else transcludedContent">
-    <mat-progress-spinner mode="indeterminate" style="display: inline-block" diameter="{{ diameter }}"></mat-progress-spinner>
-</span>
-
-<ng-template #transcludedContent>
+@if (showProgress) {
+    <span>
+        <mat-progress-spinner mode="indeterminate" style="display: inline-block" diameter="{{ diameter }}"></mat-progress-spinner>
+    </span>
+} @else {
     <ng-content></ng-content>
-</ng-template>
+}
