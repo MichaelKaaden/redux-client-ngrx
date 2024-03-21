@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { RouterTestingModule } from "@angular/router/testing";
+import { RouterModule } from "@angular/router";
 import { AppComponent } from "./app.component";
 
 describe("AppComponent", () => {
@@ -10,7 +10,7 @@ describe("AppComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [RouterTestingModule, AppComponent],
+            imports: [RouterModule.forRoot([]), AppComponent],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));
