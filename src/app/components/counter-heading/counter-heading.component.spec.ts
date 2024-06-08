@@ -43,7 +43,7 @@ describe("CounterHeadingComponent", () => {
         component.counterIndex = index;
         fixture.detectChanges();
         compiled = fixture.debugElement.nativeElement;
-        const heading = compiled.querySelector("h3").textContent;
+        const heading = compiled.querySelector("p").textContent;
         expect(heading).toContain(`#${index}`);
     });
 
@@ -52,7 +52,7 @@ describe("CounterHeadingComponent", () => {
         component.counter = { index, value: BASE_VALUE + index };
         fixture.detectChanges();
         compiled = fixture.debugElement.nativeElement;
-        const heading = compiled.querySelector("h3").textContent;
+        const heading = compiled.querySelector("p").textContent;
         expect(heading).toContain(`${BASE_VALUE + index}`);
     });
 });
