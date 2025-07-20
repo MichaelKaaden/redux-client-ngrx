@@ -10,12 +10,9 @@
                 use-system-variables: true,
                 system-variables-prefix: sys,
             ),
-            //typography: (use-system-variables: true,
-    system-variables-prefix: sys,
-            density:
-                (
-                    scale: $density,
-                ),
+            density: (
+                scale: $density,
+            ),
         )
     );
 }
