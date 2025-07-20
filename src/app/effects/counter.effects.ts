@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from "@ngrx/store";
@@ -12,7 +12,10 @@ import { CounterService } from "../services/counter.service";
 
 @Injectable()
 export class CounterEffects {
-    constructor(private actions$: Actions, private store: Store, private counterService: CounterService) {}
+    private actions$ = inject(Actions);
+    private store = inject(Store);
+    private counterService = inject(CounterService);
+
 
     decrementPending$ = createEffect(() =>
         this.actions$.pipe(

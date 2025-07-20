@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError, delay, map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
@@ -13,11 +13,11 @@ export interface IEnvelope {
 
 @Injectable()
 export class CounterService {
+    private http = inject(HttpClient);
+
     private readonly API_HOME = ""; // one would use /restApi/v3 here, for example
     private readonly BASE_URL: string = environment.apiServer + this.API_HOME;
-    private readonly DELAY = 0; // delay before the HTTP call is done
-
-    constructor(private http: HttpClient) {}
+    private readonly DELAY = 0;
 
     /**
      * Get a counter.

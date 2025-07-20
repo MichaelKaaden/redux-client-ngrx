@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { CounterActions } from "../../actions";
@@ -26,12 +26,12 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent }
     ]
 })
 export class CounterContainerComponent implements OnInit {
+    private store = inject(Store);
+
     @Input({ required: true })
     counterIndex;
 
     counter$: Observable<Counter>;
-
-    constructor(private store: Store) {}
 
     ngOnInit() {
         this.counter$ = this.store.select(selectCounter(this.counterIndex));
