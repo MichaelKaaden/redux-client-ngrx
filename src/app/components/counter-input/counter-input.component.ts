@@ -9,8 +9,7 @@ import { ProgressComponent } from "../progress/progress.component";
     templateUrl: "./counter-input.component.html",
     styleUrls: ["./counter-input.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [ProgressComponent, MatMiniFabButton, MatIcon],
+    imports: [ProgressComponent, MatMiniFabButton, MatIcon]
 })
 export class CounterInputComponent {
     @Input({ required: true })

@@ -12,8 +12,7 @@ import { ErrorComponent } from "../error/error.component";
     templateUrl: "./dashboard.component.html",
     styleUrls: ["./dashboard.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [ErrorComponent, MatCard, MatCardHeader, MatCardTitle, MatCardContent, AsyncPipe],
+    imports: [ErrorComponent, MatCard, MatCardHeader, MatCardTitle, MatCardContent, AsyncPipe]
 })
 export class DashboardComponent implements OnInit {
     counterValueSum$: Observable<number>; // the sum of all counters

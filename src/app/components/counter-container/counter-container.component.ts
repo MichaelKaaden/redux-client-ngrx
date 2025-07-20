@@ -14,7 +14,6 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent }
     templateUrl: "./counter-container.component.html",
     styleUrls: ["./counter-container.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [
         MatCard,
         MatCardHeader,
@@ -24,7 +23,7 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent }
         MatCardContent,
         CounterInputComponent,
         AsyncPipe,
-    ],
+    ]
 })
 export class CounterContainerComponent implements OnInit {
     @Input({ required: true })
