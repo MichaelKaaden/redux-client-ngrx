@@ -13,7 +13,6 @@ import { CounterService } from "../services/counter.service";
 import { CounterEffects } from "./counter.effects";
 
 describe("CounterEffects", () => {
-    // eslint-disable-next-line prefer-const
     let actions$: Observable<any>;
     let effects: CounterEffects;
     let metadata: EffectsMetadata<CounterEffects>;
@@ -67,7 +66,7 @@ describe("CounterEffects", () => {
         it("should create an ErrorOccurred action if an error occurs during counter retrieval", () => {
             const action = CounterActions.decrementPending({ index, by });
             const errMessage = "foo";
-            // eslint-disable-next-line max-len
+
             const returnedErrMessage = `error in the "decrementPending$" action creator: "decrementing counter ${index} failed with ${errMessage}"`;
             const error = ErrorActions.errorOccurred({ error: returnedErrMessage });
 
@@ -102,7 +101,7 @@ describe("CounterEffects", () => {
         it("should create an ErrorOccurred action if an error occurs during counter retrieval", () => {
             const action = CounterActions.incrementPending({ index, by });
             const errMessage = "foo";
-            // eslint-disable-next-line max-len
+
             const returnedErrMessage = `error in the "incrementPending$" action creator: "incrementing counter ${index} failed with ${errMessage}"`;
             const error = ErrorActions.errorOccurred({ error: returnedErrMessage });
 
@@ -182,7 +181,7 @@ describe("CounterEffects", () => {
         it("should produce an ErrorOccurred action if an error occurs during counter retrieval", () => {
             const action = CounterActions.loadPending({ index });
             const errMessage = "foo";
-            // eslint-disable-next-line max-len
+
             const returnedErrMessage = `error in the "loadPending$" action creator: "retrieving counter ${index} failed with ${errMessage}"`;
             const error = ErrorActions.errorOccurred({ error: returnedErrMessage });
 
@@ -225,7 +224,7 @@ describe("CounterEffects", () => {
         it("should produce an ErrorOccurred action if an error occurs during retrieval of all counters", () => {
             const action = CounterActions.loadAllPending();
             const errMessage = "foo";
-            // eslint-disable-next-line max-len
+
             const returnedErrMessage = `error in the "loadAllPending$" action creator: "retrieving all counters failed with ${errMessage}"`;
             const error = ErrorActions.errorOccurred({ error: returnedErrMessage });
 
