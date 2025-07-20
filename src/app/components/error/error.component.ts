@@ -12,8 +12,7 @@ import { AsyncPipe } from "@angular/common";
     templateUrl: "./error.component.html",
     styleUrls: ["./error.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [MatButton, MatIcon, AsyncPipe],
+    imports: [MatButton, MatIcon, AsyncPipe]
 })
 export class ErrorComponent implements OnInit {
     errors$: Observable<string[]>;

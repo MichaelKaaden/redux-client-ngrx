@@ -8,8 +8,7 @@ export const DEFAULT_DELAY = 250;
     templateUrl: "./progress.component.html",
     styleUrls: ["./progress.component.css"],
     changeDetection: ChangeDetectionStrategy.Default,
-    standalone: true,
-    imports: [MatProgressSpinner],
+    imports: [MatProgressSpinner]
 })
 export class ProgressComponent implements OnInit, OnChanges {
     @Input()
