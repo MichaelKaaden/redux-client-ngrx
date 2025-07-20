@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, inject } from "@angular/core";
 import { MatProgressSpinner } from "@angular/material/progress-spinner";
 
 export const DEFAULT_DELAY = 250;
@@ -11,6 +11,8 @@ export const DEFAULT_DELAY = 250;
     imports: [MatProgressSpinner]
 })
 export class ProgressComponent implements OnInit, OnChanges {
+    private ref = inject(ChangeDetectorRef);
+
     @Input()
     delay = DEFAULT_DELAY;
     @Input()
@@ -19,8 +21,6 @@ export class ProgressComponent implements OnInit, OnChanges {
     isLoading: boolean;
 
     public showProgress = false;
-
-    constructor(private ref: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.showProgressAfterDelay();
