@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit, inject } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { CounterActions } from "../../actions";
@@ -12,15 +12,14 @@ import { ErrorComponent } from "../error/error.component";
     templateUrl: "./dashboard.component.html",
     styleUrls: ["./dashboard.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [ErrorComponent, MatCard, MatCardHeader, MatCardTitle, MatCardContent, AsyncPipe],
+    imports: [ErrorComponent, MatCard, MatCardHeader, MatCardTitle, MatCardContent, AsyncPipe]
 })
 export class DashboardComponent implements OnInit {
+    private store = inject(Store);
+
     counterValueSum$: Observable<number>; // the sum of all counters
     numOfCounters$: Observable<number>; // the number of counters
     averageCounterValue$: Observable<number>;
-
-    constructor(private store: Store) {}
 
     ngOnInit() {
         this.numOfCounters$ = this.store.select(selectNumOfCounters);

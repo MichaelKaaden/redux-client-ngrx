@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit, inject } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { ErrorActions } from "../../actions";
@@ -12,13 +12,12 @@ import { AsyncPipe } from "@angular/common";
     templateUrl: "./error.component.html",
     styleUrls: ["./error.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [MatButton, MatIcon, AsyncPipe],
+    imports: [MatButton, MatIcon, AsyncPipe]
 })
 export class ErrorComponent implements OnInit {
-    errors$: Observable<string[]>;
+    private store = inject(Store);
 
-    constructor(private store: Store) {}
+    errors$: Observable<string[]>;
 
     ngOnInit(): void {
         this.errors$ = this.store.select(selectErrors);

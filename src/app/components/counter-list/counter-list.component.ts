@@ -7,8 +7,7 @@ import { ErrorComponent } from "../error/error.component";
     selector: "mk-counter-list",
     templateUrl: "./counter-list.component.html",
     styleUrls: ["./counter-list.component.css"],
-    standalone: true,
-    imports: [ErrorComponent, CounterContainerComponent],
+    imports: [ErrorComponent, CounterContainerComponent]
 })
 export class CounterListComponent {
     counterIndices: number[];

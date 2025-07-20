@@ -7,8 +7,7 @@ import { ProgressComponent } from "../progress/progress.component";
     templateUrl: "./counter-heading.component.html",
     styleUrls: ["./counter-heading.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [ProgressComponent],
+    imports: [ProgressComponent]
 })
 export class CounterHeadingComponent {
     @Input({ required: true })
