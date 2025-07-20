@@ -8,10 +8,9 @@
                 primary: mat.$azure-palette,
                 tertiary: mat.$blue-palette,
                 use-system-variables: true,
-    system-variables-prefix: sys,
+                system-variables-prefix: sys,
             ),
             //typography: (use-system-variables: true,
-    system-variables-prefix: sys,),
             density:
                 (
                     scale: $density,
@@ -39,11 +38,11 @@ $dark-theme: create-theme(
 
 html,
 body {
+    height: 100%;
+
     @include mat.all-component-themes($light-theme);
     @include mat.system-level-colors($light-theme);
     @include mat.system-level-typography($light-theme);
-
-    height: 100%;
 }
 
 body {
