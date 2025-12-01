@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, inject } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    inject,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    SimpleChanges,
+} from "@angular/core";
 import { MatProgressSpinner } from "@angular/material/progress-spinner";
 
 export const DEFAULT_DELAY = 250;
@@ -8,10 +18,11 @@ export const DEFAULT_DELAY = 250;
     templateUrl: "./progress.component.html",
     styleUrls: ["./progress.component.css"],
     changeDetection: ChangeDetectionStrategy.Default,
-    imports: [MatProgressSpinner]
+    imports: [MatProgressSpinner],
 })
-export class ProgressComponent implements OnInit, OnChanges {
+export class ProgressComponent implements OnInit, OnChanges, OnDestroy {
     private ref = inject(ChangeDetectorRef);
+    private delayTimer: NodeJS.Timeout;
 
     @Input()
     delay = DEFAULT_DELAY;
@@ -26,8 +37,18 @@ export class ProgressComponent implements OnInit, OnChanges {
         this.showProgressAfterDelay();
     }
 
+    ngOnDestroy() {
+        if (this.delayTimer) {
+            clearTimeout(this.delayTimer);
+        }
+    }
+
     private showProgressAfterDelay() {
-        setTimeout(() => {
+        if (this.delayTimer) {
+            clearTimeout(this.delayTimer);
+        }
+
+        this.delayTimer = setTimeout(() => {
             if (this.isLoading) {
                 // console.log(`${this.delay}ms passed, showing progress...`);
                 this.showProgress = true;
@@ -37,13 +58,18 @@ export class ProgressComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.isLoading.currentValue === true) {
-            this.showProgressAfterDelay();
-        }
-
         if (changes.isLoading.previousValue === true) {
             // console.log(`disabling progress.`);
+            if (this.delayTimer) {
+                clearTimeout(this.delayTimer);
+                this.delayTimer = null;
+            }
             this.showProgress = false;
+            this.ref.detectChanges();
+        }
+
+        if (changes.isLoading.currentValue === true) {
+            this.showProgressAfterDelay();
         }
     }
 }
