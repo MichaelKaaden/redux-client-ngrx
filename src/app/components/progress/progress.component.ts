@@ -22,7 +22,7 @@ export const DEFAULT_DELAY = 250;
 })
 export class ProgressComponent implements OnInit, OnChanges, OnDestroy {
     private ref = inject(ChangeDetectorRef);
-    private delayTimer: NodeJS.Timeout;
+    private delayTimer: any;
 
     @Input()
     delay = DEFAULT_DELAY;
