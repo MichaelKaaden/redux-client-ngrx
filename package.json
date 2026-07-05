@@ -52,11 +52,11 @@
         "@ngrx/schematics": "^21.1.1",
         "@types/jasmine": "^5.1.15",
         "@types/jasminewd2": "~2.0.13",
-        "@types/node": "^22.19.19",
-        "@typescript-eslint/eslint-plugin": "^8.60.0",
-        "@typescript-eslint/parser": "^8.60.0",
-        "@typescript-eslint/types": "^8.60.0",
-        "@typescript-eslint/utils": "^8.60.0",
+        "@types/node": "^22.20.0",
+        "@typescript-eslint/eslint-plugin": "^8.62.1",
+        "@typescript-eslint/parser": "^8.62.1",
+        "@typescript-eslint/types": "^8.62.1",
+        "@typescript-eslint/utils": "^8.62.1",
         "angular-eslint": "22.0.0",
         "eslint": "^9.39.4",
         "husky": "^9.1.7",
@@ -71,9 +71,9 @@
         "karma-jasmine": "~5.1.0",
         "karma-jasmine-html-reporter": "^2.2.0",
         "lint-staged": "^15.5.2",
-        "prettier": "^3.8.3",
+        "prettier": "^3.9.4",
         "ts-node": "~10.9.2",
         "typescript": "~6.0.3",
-        "typescript-eslint": "^8.0.0"
+        "typescript-eslint": "^8.62.1"
     }
 }
