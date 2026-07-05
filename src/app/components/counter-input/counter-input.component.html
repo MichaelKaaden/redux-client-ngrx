@@ -1,5 +1,5 @@
 <div>
-    <mk-progress [isLoading]="counter?.isLoading || counter?.isSaving" [diameter]="23">
+    <mk-progress [isLoading]="!!(counter?.isLoading || counter?.isSaving)" [diameter]="23">
         <p class="mat-headline-1 counter-value">{{ counter?.value }}</p>
     </mk-progress>
 
