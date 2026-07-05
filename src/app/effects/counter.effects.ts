@@ -1,6 +1,6 @@
 import { Injectable, inject } from "@angular/core";
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatLatestFrom } from '@ngrx/operators';
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { concatLatestFrom } from "@ngrx/operators";
 import { Store } from "@ngrx/store";
 import { of } from "rxjs";
 import { catchError, map, mergeMap } from "rxjs/operators";
@@ -15,7 +15,6 @@ export class CounterEffects {
     private actions$ = inject(Actions);
     private store = inject(Store);
     private counterService = inject(CounterService);
-
 
     decrementPending$ = createEffect(() =>
         this.actions$.pipe(
@@ -64,7 +63,7 @@ export class CounterEffects {
                 }
 
                 // re-use an already loaded counter
-                const cachedCounter: Counter = selectCounters(state).find((item: Counter) => item.index === payload.index);
+                const cachedCounter = selectCounters(state).find((item: Counter) => item.index === payload.index);
                 if (cachedCounter && !cachedCounter.isLoading) {
                     return of(
                         CounterActions.loadCompleted({

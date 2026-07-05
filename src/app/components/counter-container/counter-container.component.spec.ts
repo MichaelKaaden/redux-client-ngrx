@@ -52,8 +52,8 @@ describe("CounterContainerComponent", () => {
 
         component.counter$.subscribe({
             next: (data) => {
-                expect(data.index).toBe(myCounter.index);
-                expect(data.value).toBe(myCounter.value);
+                expect(data!.index).toBe(myCounter.index);
+                expect(data!.value).toBe(myCounter.value);
             },
             error: (error) => {
                 expect(error).toBeUndefined();
@@ -75,8 +75,8 @@ describe("CounterContainerComponent", () => {
         store.dispatch(action);
 
         component.counter$.subscribe((data) => {
-            expect(data.index).toBe(myCounter.index);
-            expect(data.value).toBe(myCounter.value);
+            expect(data!.index).toBe(myCounter.index);
+            expect(data!.value).toBe(myCounter.value);
         });
     });
 
@@ -94,8 +94,8 @@ describe("CounterContainerComponent", () => {
         store.dispatch(action);
 
         component.counter$.subscribe((data) => {
-            expect(data.index).toBe(myCounter.index);
-            expect(data.value).toBe(myCounter.value);
+            expect(data!.index).toBe(myCounter.index);
+            expect(data!.value).toBe(myCounter.value);
         });
     });
 });

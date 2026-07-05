@@ -9,7 +9,7 @@ describe("CounterHeadingComponent", () => {
     let component: CounterHeadingComponent;
     let fixture: ComponentFixture<CounterHeadingComponent>;
     let compiled: any;
-    let index;
+    let index: number;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({

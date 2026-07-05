@@ -10,7 +10,7 @@ describe("CounterInputComponent", () => {
     let component: CounterInputComponent;
     let fixture: ComponentFixture<CounterInputComponent>;
     let compiled: any;
-    let index;
+    let index: number;
     let counter: Counter;
 
     beforeEach(waitForAsync(() => {

@@ -12,14 +12,14 @@ import { ErrorComponent } from "../error/error.component";
     templateUrl: "./dashboard.component.html",
     styleUrls: ["./dashboard.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ErrorComponent, MatCard, MatCardHeader, MatCardTitle, MatCardContent, AsyncPipe]
+    imports: [ErrorComponent, MatCard, MatCardHeader, MatCardTitle, MatCardContent, AsyncPipe],
 })
 export class DashboardComponent implements OnInit {
     private store = inject(Store);
 
-    counterValueSum$: Observable<number>; // the sum of all counters
-    numOfCounters$: Observable<number>; // the number of counters
-    averageCounterValue$: Observable<number>;
+    counterValueSum$!: Observable<number>; // the sum of all counters
+    numOfCounters$!: Observable<number>; // the number of counters
+    averageCounterValue$!: Observable<number>;
 
     ngOnInit() {
         this.numOfCounters$ = this.store.select(selectNumOfCounters);

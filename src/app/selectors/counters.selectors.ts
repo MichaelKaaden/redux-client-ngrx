@@ -4,7 +4,8 @@ import * as fromCounter from "../reducers/counter.reducer";
 
 export const selectCountersState = createFeatureSelector<fromCounter.CountersState>("counters");
 export const selectCounters = createSelector(selectCountersState, fromCounter.selectAll);
-export const selectCounter = (index) => createSelector(selectCounters, (counters) => counters.find((counter) => counter.index === index));
+export const selectCounter = (index: number) =>
+    createSelector(selectCounters, (counters) => counters.find((counter) => counter.index === index));
 
 export const selectNumOfCounters = createSelector(selectCountersState, fromCounter.selectTotal);
 

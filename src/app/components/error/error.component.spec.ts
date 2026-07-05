@@ -10,7 +10,7 @@ describe("ErrorComponent", () => {
     let component: ErrorComponent;
     let fixture: ComponentFixture<ErrorComponent>;
     let store: Store;
-    let dispatchSpy;
+    let dispatchSpy: jasmine.Spy;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({

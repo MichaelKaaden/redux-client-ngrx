@@ -7,14 +7,14 @@ import { ProgressComponent } from "../progress/progress.component";
     templateUrl: "./counter-heading.component.html",
     styleUrls: ["./counter-heading.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ProgressComponent]
+    imports: [ProgressComponent],
 })
 export class CounterHeadingComponent {
     @Input({ required: true })
-    counter: Counter;
+    counter!: Counter;
 
     @Input({ required: true })
-    counterIndex: number;
+    counterIndex!: number;
 
     constructor() {}
 }

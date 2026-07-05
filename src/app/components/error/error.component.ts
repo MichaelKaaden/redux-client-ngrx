@@ -12,12 +12,12 @@ import { AsyncPipe } from "@angular/common";
     templateUrl: "./error.component.html",
     styleUrls: ["./error.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatButton, MatIcon, AsyncPipe]
+    imports: [MatButton, MatIcon, AsyncPipe],
 })
 export class ErrorComponent implements OnInit {
     private store = inject(Store);
 
-    errors$: Observable<string[]>;
+    errors$!: Observable<string[]>;
 
     ngOnInit(): void {
         this.errors$ = this.store.select(selectErrors);

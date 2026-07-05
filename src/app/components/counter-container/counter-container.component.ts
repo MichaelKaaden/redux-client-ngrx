@@ -23,15 +23,15 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent }
         MatCardContent,
         CounterInputComponent,
         AsyncPipe,
-    ]
+    ],
 })
 export class CounterContainerComponent implements OnInit {
     private store = inject(Store);
 
     @Input({ required: true })
-    counterIndex;
+    counterIndex!: number;
 
-    counter$: Observable<Counter>;
+    counter$!: Observable<Counter | undefined>;
 
     ngOnInit() {
         this.counter$ = this.store.select(selectCounter(this.counterIndex));

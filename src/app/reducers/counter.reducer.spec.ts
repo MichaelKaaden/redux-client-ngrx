@@ -44,9 +44,9 @@ describe("Counter Reducer", () => {
 
             const newCounter = result.entities[index];
             expect(newCounter).toBeDefined();
-            expect(newCounter.value).toBeUndefined();
-            expect(newCounter.isLoading).toBeTruthy();
-            expect(newCounter.isSaving).toBeFalsy();
+            expect(newCounter!.value).toBeUndefined();
+            expect(newCounter!.isLoading).toBeTruthy();
+            expect(newCounter!.isSaving).toBeFalsy();
         });
 
         it("should add a counter if the counter is not yet in the app state", () => {
@@ -59,9 +59,9 @@ describe("Counter Reducer", () => {
 
             const newCounter = result.entities[index];
             expect(newCounter).toBeDefined();
-            expect(newCounter.value).toBeUndefined();
-            expect(newCounter.isLoading).toBeTruthy();
-            expect(newCounter.isSaving).toBeFalsy();
+            expect(newCounter!.value).toBeUndefined();
+            expect(newCounter!.isLoading).toBeTruthy();
+            expect(newCounter!.isSaving).toBeFalsy();
         });
 
         it("should not change the other counters if the counter is not yet in the app state", () => {
@@ -85,9 +85,9 @@ describe("Counter Reducer", () => {
 
             expect(selectTotal(state)).toBe(2);
             expect(selectTotal(result)).toBe(3);
-            expect(selectEntities(result)[0].index).toBe(0);
-            expect(selectEntities(result)[1].index).toBe(1);
-            expect(selectEntities(result)[2].index).toBe(2);
+            expect(selectEntities(result)[0]!.index).toBe(0);
+            expect(selectEntities(result)[1]!.index).toBe(1);
+            expect(selectEntities(result)[2]!.index).toBe(2);
         });
 
         it("should not add a counter if the counter already is in the app state", () => {
@@ -114,9 +114,9 @@ describe("Counter Reducer", () => {
             expect(selectTotal(result)).toBe(1);
 
             const newCounter = result.entities[index];
-            expect(newCounter.index).toBe(oldCounter.index);
-            expect(newCounter.value).toBe(value);
-            expect(newCounter.isLoading).toBeFalsy();
+            expect(newCounter!.index).toBe(oldCounter.index);
+            expect(newCounter!.value).toBe(value);
+            expect(newCounter!.isLoading).toBeFalsy();
         });
 
         it("should set the properties for the placeholder counter for some counters in the array", () => {
@@ -130,9 +130,9 @@ describe("Counter Reducer", () => {
             expect(selectTotal(result)).toBe(3);
 
             const newCounter = result.entities[index];
-            expect(newCounter.index).toBe(oldCounter.index);
-            expect(newCounter.value).toBe(value);
-            expect(newCounter.isLoading).toBeFalsy();
+            expect(newCounter!.index).toBe(oldCounter.index);
+            expect(newCounter!.value).toBe(value);
+            expect(newCounter!.isLoading).toBeFalsy();
         });
 
         it("should handle a non-present counter", () => {
@@ -223,7 +223,7 @@ describe("Counter Reducer", () => {
 
             const newCounter = result.entities[index];
             expect(newCounter).not.toBe(counter);
-            expect(newCounter.isSaving).toBeTruthy();
+            expect(newCounter!.isSaving).toBeTruthy();
             expect(result.entities[anotherCounter.index]).toBe(anotherCounter);
             expect(result.entities[yetAnotherCounter.index]).toBe(yetAnotherCounter);
         });
@@ -242,7 +242,7 @@ describe("Counter Reducer", () => {
 
             const newCounter = result.entities[index];
             expect(newCounter).not.toBe(counter);
-            expect(newCounter.isSaving).toBeTruthy();
+            expect(newCounter!.isSaving).toBeTruthy();
             expect(result.entities[anotherCounter.index]).toBe(anotherCounter);
             expect(result.entities[yetAnotherCounter.index]).toBe(yetAnotherCounter);
         });
@@ -265,7 +265,7 @@ describe("Counter Reducer", () => {
             const oldItem = state.entities[index];
             const newItem = result.entities[index];
             expect(newItem).not.toBe(oldItem);
-            expect(newItem.value).toBe(oldItem.value - 1);
+            expect(newItem!.value).toBe(oldItem!.value! - 1);
         });
 
         it("should decrement a counter in the middle of the app state", () => {
@@ -278,7 +278,7 @@ describe("Counter Reducer", () => {
             const oldItem = state.entities[index];
             const newItem = result.entities[index];
             expect(newItem).not.toBe(oldItem);
-            expect(newItem.value).toBe(oldItem.value - 1);
+            expect(newItem!.value).toBe(oldItem!.value! - 1);
         });
 
         it("should handle a non-present counter", () => {
@@ -309,7 +309,7 @@ describe("Counter Reducer", () => {
             const oldItem = state.entities[index];
             const newItem = result.entities[index];
             expect(newItem).not.toBe(oldItem);
-            expect(newItem.value).toBe(oldItem.value + 1);
+            expect(newItem!.value).toBe(oldItem!.value! + 1);
         });
 
         it("should increment a counter in the middle of the app state", () => {
@@ -322,7 +322,7 @@ describe("Counter Reducer", () => {
             const oldItem = state.entities[index];
             const newItem = result.entities[index];
             expect(newItem).not.toBe(oldItem);
-            expect(newItem.value).toBe(oldItem.value + 1);
+            expect(newItem!.value).toBe(oldItem!.value! + 1);
         });
 
         it("should handle a non-present counter", () => {

@@ -29,7 +29,7 @@ export class ProgressComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     diameter = 40;
     @Input({ required: true })
-    isLoading: boolean;
+    isLoading!: boolean;
 
     public showProgress = false;
 

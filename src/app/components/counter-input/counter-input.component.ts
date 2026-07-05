@@ -9,20 +9,20 @@ import { ProgressComponent } from "../progress/progress.component";
     templateUrl: "./counter-input.component.html",
     styleUrls: ["./counter-input.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ProgressComponent, MatMiniFabButton, MatIcon]
+    imports: [ProgressComponent, MatMiniFabButton, MatIcon],
 })
 export class CounterInputComponent {
     @Input({ required: true })
-    counter: Counter;
+    counter!: Counter;
 
     @Input({ required: true })
-    counterIndex: number;
+    counterIndex!: number;
 
     @Input({ required: true })
-    decrementFunc: (by: number) => void;
+    decrementFunc!: (by: number) => void;
 
     @Input({ required: true })
-    incrementFunc: (by: number) => void;
+    incrementFunc!: (by: number) => void;
 
     constructor() {}
 
