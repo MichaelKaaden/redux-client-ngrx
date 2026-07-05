@@ -1,4 +1,4 @@
-import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClient, withXhr } from "@angular/common/http";
 import { enableProdMode, provideZoneChangeDetection } from "@angular/core";
 import { bootstrapApplication } from "@angular/platform-browser";
 import { provideAnimations } from "@angular/platform-browser/animations";
@@ -22,8 +22,9 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
     providers: [
-        provideZoneChangeDetection(),CounterService,
-        provideHttpClient(),
+        provideZoneChangeDetection(),
+        CounterService,
+        provideHttpClient(withXhr()),
         provideAnimations(),
         provideRouter(routes),
         provideStore(reducers, {

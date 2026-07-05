@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { CounterContainerComponent } from "../counter-container/counter-container.component";
 
 import { ErrorComponent } from "../error/error.component";
@@ -7,7 +7,8 @@ import { ErrorComponent } from "../error/error.component";
     selector: "mk-counter-list",
     templateUrl: "./counter-list.component.html",
     styleUrls: ["./counter-list.component.css"],
-    imports: [ErrorComponent, CounterContainerComponent]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [ErrorComponent, CounterContainerComponent],
 })
 export class CounterListComponent {
     counterIndices: number[];

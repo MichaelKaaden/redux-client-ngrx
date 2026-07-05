@@ -17,7 +17,7 @@ export const DEFAULT_DELAY = 250;
     selector: "mk-progress",
     templateUrl: "./progress.component.html",
     styleUrls: ["./progress.component.css"],
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [MatProgressSpinner],
 })
 export class ProgressComponent implements OnInit, OnChanges, OnDestroy {
