@@ -82,8 +82,8 @@ export class CounterService {
      *
      * @param error The error
      */
-    private errorHandler(error: Error | any): Observable<any> {
-        return throwError(error.message);
+    private errorHandler(error: { message: string }): Observable<never> {
+        return throwError(() => error.message);
     }
 
     /**

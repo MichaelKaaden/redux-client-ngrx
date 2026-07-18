@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
 import { Counter } from "../../models/counter";
 import { MatIcon } from "@angular/material/icon";
 import { MatMiniFabButton } from "@angular/material/button";
@@ -18,19 +18,19 @@ export class CounterInputComponent {
     @Input({ required: true })
     counterIndex!: number;
 
-    @Input({ required: true })
-    decrementFunc!: (by: number) => void;
+    @Output()
+    decrement = new EventEmitter<number>();
 
-    @Input({ required: true })
-    incrementFunc!: (by: number) => void;
+    @Output()
+    increment = new EventEmitter<number>();
 
     constructor() {}
 
-    public decrement(): void {
-        this.decrementFunc(1);
+    public onDecrementClick(): void {
+        this.decrement.emit(1);
     }
 
-    public increment(): void {
-        this.incrementFunc(1);
+    public onIncrementClick(): void {
+        this.increment.emit(1);
     }
 }

@@ -16,6 +16,9 @@ export class CounterEffects {
     private store = inject(Store);
     private counterService = inject(CounterService);
 
+    // mergeMap here means rapid repeated clicks fire concurrent PUTs whose completions can
+    // arrive out of order, so isSaving/value could briefly reflect a stale response. Switch to
+    // concatMap (queue requests) or switchMap (cancel superseded ones) if that becomes a problem.
     decrementPending$ = createEffect(() =>
         this.actions$.pipe(
             ofType(CounterActions.decrementPending),
@@ -34,6 +37,7 @@ export class CounterEffects {
         ),
     );
 
+    // see the mergeMap note on decrementPending$ above — same out-of-order-completion caveat applies
     incrementPending$ = createEffect(() =>
         this.actions$.pipe(
             ofType(CounterActions.incrementPending),

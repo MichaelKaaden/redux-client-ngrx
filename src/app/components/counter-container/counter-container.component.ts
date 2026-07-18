@@ -39,13 +39,11 @@ export class CounterContainerComponent implements OnInit {
         this.store.dispatch(CounterActions.loadPending({ index: this.counterIndex }));
     }
 
-    // needed to capture "this" properly
-    public decrement = (by: number): void => {
+    public decrement(by: number): void {
         this.store.dispatch(CounterActions.decrementPending({ index: this.counterIndex, by }));
-    };
+    }
 
-    // needed to capture "this" properly
-    public increment = (by: number): void => {
+    public increment(by: number): void {
         this.store.dispatch(CounterActions.incrementPending({ index: this.counterIndex, by }));
-    };
+    }
 }

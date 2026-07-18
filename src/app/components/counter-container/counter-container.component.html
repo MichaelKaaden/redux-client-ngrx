@@ -14,8 +14,8 @@
             <mk-counter-input
                 [counterIndex]="counterIndex"
                 [counter]="counter"
-                [decrementFunc]="decrement"
-                [incrementFunc]="increment"
+                (decrement)="decrement($event)"
+                (increment)="increment($event)"
             ></mk-counter-input>
         </mat-card-content>
     </mat-card>

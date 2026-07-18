@@ -36,11 +36,6 @@ describe("CounterInputComponent", () => {
         expect(component.counterIndex).toBeUndefined();
     });
 
-    it("should abort without loadFunc", () => {
-        component.counterIndex = index;
-        expect(fixture.detectChanges).toThrow();
-    });
-
     it("should use the correct index", () => {
         component.counterIndex = index;
         fixture.detectChanges();
@@ -56,13 +51,9 @@ describe("CounterInputComponent", () => {
         expect(span).toContain(`${BASE_VALUE + index}`);
     });
 
-    it("should use the bound decrement function", fakeAsync(() => {
-        const foo = {
-            decrement: (by: number): void => {},
-        };
-
-        spyOn(foo, "decrement").and.callThrough();
-        component.decrementFunc = foo.decrement;
+    it("should emit decrement when the decrement button is clicked", fakeAsync(() => {
+        const spy = jasmine.createSpy("decrement");
+        component.decrement.subscribe(spy);
         fixture.detectChanges();
 
         compiled = fixture.debugElement.nativeElement;
@@ -71,16 +62,12 @@ describe("CounterInputComponent", () => {
         flush();
         fixture.detectChanges();
 
-        expect(foo.decrement).toHaveBeenCalledWith(1);
+        expect(spy).toHaveBeenCalledWith(1);
     }));
 
-    it("should use the bound increment function", fakeAsync(() => {
-        const foo = {
-            increment: (by: number): void => {},
-        };
-
-        spyOn(foo, "increment").and.callThrough();
-        component.incrementFunc = foo.increment;
+    it("should emit increment when the increment button is clicked", fakeAsync(() => {
+        const spy = jasmine.createSpy("increment");
+        component.increment.subscribe(spy);
         fixture.detectChanges();
 
         compiled = fixture.debugElement.nativeElement;
@@ -89,6 +76,6 @@ describe("CounterInputComponent", () => {
         flush();
         fixture.detectChanges();
 
-        expect(foo.increment).toHaveBeenCalledWith(1);
+        expect(spy).toHaveBeenCalledWith(1);
     }));
 });

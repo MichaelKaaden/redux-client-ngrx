@@ -8,7 +8,7 @@
             mat-mini-fab
             color="primary"
             class="decrementButton"
-            (click)="decrement()"
+            (click)="onDecrementClick()"
             [disabled]="counter?.isLoading || counter?.isSaving"
         >
             <mat-icon>remove</mat-icon>
@@ -17,7 +17,7 @@
             mat-mini-fab
             color="primary"
             class="incrementButton"
-            (click)="increment()"
+            (click)="onIncrementClick()"
             [disabled]="counter?.isLoading || counter?.isSaving"
         >
             <mat-icon>add</mat-icon>
