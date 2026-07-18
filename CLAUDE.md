@@ -3,6 +3,14 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with
 code in this repository.
 
+## Branching model
+
+This repo follows **Git Flow**: `master` holds released code (tagged per
+version), `develop` is the integration branch. Releases are cut on `release/*`
+branches, bumped (`[chore] Bump version for release x.y.z`), merged into
+`master` and tagged, then merged back into `develop`. Feature work branches off
+`develop`, not `master`.
+
 ## What this is
 
 A single-page Angular + NgRx application that fetches "counters" from a REST
