@@ -2,7 +2,7 @@ import { provideHttpClient, withXhr } from "@angular/common/http";
 import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { getTestBed, TestBed, waitForAsync } from "@angular/core/testing";
 import { environment } from "../../environments/environment";
-import { Counter } from "../models/counter";
+import { Counter, CounterRaw } from "../models/counter";
 
 import { CounterService, IEnvelope } from "./counter.service";
 
@@ -33,7 +33,7 @@ describe("CounterService", () => {
     it("should correctly retrieve a counter", waitForAsync(() => {
         const index = 0;
         const value = 42;
-        const dummyEnvelope: IEnvelope = {
+        const dummyEnvelope: IEnvelope<{ counter: CounterRaw }> = {
             message: "Okay",
             status: 200,
             data: {
@@ -82,7 +82,7 @@ describe("CounterService", () => {
         const value0 = 42;
         const index1 = 1;
         const value1 = 4711;
-        const dummyEnvelope: IEnvelope = {
+        const dummyEnvelope: IEnvelope<{ counters: CounterRaw[] }> = {
             message: "Okay",
             status: 200,
             data: {
@@ -136,7 +136,7 @@ describe("CounterService", () => {
     it("should correctly decrement a counter", waitForAsync(() => {
         const index = 0;
         const by = 1;
-        const dummyEnvelope: IEnvelope = {
+        const dummyEnvelope: IEnvelope<{ counter: CounterRaw }> = {
             message: "Okay",
             status: 200,
             data: {
@@ -184,7 +184,7 @@ describe("CounterService", () => {
     it("should correctly increment a counter", waitForAsync(() => {
         const index = 0;
         const by = 1;
-        const dummyEnvelope: IEnvelope = {
+        const dummyEnvelope: IEnvelope<{ counter: CounterRaw }> = {
             message: "Okay",
             status: 200,
             data: {
