@@ -1,4 +1,4 @@
-@if (errors$ | async; as errors) {
+@if (errors(); as errors) {
     <ul>
         @for (error of errors; track $index) {
             <li>

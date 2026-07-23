@@ -48,8 +48,6 @@ describe("DashboardComponent", () => {
         const action = CounterActions.loadAllCompleted({ counters });
         store.dispatch(action);
 
-        component.numOfCounters$.subscribe((num) => {
-            expect(num).toBe(counters.length);
-        });
+        expect(component.numOfCounters()).toBe(counters.length);
     });
 });

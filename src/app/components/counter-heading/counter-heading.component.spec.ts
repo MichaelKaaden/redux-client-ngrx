@@ -26,21 +26,21 @@ describe("CounterHeadingComponent", () => {
     });
 
     it("should create", () => {
+        fixture.componentRef.setInput("counterIndex", index);
+        fixture.componentRef.setInput("counter", { index, value: BASE_VALUE + index });
         expect(component).toBeTruthy();
     });
 
-    it("initially, no index is set", () => {
-        expect(component.counterIndex).toBeUndefined();
-    });
-
     it("should use the correct index", () => {
-        component.counterIndex = index;
+        fixture.componentRef.setInput("counterIndex", index);
+        fixture.componentRef.setInput("counter", { index, value: BASE_VALUE + index });
         fixture.detectChanges();
-        expect(component.counterIndex).toBe(index);
+        expect(component.counterIndex()).toBe(index);
     });
 
     it("should display the index", () => {
-        component.counterIndex = index;
+        fixture.componentRef.setInput("counterIndex", index);
+        fixture.componentRef.setInput("counter", { index, value: BASE_VALUE + index });
         fixture.detectChanges();
         compiled = fixture.debugElement.nativeElement;
         const heading = compiled.querySelector("p").textContent;
@@ -48,8 +48,8 @@ describe("CounterHeadingComponent", () => {
     });
 
     it("should display the counter value", () => {
-        component.counterIndex = index;
-        component.counter = { index, value: BASE_VALUE + index };
+        fixture.componentRef.setInput("counterIndex", index);
+        fixture.componentRef.setInput("counter", { index, value: BASE_VALUE + index });
         fixture.detectChanges();
         compiled = fixture.debugElement.nativeElement;
         const heading = compiled.querySelector("p").textContent;

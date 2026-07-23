@@ -28,7 +28,7 @@ describe("CounterContainerComponent", () => {
 
         fixture = TestBed.createComponent(CounterContainerComponent);
         component = fixture.componentInstance;
-        component.counterIndex = counterIndex;
+        fixture.componentRef.setInput("counterIndex", counterIndex);
 
         fixture.detectChanges();
     });
@@ -50,15 +50,9 @@ describe("CounterContainerComponent", () => {
         const action = CounterActions.loadCompleted({ index: counterIndex, counter: myCounter });
         store.dispatch(action);
 
-        component.counter$.subscribe({
-            next: (data) => {
-                expect(data!.index).toBe(myCounter.index);
-                expect(data!.value).toBe(myCounter.value);
-            },
-            error: (error) => {
-                expect(error).toBeUndefined();
-            },
-        });
+        const data = component.counter();
+        expect(data!.index).toBe(myCounter.index);
+        expect(data!.value).toBe(myCounter.value);
     });
 
     it("should dispatch an action to decrement the counter", () => {
@@ -74,10 +68,9 @@ describe("CounterContainerComponent", () => {
         const action = CounterActions.decrementCompleted({ index: counterIndex, counter: myCounter });
         store.dispatch(action);
 
-        component.counter$.subscribe((data) => {
-            expect(data!.index).toBe(myCounter.index);
-            expect(data!.value).toBe(myCounter.value);
-        });
+        const data = component.counter();
+        expect(data!.index).toBe(myCounter.index);
+        expect(data!.value).toBe(myCounter.value);
     });
 
     it("should dispatch an action to increment the counter", () => {
@@ -93,9 +86,8 @@ describe("CounterContainerComponent", () => {
         const action = CounterActions.incrementCompleted({ index: counterIndex, counter: myCounter });
         store.dispatch(action);
 
-        component.counter$.subscribe((data) => {
-            expect(data!.index).toBe(myCounter.index);
-            expect(data!.value).toBe(myCounter.value);
-        });
+        const data = component.counter();
+        expect(data!.index).toBe(myCounter.index);
+        expect(data!.value).toBe(myCounter.value);
     });
 });

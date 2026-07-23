@@ -1,18 +1,18 @@
-@if (counter$ | async; as counter) {
+@if (counter(); as counter) {
     <mat-card appearance="raised" class="counterContainer">
         <mat-card-header>
             <mat-card-title>
-                <p>Counter #{{ counterIndex }}</p>
+                <p>Counter #{{ counterIndex() }}</p>
             </mat-card-title>
 
             <mat-card-subtitle>
-                <mk-counter-heading [counterIndex]="counterIndex" [counter]="counter"></mk-counter-heading>
+                <mk-counter-heading [counterIndex]="counterIndex()" [counter]="counter"></mk-counter-heading>
             </mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content>
             <mk-counter-input
-                [counterIndex]="counterIndex"
+                [counterIndex]="counterIndex()"
                 [counter]="counter"
                 (decrement)="decrement($event)"
                 (increment)="increment($event)"

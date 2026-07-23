@@ -1,4 +1,4 @@
-import { NO_ERRORS_SCHEMA, SimpleChange } from "@angular/core";
+import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
 
 import { DEFAULT_DELAY, ProgressComponent } from "./progress.component";
@@ -21,72 +21,64 @@ describe("ProgressComponent", () => {
     });
 
     it("should create", () => {
+        fixture.componentRef.setInput("isLoading", false);
         expect(component).toBeTruthy();
     });
 
     it("should not show an animation if isLoading is false", () => {
-        component.isLoading = false;
+        fixture.componentRef.setInput("isLoading", false);
         fixture.detectChanges();
-        expect(component.showProgress).toBeFalsy();
+        expect(component.showProgress()).toBeFalsy();
 
         compiled = fixture.debugElement.nativeElement;
         expect(compiled.querySelector("mat-progress-spinner")).toBe(null);
     });
 
     it("should show an animation after DELAY if isLoading is true", fakeAsync(() => {
-        component.isLoading = true;
+        fixture.componentRef.setInput("isLoading", true);
         fixture.detectChanges();
         tick(DEFAULT_DELAY + 1); // wait for setTimeout()
-        expect(component.showProgress).toBeTruthy();
+        expect(component.showProgress()).toBeTruthy();
 
         compiled = fixture.debugElement.nativeElement;
         expect(compiled.querySelector("mat-progress-spinner")).toBeDefined();
     }));
 
     it("should reset showProgress as soon as isLoading is set to false", fakeAsync(() => {
-        component.isLoading = true;
+        fixture.componentRef.setInput("isLoading", true);
         fixture.detectChanges();
         tick(DEFAULT_DELAY + 1); // wait for setTimeout()
-        expect(component.showProgress).toBeTruthy();
+        expect(component.showProgress()).toBeTruthy();
         compiled = fixture.debugElement.nativeElement;
         expect(compiled.querySelector("mat-progress-spinner")).toBeDefined();
 
-        component.isLoading = false;
-        component.ngOnChanges({
-            isLoading: new SimpleChange(true, component.isLoading, true),
-        });
+        fixture.componentRef.setInput("isLoading", false);
         fixture.detectChanges();
-        expect(component.showProgress).toBeFalsy();
+        expect(component.showProgress()).toBeFalsy();
         compiled = fixture.debugElement.nativeElement;
         expect(compiled.querySelector("mat-progress-spinner")).toBe(null);
     }));
 
     it("should respect an individual delay value", fakeAsync(() => {
         const delay = 500;
-        component.delay = delay;
-        component.isLoading = true;
+        fixture.componentRef.setInput("delay", delay);
+        fixture.componentRef.setInput("isLoading", true);
         fixture.detectChanges();
         tick(delay - 1);
-        expect(component.showProgress).toBeFalsy();
+        expect(component.showProgress()).toBeFalsy();
         tick(delay + 1);
-        expect(component.showProgress).toBeTruthy();
+        expect(component.showProgress()).toBeTruthy();
     }));
 
     it("should show the progress during time travel debugging ", fakeAsync(() => {
-        component.isLoading = false;
-        component.ngOnChanges({
-            isLoading: new SimpleChange(false, component.isLoading, false),
-        });
+        fixture.componentRef.setInput("isLoading", false);
         fixture.detectChanges();
         tick(DEFAULT_DELAY + 1);
 
-        component.isLoading = true;
-        component.ngOnChanges({
-            isLoading: new SimpleChange(true, component.isLoading, true),
-        });
+        fixture.componentRef.setInput("isLoading", true);
         fixture.detectChanges();
         tick(DEFAULT_DELAY + 1);
 
-        expect(component.showProgress).toBeTruthy();
+        expect(component.showProgress()).toBeTruthy();
     }));
 });

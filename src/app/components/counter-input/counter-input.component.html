@@ -1,6 +1,6 @@
 <div>
-    <mk-progress [isLoading]="!!(counter?.isLoading || counter?.isSaving)" [diameter]="23">
-        <p class="mat-headline-1 counter-value">{{ counter?.value }}</p>
+    <mk-progress [isLoading]="!!(counter().isLoading || counter().isSaving)" [diameter]="23">
+        <p class="mat-headline-1 counter-value">{{ counter().value }}</p>
     </mk-progress>
 
     <div class="button-container">
@@ -9,7 +9,7 @@
             color="primary"
             class="decrementButton"
             (click)="onDecrementClick()"
-            [disabled]="counter?.isLoading || counter?.isSaving"
+            [disabled]="counter().isLoading || counter().isSaving"
         >
             <mat-icon>remove</mat-icon>
         </button>
@@ -18,7 +18,7 @@
             color="primary"
             class="incrementButton"
             (click)="onIncrementClick()"
-            [disabled]="counter?.isLoading || counter?.isSaving"
+            [disabled]="counter().isLoading || counter().isSaving"
         >
             <mat-icon>add</mat-icon>
         </button>

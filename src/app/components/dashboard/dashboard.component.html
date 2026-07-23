@@ -8,7 +8,7 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <p class="mat-headline-1 bold">{{ numOfCounters$ | async }}</p>
+            <p class="mat-headline-1 bold">{{ numOfCounters() }}</p>
         </mat-card-content>
     </mat-card>
 
@@ -19,7 +19,7 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <p class="mat-headline-1 bold">{{ counterValueSum$ | async }}</p>
+            <p class="mat-headline-1 bold">{{ counterValueSum() }}</p>
         </mat-card-content>
     </mat-card>
 
@@ -30,7 +30,7 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <p class="mat-headline-1 bold">{{ averageCounterValue$ | async }}</p>
+            <p class="mat-headline-1 bold">{{ averageCounterValue() }}</p>
         </mat-card-content>
     </mat-card>
 </div>

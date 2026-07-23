@@ -29,22 +29,21 @@ describe("CounterInputComponent", () => {
     });
 
     it("should create", () => {
+        fixture.componentRef.setInput("counterIndex", index);
+        fixture.componentRef.setInput("counter", counter);
         expect(component).toBeTruthy();
     });
 
-    it("initially, no index is set", () => {
-        expect(component.counterIndex).toBeUndefined();
-    });
-
     it("should use the correct index", () => {
-        component.counterIndex = index;
+        fixture.componentRef.setInput("counterIndex", index);
+        fixture.componentRef.setInput("counter", counter);
         fixture.detectChanges();
-        expect(component.counterIndex).toBe(index);
+        expect(component.counterIndex()).toBe(index);
     });
 
     it("should display the counter's value", () => {
-        component.counterIndex = index;
-        component.counter = counter;
+        fixture.componentRef.setInput("counterIndex", index);
+        fixture.componentRef.setInput("counter", counter);
         fixture.detectChanges();
         compiled = fixture.debugElement.nativeElement;
         const span = compiled.querySelector(".counter-value").textContent;
@@ -52,6 +51,8 @@ describe("CounterInputComponent", () => {
     });
 
     it("should emit decrement when the decrement button is clicked", fakeAsync(() => {
+        fixture.componentRef.setInput("counterIndex", index);
+        fixture.componentRef.setInput("counter", counter);
         const spy = jasmine.createSpy("decrement");
         component.decrement.subscribe(spy);
         fixture.detectChanges();
@@ -66,6 +67,8 @@ describe("CounterInputComponent", () => {
     }));
 
     it("should emit increment when the increment button is clicked", fakeAsync(() => {
+        fixture.componentRef.setInput("counterIndex", index);
+        fixture.componentRef.setInput("counter", counter);
         const spy = jasmine.createSpy("increment");
         component.increment.subscribe(spy);
         fixture.detectChanges();

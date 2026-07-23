@@ -1,27 +1,21 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { Observable } from "rxjs";
 import { ErrorActions } from "../../actions";
 import { selectErrors } from "../../selectors/errors.selectors";
 import { MatIcon } from "@angular/material/icon";
 import { MatButton } from "@angular/material/button";
-import { AsyncPipe } from "@angular/common";
 
 @Component({
     selector: "mk-error",
     templateUrl: "./error.component.html",
     styleUrls: ["./error.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatButton, MatIcon, AsyncPipe],
+    imports: [MatButton, MatIcon],
 })
-export class ErrorComponent implements OnInit {
+export class ErrorComponent {
     private store = inject(Store);
 
-    errors$!: Observable<string[]>;
-
-    ngOnInit(): void {
-        this.errors$ = this.store.select(selectErrors);
-    }
+    errors = this.store.selectSignal(selectErrors);
 
     reset() {
         this.store.dispatch(ErrorActions.resetErrors());

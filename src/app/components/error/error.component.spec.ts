@@ -34,9 +34,7 @@ describe("ErrorComponent", () => {
     });
 
     it("should initially show no errors", () => {
-        component.errors$.subscribe((data) => {
-            expect(data.length).toBe(0);
-        });
+        expect(component.errors().length).toBe(0);
     });
 
     it("should show an error if its action is dispatched", () => {
@@ -44,10 +42,8 @@ describe("ErrorComponent", () => {
         const action = ErrorActions.errorOccurred({ error });
         store.dispatch(action);
 
-        component.errors$.subscribe((data) => {
-            expect(data.length).toBe(1);
-            expect(data[0]).toEqual(error);
-        });
+        expect(component.errors().length).toBe(1);
+        expect(component.errors()[0]).toEqual(error);
     });
 
     it("should dispatch an action when reset() is called", () => {
@@ -65,8 +61,6 @@ describe("ErrorComponent", () => {
 
         component.reset();
 
-        component.errors$.subscribe((data) => {
-            expect(data.length).toBe(0);
-        });
+        expect(component.errors().length).toBe(0);
     });
 });

@@ -1,14 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    inject,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, effect, input, signal } from "@angular/core";
 import { MatProgressSpinner } from "@angular/material/progress-spinner";
 
 export const DEFAULT_DELAY = 250;
@@ -20,56 +10,22 @@ export const DEFAULT_DELAY = 250;
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [MatProgressSpinner],
 })
-export class ProgressComponent implements OnInit, OnChanges, OnDestroy {
-    private ref = inject(ChangeDetectorRef);
-    private delayTimer: any;
+export class ProgressComponent {
+    delay = input(DEFAULT_DELAY);
+    diameter = input(40);
+    isLoading = input.required<boolean>();
 
-    @Input()
-    delay = DEFAULT_DELAY;
-    @Input()
-    diameter = 40;
-    @Input({ required: true })
-    isLoading!: boolean;
+    public showProgress = signal(false);
 
-    public showProgress = false;
-
-    ngOnInit() {
-        this.showProgressAfterDelay();
-    }
-
-    ngOnDestroy() {
-        if (this.delayTimer) {
-            clearTimeout(this.delayTimer);
-        }
-    }
-
-    private showProgressAfterDelay() {
-        if (this.delayTimer) {
-            clearTimeout(this.delayTimer);
-        }
-
-        this.delayTimer = setTimeout(() => {
-            if (this.isLoading) {
-                // console.log(`${this.delay}ms passed, showing progress...`);
-                this.showProgress = true;
-                this.ref.detectChanges();
+    constructor() {
+        effect((onCleanup) => {
+            if (!this.isLoading()) {
+                this.showProgress.set(false);
+                return;
             }
-        }, this.delay);
-    }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.isLoading.previousValue === true) {
-            // console.log(`disabling progress.`);
-            if (this.delayTimer) {
-                clearTimeout(this.delayTimer);
-                this.delayTimer = null;
-            }
-            this.showProgress = false;
-            this.ref.detectChanges();
-        }
-
-        if (changes.isLoading.currentValue === true) {
-            this.showProgressAfterDelay();
-        }
+            const timer = setTimeout(() => this.showProgress.set(true), this.delay());
+            onCleanup(() => clearTimeout(timer));
+        });
     }
 }

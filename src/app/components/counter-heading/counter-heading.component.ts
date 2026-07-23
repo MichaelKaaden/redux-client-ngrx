@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, input } from "@angular/core";
 import { Counter } from "../../models/counter";
 import { ProgressComponent } from "../progress/progress.component";
 
@@ -10,11 +10,6 @@ import { ProgressComponent } from "../progress/progress.component";
     imports: [ProgressComponent],
 })
 export class CounterHeadingComponent {
-    @Input({ required: true })
-    counter!: Counter;
-
-    @Input({ required: true })
-    counterIndex!: number;
-
-    constructor() {}
+    counter = input.required<Counter>();
+    counterIndex = input.required<number>();
 }
