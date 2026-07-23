@@ -11,7 +11,7 @@ export interface IEnvelope {
     status: number;
 }
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class CounterService {
     private http = inject(HttpClient);
 

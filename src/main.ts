@@ -12,7 +12,6 @@ import { CounterEffects } from "./app/effects/counter.effects";
 import { metaReducers, reducers } from "./app/reducers";
 import * as fromCounter from "./app/reducers/counter.reducer";
 import * as fromError from "./app/reducers/error.reducer";
-import { CounterService } from "./app/services/counter.service";
 
 import { environment } from "./environments/environment";
 
@@ -23,7 +22,6 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
     providers: [
         provideZonelessChangeDetection(),
-        CounterService,
         provideHttpClient(withXhr()),
         provideAnimations(),
         provideRouter(routes),
