@@ -367,10 +367,10 @@
   optionalDependencies:
     lmdb "3.5.4"
 
-"@angular/cdk@^22.0.5":
-  version "22.0.5"
-  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-22.0.5.tgz#449c5bf568f26081c880647ae6e548b9dc73a8bc"
-  integrity sha512-qy1scYkkhedGxrU2GjOUoh76xjsxCDOODWdVfg4aXLXG7RBIH6hOuKdcNpR/sWhfSdY02a11QYRN2CqoqWDvZQ==
+"@angular/cdk@^22.0.6":
+  version "22.0.6"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-22.0.6.tgz#159accfd6b4ba655f756669d585f2ab544020eb6"
+  integrity sha512-b36f4b+7yQpuulG9Ai2O38SV2tsqyNeYTYCH9TehMir18XlTx+NtLELwA8Sfi24tHByJHEDADQZtHPWWUj71/w==
   dependencies:
     parse5 "^8.0.0"
     tslib "^2.3.0"
@@ -458,10 +458,10 @@
     tinyglobby "^0.2.12"
     yargs "^18.0.0"
 
-"@angular/material@^22.0.5":
-  version "22.0.5"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-22.0.5.tgz#20209873339e6acda496d2cd68f5b0907f2f4ea8"
-  integrity sha512-A0SnDMvWQBxv3dB2w33GXwuo1/puKtFe8ZMQmIiurS5bbTQpV7UHAM0pWzg7L4DG2cvaH4WZGRPfNG3f8fh+yA==
+"@angular/material@^22.0.6":
+  version "22.0.6"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-22.0.6.tgz#24ac244219c26b716c5ed31dab14d2c4468eb175"
+  integrity sha512-EVKhP3689o+7J4TD7KMzmypxKGAUdvU3UsIhXYEoJ2IyxF/jAfuWSVKBmR8Ig6w74wSayBglfOTVoI3RuDL9NA==
   dependencies:
     tslib "^2.3.0"
 
